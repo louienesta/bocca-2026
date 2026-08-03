@@ -835,15 +835,6 @@ p, .p-small, p.small {
         margin-bottom: 1.5rem;
     }
 
-    .overtitle-red {
-        font-family: 'Inter', sans-serif;
-        font-size: 1.125rem;
-        font-weight: 600;
-        letter-spacing: 0.15em;
-        color: var(--bocca-red);
-        text-transform: uppercase;
-    }
-
     .mobile-cases-track {
         display: flex;
         overflow-x: auto;
@@ -867,7 +858,7 @@ p, .p-small, p.small {
         display: flex;
         flex-direction: column;
         text-decoration: none;
-        box-shadow: 0 10px 30px rgba(77, 16, 48, 0.15);
+        box-shadow: none;
         overflow: hidden;
         transition: transform 0.2s ease;
     }
