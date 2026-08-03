@@ -1,0 +1,1008 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:ital,wght@0,100..900;1,100..900&family=Gowun+Batang&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+/* ==========================================
+   Brand Colour Tokens
+   ========================================== */
+:root {
+    --bocca-red:  #FF4931;
+    --bordeaux:   #4D1030;
+    --petroleum:  #2E4A50;
+    --bocca-blue: #BADBFF;
+    --beige:      #FAF4F0;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: 'Inter', sans-serif;
+    color: var(--bordeaux);
+    scroll-behavior: smooth;
+    background-color: var(--beige);
+    scroll-snap-type: y mandatory;
+}
+
+/* Typography Design System */
+h1, h2, h3, h4, h5 {
+    font-family: 'Gowun Batang', serif;
+    font-weight: 400;
+    line-height: 1.05; /* Proportionally 105% */
+}
+
+h1 { font-size: 6rem; }      /* 96px */
+h2 { font-size: 5rem; }      /* 80px */
+h3 { font-size: 4rem; }      /* 64px */
+h4 { font-size: 3.5rem; }    /* 56px */
+h5 { font-size: 2.75rem; }   /* 44px */
+
+h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 2rem;        /* 32px */
+    line-height: 1.05;      /* Proportionally 105% */
+}
+
+p, .p-small, p.small {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;        /* 16px */
+    line-height: 1.2;       /* Proportionally 120% */
+}
+
+.p-large, p.large {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 1.25rem;     /* 20px */
+    line-height: 1.2;       /* Proportionally 120% */
+}
+
+.overtitle {
+    font-family: 'Geist Mono', monospace;
+    font-weight: 400;
+    font-size: 1.375rem;    /* 22px */
+    line-height: 1.05;      /* Proportionally 105% */
+    letter-spacing: 0.2em;  /* 20% letter spacing */
+    text-transform: uppercase;
+    color: var(--bocca-red);
+}
+
+/* Responsive typography styling */
+@media (max-width: 768px) {
+    h1 { font-size: 3rem; }
+    h2 { font-size: 2.5rem; }
+    h3 { font-size: 2rem; }
+    h4 { font-size: 1.75rem; }
+    h5 { font-size: 1.5rem; }
+    h6 { font-size: 1.25rem; }
+    .p-large, p.large { font-size: 1.125rem; }
+    .overtitle { font-size: 1rem; }
+}
+
+/* ==========================================
+   Fixed Navigation
+   ========================================== */
+.site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    padding: 2rem 4rem; /* 32px 64px */
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none; /* let clicks pass through gap areas */
+}
+
+/* Left — Cases link */
+.nav-cases {
+    font-family: 'Gowun Batang', serif;
+    font-size: 1.5rem; /* 24px */
+    font-weight: 700;
+    color: var(--bocca-red);
+    text-decoration: none;
+    pointer-events: auto;
+    transition: opacity 0.2s ease;
+}
+
+.nav-cases:hover {
+    opacity: 0.75;
+}
+
+/* Centre — Logo */
+.nav-logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    pointer-events: auto;
+    line-height: 0;
+}
+
+.nav-logo-img {
+    height: 4rem; /* 64px */
+    width: auto;
+    display: block;
+}
+
+/* Right — Hamburger */
+.nav-hamburger {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.2s ease;
+}
+
+.nav-hamburger:hover {
+    opacity: 0.75;
+}
+
+.nav-hamburger img {
+    display: block;
+    width: auto;
+    height: 1.5rem;
+}
+
+/* ==========================================
+   Hero Section
+   ========================================== */
+.hero-section {
+    height: 100dvh;
+    background-color: var(--beige);
+    scroll-snap-align: start;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    width: 100%;
+    height: 100%;
+}
+
+/* Left column: 4/12 */
+.hero-copy {
+    grid-column: 1 / 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    padding: 6rem 4rem 6rem 6rem;
+}
+
+.hero-copy .overtitle {
+    display: block;
+}
+
+.hero-headline {
+    font-size: clamp(3rem, 4.5vw, 6rem);
+    line-height: 1.05;
+    color: var(--bordeaux);
+}
+
+.hero-desc {
+    color: var(--bordeaux);
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+/* Right column: 8/12 */
+.hero-media {
+    grid-column: 5 / 13;
+    position: relative;
+    overflow: hidden;
+    background-color: color-mix(in srgb, var(--beige) 60%, var(--petroleum) 40%);
+}
+
+.hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+
+/* ==========================================
+   Featured Cases Section Styling
+   ========================================== */
+.featured-cases {
+    height: 500dvh; /* 5 slides = 4 scroll intervals */
+    background-color: var(--beige);
+    position: relative;
+    border-bottom: 1px solid rgba(77, 16, 48, 0.08);
+}
+
+.case-snap-point {
+    height: 100dvh;
+    scroll-snap-align: start;
+    pointer-events: none;
+}
+
+.cases-sticky {
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    width: 100%;
+    margin-top: -500dvh; /* Overlay sticky content over 5 snap points */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    pointer-events: auto;
+}
+
+.cases-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    width: 100%;
+    height: 100%;
+}
+
+/* Left Side: 8/12 Columns - Stationary Frame Mask */
+.cases-carousel-viewport {
+    grid-column: 1 / 9; /* Spans columns 1 to 8 (8/12) */
+    height: 70vh;
+    width: calc(100% - 4vw);
+    margin-left: 4vw;
+    align-self: center;
+    overflow: hidden;
+    border-bottom-right-radius: 80px; /* Stationary frame with single rounded corner */
+    background-color: var(--beige);
+    position: relative;
+}
+
+.cases-carousel-track {
+    display: flex;
+    width: 500%; /* 5 slides */
+    height: 100%;
+    flex-shrink: 0;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+.case-slide {
+    flex: 0 0 20%; /* 100% / 5 slides = 20% of track width */
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.case-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    transform: scale(0.88);
+    opacity: 1;
+    transition: transform 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.case-slide.active img {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.spacer-content h2 {
+    font-family: 'Gowun Batang', serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 400;
+    margin-bottom: 2rem;
+}
+
+.spacer-content h3 {
+    font-family: 'Gowun Batang', serif;
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--bocca-red);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.scroll-indicator {
+    margin-top: 2rem;
+    animation: bounce 2s infinite;
+}
+
+.scroll-indicator .arrow {
+    font-size: 2rem;
+    color: var(--bordeaux);
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Main showcase track */
+.showcase-track {
+    height: 300dvh; /* Length of scroll animation */
+    position: relative;
+    view-timeline-name: --showcase-timeline;
+    view-timeline-axis: block;
+}
+
+.showcase-snap-point {
+    height: 100dvh;
+    scroll-snap-align: start;
+    pointer-events: none;
+}
+
+/* Sticky container that locks onto screen */
+.showcase-sticky {
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    width: 100%;
+    margin-top: -300dvh; /* Overlay sticky view over 3 snap points */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--beige);
+    pointer-events: auto;
+}
+
+.bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(250,244,240,0) 70%); /* beige fade */
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Center Content Styling */
+.center-content {
+    text-align: center;
+    z-index: 10;
+    max-width: 90%;
+    pointer-events: none;
+}
+
+.headline {
+    font-family: 'Gowun Batang', serif;
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 400;
+    color: var(--bordeaux);
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+}
+
+/* ── Shared button base (Figma spec) ─────────────────────────── */
+.btn-filled,
+.btn-outlined,
+.cta-btn {
+    display: inline-flex;
+    padding: 10px 16px 12px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Gowun Batang', serif;
+    font-size: 1.25rem; /* 20px */
+    font-weight: 400;
+    line-height: 1;
+    text-decoration: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease-out;
+    white-space: nowrap;
+    pointer-events: auto;
+    box-sizing: border-box;
+}
+
+/* Primary – Bordeaux filled */
+.btn-filled {
+    background: var(--bordeaux);
+    border: 1px solid var(--bordeaux);
+    color: var(--beige);
+}
+
+.btn-filled:hover {
+    transform: scale(1.05);
+}
+
+/* Secondary – transparent with border */
+.btn-outlined {
+    background: transparent;
+    border: 1px solid var(--bordeaux);
+    color: var(--bordeaux);
+}
+
+.btn-outlined:hover {
+    transform: scale(1.05);
+}
+
+/* Accent variant – red CTA (showcase section) */
+.cta-btn {
+    background: var(--bocca-red);
+    border: 1px solid var(--bocca-red);
+    color: #ffffff;
+}
+
+.cta-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Floating Images Layout & Positions */
+.floating-img {
+    position: absolute;
+    overflow: hidden;
+    background-color: color-mix(in srgb, var(--beige) 70%, var(--bordeaux) 30%);
+    z-index: 5;
+    will-change: transform, opacity;
+}
+
+.floating-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.floating-img:hover img {
+    transform: scale(1.05);
+}
+
+/* Specific Positions matching Figma design */
+.img-top-right {
+    top: 8vh;
+    left: 45%;
+    width: 20vw;
+    height: 25vh;
+    min-width: 220px;
+    min-height: 180px;
+}
+
+.img-left {
+    top: 36vh;
+    left: 6vw;
+    width: 25vw;
+    height: 35vh;
+    min-width: 260px;
+    min-height: 200px;
+}
+
+.img-bottom {
+    bottom: 6vh;
+    left: 36vw;
+    width: 13vw;
+    height: 30vh;
+    min-width: 160px;
+    min-height: 220px;
+}
+
+.img-right-tall {
+    top: 20vh;
+    right: 8vw;
+    width: 18vw;
+    height: 52vh;
+    min-width: 200px;
+    min-height: 320px;
+}
+
+/* --- Native CSS Scroll-Driven Animations --- */
+@media (prefers-reduced-motion: no-preference) {
+    @supports ((animation-timeline: view()) and (animation-range: entry)) {
+        
+        .floating-img {
+            animation-timeline: --showcase-timeline;
+            animation-range: contain 0% contain 100%;
+            animation-fill-mode: both;
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        /* Staggered entrance and exit animations mapped to contain range */
+        .img-top-right {
+            animation-name: anim-top-right;
+        }
+
+        .img-left {
+            animation-name: anim-left;
+        }
+
+        .img-bottom {
+            animation-name: anim-bottom;
+        }
+
+        .img-right-tall {
+            animation-name: anim-right-tall;
+        }
+
+        @keyframes anim-top-right {
+            0% {
+                opacity: 0;
+                transform: scale(0.4) translate(20px, -20px);
+            }
+            40%, 100% {
+                opacity: 1;
+                transform: scale(1) translate(0, 0);
+            }
+        }
+
+        @keyframes anim-left {
+            0%, 10% {
+                opacity: 0;
+                transform: scale(0.4) translate(-40px, 10px);
+            }
+            48%, 100% {
+                opacity: 1;
+                transform: scale(1) translate(0, 0);
+            }
+        }
+
+        @keyframes anim-bottom {
+            0%, 18% {
+                opacity: 0;
+                transform: scale(0.4) translate(0, 40px);
+            }
+            54%, 100% {
+                opacity: 1;
+                transform: scale(1) translate(0, 0);
+            }
+        }
+
+        @keyframes anim-right-tall {
+            0%, 25% {
+                opacity: 0;
+                transform: scale(0.4) translate(40px, -10px);
+            }
+            60%, 100% {
+                opacity: 1;
+                transform: scale(1) translate(0, 0);
+            }
+        }
+    }
+}
+
+/* Fallback state when scroll animations are not supported natively and JS hasn't run yet */
+.no-scroll-timeline .floating-img {
+    opacity: 0;
+    transform: scale(0.5);
+    transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+}
+
+/* Responsive adjustments for smaller viewports */
+@media (max-width: 900px) {
+    .img-top-right {
+        width: 25vw;
+        height: 20vh;
+        left: 45%;
+        top: 10vh;
+    }
+
+    .img-left {
+        width: 30vw;
+        height: 25vh;
+        left: 3vw;
+        top: 38vh;
+    }
+
+    .img-bottom {
+        width: 20vw;
+        height: 22vh;
+        left: 35vw;
+        bottom: 8vh;
+    }
+
+    .img-right-tall {
+        width: 24vw;
+        height: 35vh;
+        right: 4vw;
+        top: 25vh;
+    }
+}
+
+@media (max-width: 600px) {
+    .headline {
+        font-size: 2.75rem;
+    }
+    
+    .floating-img {
+        box-shadow: 0 10px 20px rgba(77, 16, 48, 0.06); /* bordeaux tint */
+    }
+    
+    /* On very small devices, position images closer or shrink them to avoid overlap */
+    .img-top-right {
+        width: 32vw;
+        height: 15vh;
+        left: 50%;
+        top: 12vh;
+        min-width: unset;
+        min-height: unset;
+    }
+
+    .img-left {
+        width: 35vw;
+        height: 18vh;
+        left: 2vw;
+        top: 42vh;
+        min-width: unset;
+        min-height: unset;
+    }
+
+    .img-bottom {
+        width: 28vw;
+        height: 18vh;
+        left: 36vw;
+        bottom: 12vh;
+        min-width: unset;
+        min-height: unset;
+    }
+
+    .img-right-tall {
+        width: 32vw;
+        height: 25vh;
+        right: 2vw;
+        top: 30vh;
+        min-width: unset;
+        min-height: unset;
+    }
+}
+
+
+
+/* Right Side: 4/12 Columns */
+.cases-info {
+    grid-column: 9 / 13; /* Spans columns 9 to 12 (4/12) */
+    display: flex;
+    align-items: center;
+    padding: 0 5vw 0 2vw;
+    box-sizing: border-box;
+    background-color: var(--beige);
+    height: 100%;
+}
+
+.cases-info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.case-title {
+    font-size: 3.5rem; /* Large Gowun Batang H2 proportional styling */
+    line-height: 1.05;
+    transition: opacity 0.25s cubic-bezier(0.25, 1, 0.5, 1), transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.case-desc {
+    transition: opacity 0.25s cubic-bezier(0.25, 1, 0.5, 1), transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Staggered text fade transition styles */
+.transition-fade {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+/* Action buttons */
+.cases-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+/* btn-filled and btn-outlined are defined in the shared base above */
+
+/* Indicator Pagination dots */
+.cases-pagination {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--bordeaux);
+    opacity: 0.25;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: opacity 0.25s, transform 0.25s;
+}
+
+.dot:hover {
+    opacity: 0.6;
+}
+
+.dot.active {
+    opacity: 1;
+    transform: scale(1.25);
+}
+
+/* Responsive adjustment for tablets & mobiles */
+@media (max-width: 900px) {
+    .featured-cases {
+        height: auto;
+        min-height: 100dvh;
+    }
+
+    .cases-sticky {
+        position: relative;
+        height: auto;
+        overflow: visible;
+    }
+
+    .cases-container {
+        grid-template-columns: 100%;
+        grid-template-rows: auto auto;
+    }
+
+    .cases-carousel-viewport {
+        grid-column: 1 / -1;
+        padding: 4vh 5vw 2vh 5vw;
+        height: 50vh;
+    }
+
+    .cases-carousel-track {
+        height: 100%;
+        width: 500%;
+    }
+
+    .cases-info {
+        grid-column: 1 / -1;
+        padding: 4vh 6vw 6vh 6vw;
+        height: auto;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .cases-info-content {
+        max-width: 100%;
+        gap: 1.25rem;
+    }
+
+    .case-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .cases-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+    
+    .btn-filled, .btn-outlined {
+        text-align: center;
+    }
+}
+
+/* ==========================================
+   Page Blur Overlay
+   ========================================== */
+.page-blur-overlay {
+    position: fixed;
+    inset: 0;
+    top: 0; /* sits behind nav via z-index layering */
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 90; /* below nav (1000) but above content */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+}
+
+.page-blur-overlay.active {
+    opacity: 1;
+}
+
+/* ==========================================
+   Site Footer
+   ========================================== */
+.site-footer {
+    position: relative;
+    z-index: 95; /* above blur overlay */
+    min-height: 50vh;
+    background-color: var(--bocca-red);
+    color: #ffffff;
+    scroll-snap-align: start;
+    overflow: hidden;
+}
+
+.footer-inner {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 1fr auto; /* row 1: content, row 2: logo */
+    min-height: 50vh;
+    padding: 2rem 4rem 2rem 4rem;
+    box-sizing: border-box;
+    gap: 0;
+}
+
+/* Top-left: address — row 1, cols 1-4 */
+.footer-address {
+    grid-column: 1 / 5;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.15rem;
+    align-self: start;
+}
+
+.footer-address .p-large {
+    color: #ffffff;
+    opacity: 0.8;
+    font-weight: 300;
+}
+
+/* Right: contact — spans BOTH rows, cols 9-13 */
+.footer-contact {
+    grid-column: 9 / 13;
+    grid-row: 1 / 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    text-align: right;
+    padding-bottom: 0; /* inherits inner padding */
+}
+
+.footer-cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-family: 'Gowun Batang', serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    line-height: 1.05;
+    color: #ffffff;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.footer-cta-link:hover {
+    opacity: 0.75;
+}
+
+/* SVG arrow */
+.footer-arrow-icon {
+    display: inline-block;
+    height: 2.5rem;
+    width: auto;
+    filter: brightness(0) invert(1);
+    flex-shrink: 0;
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.footer-link {
+    font-family: 'Gowun Batang', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.footer-link:hover {
+    opacity: 0.7;
+}
+
+/* Bottom-left: large logo — row 2, cols 1-8 */
+.footer-logo-wrap {
+    grid-column: 1 / 9;
+    grid-row: 2;
+    display: flex;
+    align-items: flex-end;
+}
+
+.footer-logo-img {
+    display: block;
+    height: clamp(8rem, 24vw, 20rem);
+    width: auto;
+    filter: brightness(0) invert(1);
+    /* Start state for the IntersectionObserver transition */
+    opacity: 0;
+    transform: scale(0.5) translateY(10rem);
+    transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.site-footer.logo-visible .footer-logo-img {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* ==========================================
+   Slide-in Contact Card
+   ========================================== */
+.contact-reveal-card {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    background-color: var(--bordeaux);
+    color: var(--beige);
+    transform: translateX(100%);
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 20; /* floats above the standard footer content */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 4rem; /* matches footer-inner padding */
+    box-sizing: border-box;
+}
+
+/* 
+Trigger the slide-in when hovering EITHER:
+1. The "Get in touch" link specifically
+2. The card itself (so it doesn't slide away while you're reading it)
+*/
+.site-footer:has(.footer-cta-link:hover) .contact-reveal-card,
+.contact-reveal-card:hover {
+    transform: translateX(0);
+}
+
+.contact-reveal-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.reveal-title {
+    font-size: 1.25rem;
+    color: var(--bocca-red);
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+.reveal-link {
+    font-family: 'Gowun Batang', serif;
+    font-size: 3.5rem;
+    color: var(--beige);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    line-height: 1.05;
+}
+
+.reveal-link:hover {
+    opacity: 0.7;
+}

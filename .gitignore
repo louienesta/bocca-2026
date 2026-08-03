@@ -1,0 +1,4 @@
+.DS_Store
+*.xmp
+node_modules/
+.netlify/
