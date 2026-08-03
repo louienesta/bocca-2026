@@ -82,13 +82,18 @@ p, .p-small, p.small {
 
     /* Navigation responsive fixes */
     .site-nav {
-        padding: 1rem 1rem;
+        padding: 1rem 1rem !important;
+        box-sizing: border-box;
     }
     .nav-logo-img {
-        height: 2rem; /* 32px */
+        height: 1.5rem !important; /* 24px - compact and clean */
+        width: auto;
     }
     .nav-cases {
-        font-size: 1.25rem; /* 20px */
+        font-size: 1.125rem !important;
+    }
+    .nav-hamburger img {
+        height: 1.25rem !important;
     }
 }
 
@@ -237,17 +242,19 @@ p, .p-small, p.small {
     }
     .hero-grid {
         grid-template-columns: 100%;
-        grid-template-rows: auto 45vh;
+        grid-template-rows: 45vh auto;
         height: auto;
-    }
-    .hero-copy {
-        grid-column: 1 / -1;
-        padding: 5.5rem 1.5rem 2.5rem 1.5rem;
-        gap: 1.5rem;
     }
     .hero-media {
         grid-column: 1 / -1;
+        grid-row: 1; /* Video on top */
         height: 45vh;
+    }
+    .hero-copy {
+        grid-column: 1 / -1;
+        grid-row: 2; /* Text on bottom */
+        padding: 2.5rem 1.5rem 3rem 1.5rem;
+        gap: 1.5rem;
     }
 }
 
@@ -801,6 +808,11 @@ p, .p-small, p.small {
 
 /* Responsive adjustment for tablets & mobiles */
 @media (max-width: 900px) {
+    .featured-cases {
+        height: auto;
+        scroll-snap-align: start; /* Fix scroll snapping skipping past this section */
+    }
+
     .desktop-only-cases {
         display: none;
     }
@@ -834,10 +846,11 @@ p, .p-small, p.small {
     .mobile-case-card {
         flex: 0 0 85vw; /* Each card takes up 85% viewport width */
         scroll-snap-align: center;
-        background: #ffffff;
+        background: transparent;
+        border: 1px solid var(--bordeaux);
         border-radius: 16px;
         overflow: hidden;
-        box-shadow: 0 8px 24px rgba(77, 16, 48, 0.05);
+        box-shadow: none;
         display: flex;
         flex-direction: column;
     }
