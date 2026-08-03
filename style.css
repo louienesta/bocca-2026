@@ -732,6 +732,7 @@ p, .p-small, p.small {
 .dot {
     width: 8px;
     height: 8px;
+    flex-shrink: 0;
     border-radius: 50%;
     background-color: var(--bordeaux);
     opacity: 0.25;
