@@ -79,6 +79,17 @@ p, .p-small, p.small {
     h6 { font-size: 1.25rem; }
     .p-large, p.large { font-size: 1.125rem; }
     .overtitle { font-size: 1rem; }
+
+    /* Navigation responsive fixes */
+    .site-nav {
+        padding: 1rem 1.5rem;
+    }
+    .nav-logo-img {
+        height: 2.75rem; /* 44px */
+    }
+    .nav-cases {
+        font-size: 1.25rem; /* 20px */
+    }
 }
 
 /* ==========================================
@@ -216,6 +227,28 @@ p, .p-small, p.small {
     height: 100%;
     object-fit: cover;
     display: block;
+}
+
+/* Hero Section mobile adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        height: auto;
+        min-height: 100dvh;
+    }
+    .hero-grid {
+        grid-template-columns: 100%;
+        grid-template-rows: auto 45vh;
+        height: auto;
+    }
+    .hero-copy {
+        grid-column: 1 / -1;
+        padding: 5.5rem 1.5rem 2.5rem 1.5rem;
+        gap: 1.5rem;
+    }
+    .hero-media {
+        grid-column: 1 / -1;
+        height: 45vh;
+    }
 }
 
 
@@ -634,6 +667,11 @@ p, .p-small, p.small {
         font-size: 2.75rem;
     }
     
+    .center-content {
+        max-width: 85%;
+        padding: 0 1rem;
+    }
+    
     .floating-img {
         box-shadow: 0 10px 20px rgba(77, 16, 48, 0.06); /* bordeaux tint */
     }
@@ -758,25 +796,32 @@ p, .p-small, p.small {
 /* Responsive adjustment for tablets & mobiles */
 @media (max-width: 900px) {
     .featured-cases {
-        height: auto;
-        min-height: 100dvh;
+        height: 500dvh;
     }
 
     .cases-sticky {
-        position: relative;
-        height: auto;
-        overflow: visible;
+        position: sticky;
+        top: 0;
+        height: 100dvh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
     }
 
     .cases-container {
-        grid-template-columns: 100%;
-        grid-template-rows: auto auto;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
     }
 
     .cases-carousel-viewport {
-        grid-column: 1 / -1;
-        padding: 4vh 5vw 2vh 5vw;
-        height: 50vh;
+        grid-column: unset;
+        width: 100%;
+        margin-left: 0;
+        height: 45dvh;
+        border-bottom-right-radius: 40px;
+        flex-shrink: 0;
     }
 
     .cases-carousel-track {
@@ -785,20 +830,39 @@ p, .p-small, p.small {
     }
 
     .cases-info {
-        grid-column: 1 / -1;
-        padding: 4vh 6vw 6vh 6vw;
+        grid-column: unset;
+        padding: 2rem 1.5rem 2rem 1.5rem;
         height: auto;
-        justify-content: flex-start;
-        align-items: flex-start;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        width: 100%;
+        background-color: var(--beige);
     }
 
     .cases-info-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         max-width: 100%;
-        gap: 1.25rem;
+        width: 100%;
+        height: 100%;
+        gap: 1rem;
     }
 
     .case-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
+        line-height: 1.1;
+    }
+
+    .case-desc {
+        font-size: 1rem;
+        line-height: 1.35;
+    }
+
+    .cases-pagination {
+        margin-top: 0.5rem;
     }
 }
 
@@ -1010,4 +1074,56 @@ Trigger the slide-in when hovering EITHER:
 
 .reveal-link:hover {
     opacity: 0.7;
+}
+
+/* Footer mobile adjustments */
+@media (max-width: 768px) {
+    .site-footer {
+        min-height: auto;
+        height: auto;
+    }
+    .footer-inner {
+        grid-template-columns: 100%;
+        grid-template-rows: auto auto auto;
+        padding: 3rem 1.5rem 2rem 1.5rem;
+        gap: 2rem;
+    }
+    .footer-address {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        text-align: left;
+    }
+    .footer-contact {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        align-items: flex-start;
+        text-align: left;
+        gap: 1.5rem;
+    }
+    .footer-cta-link {
+        font-size: 2.25rem;
+    }
+    .footer-arrow-icon {
+        height: 1.75rem;
+    }
+    .footer-links {
+        justify-content: flex-start;
+        width: 100%;
+        gap: 1.5rem;
+    }
+    .footer-logo-wrap {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        margin-top: 1rem;
+    }
+    .footer-logo-img {
+        height: clamp(5rem, 15vw, 8rem);
+    }
+    .contact-reveal-card {
+        width: 100%;
+        padding: 2rem 1.5rem;
+    }
+    .reveal-link {
+        font-size: 2.25rem;
+    }
 }
