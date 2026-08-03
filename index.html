@@ -47,62 +47,156 @@
 
     <!-- Featured Cases Section -->
     <section class="featured-cases" id="featured-cases">
-        <!-- 5 Vertical Snap Points for mandatory page scroll snapping -->
-        <div class="case-snap-point" data-snap="0"></div>
-        <div class="case-snap-point" data-snap="1"></div>
-        <div class="case-snap-point" data-snap="2"></div>
-        <div class="case-snap-point" data-snap="3"></div>
-        <div class="case-snap-point" data-snap="4"></div>
+        
+        <!-- Desktop Only Version (Sticky vertical-to-horizontal timeline scroll) -->
+        <div class="desktop-only-cases">
+            <!-- 5 Vertical Snap Points for mandatory page scroll snapping -->
+            <div class="case-snap-point" data-snap="0"></div>
+            <div class="case-snap-point" data-snap="1"></div>
+            <div class="case-snap-point" data-snap="2"></div>
+            <div class="case-snap-point" data-snap="3"></div>
+            <div class="case-snap-point" data-snap="4"></div>
 
-        <div class="cases-sticky">
-            <div class="cases-container">
-                
-                <!-- Left Side: Horizontal Image Carousel (spans 8/12 columns) -->
-                <div class="cases-carousel-viewport">
-                    <div class="cases-carousel-track" id="cases-carousel-track">
-                        <div class="case-slide active">
-                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=80" alt="Creative Branding Case">
-                        </div>
-                        <div class="case-slide">
-                            <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80" alt="Digital Innovation Case">
-                        </div>
-                        <div class="case-slide">
-                            <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80" alt="Strategic Growth Case">
-                        </div>
-                        <div class="case-slide">
-                            <img src="https://images.unsplash.com/photo-1600508774634-4e11d34730e2?auto=format&fit=crop&w=1200&q=80" alt="Visual Identity Case">
-                        </div>
-                        <div class="case-slide">
-                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="Future Development Case">
+            <div class="cases-sticky">
+                <div class="cases-container">
+                    
+                    <!-- Left Side: Horizontal Image Carousel (spans 8/12 columns) -->
+                    <div class="cases-carousel-viewport">
+                        <div class="cases-carousel-track" id="cases-carousel-track">
+                            <div class="case-slide active">
+                                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=80" alt="Creative Branding Case">
+                            </div>
+                            <div class="case-slide">
+                                <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80" alt="Digital Innovation Case">
+                            </div>
+                            <div class="case-slide">
+                                <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80" alt="Strategic Growth Case">
+                            </div>
+                            <div class="case-slide">
+                                <img src="https://images.unsplash.com/photo-1600508774634-4e11d34730e2?auto=format&fit=crop&w=1200&q=80" alt="Visual Identity Case">
+                            </div>
+                            <div class="case-slide">
+                                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="Future Development Case">
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Right Side: Details & pagination (spans 4/12 columns) -->
-                <div class="cases-info">
-                    <div class="cases-info-content">
-                        <span class="overtitle">Udvalgte Cases</span>
-                        <h2 class="case-title" id="case-title">Case overskrift: Lorem ipsum dolor sit amet</h2>
-                        <p class="p-large case-desc" id="case-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        
-                        <div class="cases-actions">
+                    <!-- Right Side: Details & pagination (spans 4/12 columns) -->
+                    <div class="cases-info">
+                        <div class="cases-info-content">
+                            <span class="overtitle">Udvalgte Cases</span>
+                            <h2 class="case-title" id="case-title">Case overskrift: Lorem ipsum dolor sit amet</h2>
+                            <p class="p-large case-desc" id="case-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            
+                            <div class="cases-actions">
+                                <a href="#" class="btn-filled">Se case</a>
+                                <a href="#" class="btn-outlined">Se alle cases</a>
+                            </div>
+
+                            <!-- Indicator dots -->
+                            <div class="cases-pagination" id="cases-pagination">
+                                <button class="dot active" data-slide="0" aria-label="Go to case 1"></button>
+                                <button class="dot" data-slide="1" aria-label="Go to case 2"></button>
+                                <button class="dot" data-slide="2" aria-label="Go to case 3"></button>
+                                <button class="dot" data-slide="3" aria-label="Go to case 4"></button>
+                                <button class="dot" data-slide="4" aria-label="Go to case 5"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Only Version (Horizontal swipe-based slider list) -->
+        <div class="mobile-only-cases">
+            <div class="mobile-cases-header">
+                <span class="overtitle">Udvalgte Cases</span>
+            </div>
+            
+            <div class="mobile-cases-track" id="mobile-cases-track">
+                <!-- Card 1 -->
+                <div class="mobile-case-card" data-card-slide="0">
+                    <div class="mobile-card-image-wrap">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=80" alt="Creative Branding Case">
+                    </div>
+                    <div class="mobile-card-info">
+                        <h3 class="mobile-card-title">Case overskrift: Lorem ipsum dolor sit amet</h3>
+                        <p class="p-large mobile-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <div class="mobile-card-actions">
                             <a href="#" class="btn-filled">Se case</a>
                             <a href="#" class="btn-outlined">Se alle cases</a>
                         </div>
-
-                        <!-- Indicator dots -->
-                        <div class="cases-pagination" id="cases-pagination">
-                            <button class="dot active" data-slide="0" aria-label="Go to case 1"></button>
-                            <button class="dot" data-slide="1" aria-label="Go to case 2"></button>
-                            <button class="dot" data-slide="2" aria-label="Go to case 3"></button>
-                            <button class="dot" data-slide="3" aria-label="Go to case 4"></button>
-                            <button class="dot" data-slide="4" aria-label="Go to case 5"></button>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="mobile-case-card" data-card-slide="1">
+                    <div class="mobile-card-image-wrap">
+                        <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80" alt="Digital Innovation Case">
+                    </div>
+                    <div class="mobile-card-info">
+                        <h3 class="mobile-card-title">Creative Branding: Designing Bocca's Future</h3>
+                        <p class="p-large mobile-card-desc">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+                        <div class="mobile-card-actions">
+                            <a href="#" class="btn-filled">Se case</a>
+                            <a href="#" class="btn-outlined">Se alle cases</a>
                         </div>
                     </div>
                 </div>
-
+                <!-- Card 3 -->
+                <div class="mobile-case-card" data-card-slide="2">
+                    <div class="mobile-card-image-wrap">
+                        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80" alt="Strategic Growth Case">
+                    </div>
+                    <div class="mobile-card-info">
+                        <h3 class="mobile-card-title">Digital Innovation: Seamless Web Products</h3>
+                        <p class="p-large mobile-card-desc">Sunt in culpa qui officia deserunt mollit anim id est laborum. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+                        <div class="mobile-card-actions">
+                            <a href="#" class="btn-filled">Se case</a>
+                            <a href="#" class="btn-outlined">Se alle cases</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="mobile-case-card" data-card-slide="3">
+                    <div class="mobile-card-image-wrap">
+                        <img src="https://images.unsplash.com/photo-1600508774634-4e11d34730e2?auto=format&fit=crop&w=1200&q=80" alt="Visual Identity Case">
+                    </div>
+                    <div class="mobile-card-info">
+                        <h3 class="mobile-card-title">Strategic Growth: Expanding Market Presence</h3>
+                        <p class="p-large mobile-card-desc">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias.</p>
+                        <div class="mobile-card-actions">
+                            <a href="#" class="btn-filled">Se case</a>
+                            <a href="#" class="btn-outlined">Se alle cases</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 5 -->
+                <div class="mobile-case-card" data-card-slide="4">
+                    <div class="mobile-card-image-wrap">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="Future Development Case">
+                    </div>
+                    <div class="mobile-card-info">
+                        <h3 class="mobile-card-title">Visual Identity: Defining Modern Aesthetics</h3>
+                        <p class="p-large mobile-card-desc">Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla.</p>
+                        <div class="mobile-card-actions">
+                            <a href="#" class="btn-filled">Se case</a>
+                            <a href="#" class="btn-outlined">Se alle cases</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile indicators -->
+            <div class="mobile-cases-pagination" id="mobile-cases-pagination">
+                <button class="dot active" data-slide="0" aria-label="Go to case 1"></button>
+                <button class="dot" data-slide="1" aria-label="Go to case 2"></button>
+                <button class="dot" data-slide="2" aria-label="Go to case 3"></button>
+                <button class="dot" data-slide="3" aria-label="Go to case 4"></button>
+                <button class="dot" data-slide="4" aria-label="Go to case 5"></button>
             </div>
         </div>
+        
     </section>
 
     <!-- Main Scroll-driven sticky showcase module -->
@@ -159,14 +253,10 @@
 
             <!-- Right: contact spanning full height -->
             <div class="footer-contact">
-                <a href="#" class="footer-cta-link">
+                <a href="#" class="footer-cta-link" id="footer-cta-link">
                     Get in touch
                     <img src="img/arrowUpRight.svg" alt="" class="footer-arrow-icon" aria-hidden="true">
                 </a>
-                <div class="footer-links">
-                    <a href="#" class="footer-link">Cookiepolitik</a>
-                    <a href="#" class="footer-link">Privatlivspolitik</a>
-                </div>
             </div>
 
             <!-- Bottom-left: large logo -->
@@ -174,10 +264,17 @@
                 <img src="img/BoccaLogo.svg" alt="Bocca" class="footer-logo-img">
             </div>
 
+            <!-- Cookie & Privatlivspolitik links -->
+            <div class="footer-links" id="footer-links">
+                <a href="#" class="footer-link">Cookiepolitik</a>
+                <a href="#" class="footer-link">Privatlivspolitik</a>
+            </div>
+
         </div>
 
         <!-- Slide-in Contact Card -->
-        <div class="contact-reveal-card" aria-hidden="true">
+        <div class="contact-reveal-card" id="contact-reveal-card" aria-hidden="true">
+            <button class="reveal-close-btn" id="reveal-close-btn" aria-label="Close contact info">✕</button>
             <div class="contact-reveal-inner">
                 <h3 class="reveal-title">Phone</h3>
                 <a href="tel:+4533111300" class="reveal-link">33 11 13 00</a>
@@ -315,6 +412,45 @@
             });
 
 
+            // --- 1b. Mobile Horizontal Swipe Carousel Dots Sync ---
+            const mobileTrack = document.getElementById('mobile-cases-track');
+            const mobileDots = document.querySelectorAll('#mobile-cases-pagination .dot');
+
+            if (mobileTrack) {
+                mobileTrack.addEventListener('scroll', () => {
+                    const scrollLeft = mobileTrack.scrollLeft;
+                    const card = mobileTrack.querySelector('.mobile-case-card');
+                    if (!card) return;
+                    const cardWidth = card.offsetWidth;
+                    const gap = 16; // 1rem gap is 16px
+                    const activeIndex = Math.round(scrollLeft / (cardWidth + gap));
+                    
+                    mobileDots.forEach((dot, idx) => {
+                        if (idx === activeIndex) {
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+                });
+
+                // Click mobile dots to scroll horizontally
+                mobileDots.forEach(dot => {
+                    dot.addEventListener('click', (e) => {
+                        const targetIndex = parseInt(e.target.getAttribute('data-slide'));
+                        const card = mobileTrack.querySelector('.mobile-case-card');
+                        if (!card) return;
+                        const cardWidth = card.offsetWidth;
+                        const gap = 16;
+                        mobileTrack.scrollTo({
+                            left: targetIndex * (cardWidth + gap),
+                            behavior: 'smooth'
+                        });
+                    });
+                });
+            }
+
+
             // --- 2. Showcase Reveal Scroll Fallback Strategy ---
             const supportsScrollTimeline = CSS.supports('(animation-timeline: view()) and (animation-range: entry)');
             
@@ -357,13 +493,45 @@
                         blurOverlay.classList.add('active');
                         footer.classList.add('logo-visible');
                     } else {
-                        blurOverlay.classList.remove('active');
+                        // Only remove active if drawer is NOT open
+                        if (!footer.classList.contains('drawer-open')) {
+                            blurOverlay.classList.remove('active');
+                        }
                         footer.classList.remove('logo-visible');
                     }
                 });
             }, { threshold: 0.05 });
 
             footerObserver.observe(footer);
+
+            // --- 4. Footer Drawer Tap-to-Open and Close Controls ---
+            const ctaLink = document.getElementById('footer-cta-link');
+            const closeBtn = document.getElementById('reveal-close-btn');
+            
+            if (ctaLink && closeBtn) {
+                ctaLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    footer.classList.add('drawer-open');
+                    blurOverlay.classList.add('active');
+                });
+
+                closeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    footer.classList.remove('drawer-open');
+                    // Only hide overlay if footer itself is not in viewport focus
+                    if (!footer.classList.contains('logo-visible')) {
+                        blurOverlay.classList.remove('active');
+                    }
+                });
+
+                // Close drawer when tapping the dimmed backdrop (blur overlay)
+                blurOverlay.addEventListener('click', () => {
+                    footer.classList.remove('drawer-open');
+                    if (!footer.classList.contains('logo-visible')) {
+                        blurOverlay.classList.remove('active');
+                    }
+                });
+            }
         });
     </script>
 </body>
