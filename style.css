@@ -730,8 +730,12 @@ p, .p-small, p.small {
 }
 
 .dot {
+    display: block;
     width: 8px;
     height: 8px;
+    aspect-ratio: 1;
+    min-width: 0;
+    min-height: 0;
     flex-shrink: 0;
     border-radius: 50%;
     background-color: var(--bordeaux);
