@@ -801,7 +801,12 @@ p, .p-small, p.small {
     transform: scale(1.25);
 }
 
-/* Mobile-only cases default hidden on desktop */
+/* Cases wrappers */
+.desktop-only-cases {
+    height: 100%;
+    width: 100%;
+}
+
 .mobile-only-cases {
     display: none;
 }
