@@ -835,11 +835,20 @@ p, .p-small, p.small {
         margin-bottom: 1.5rem;
     }
 
+    .overtitle-red {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.125rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        color: var(--bocca-red);
+        text-transform: uppercase;
+    }
+
     .mobile-cases-track {
         display: flex;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        gap: 1rem;
+        gap: 1.25rem;
         padding: 0 1.5rem 1.5rem 1.5rem;
         scrollbar-width: none; /* Hide Firefox scrollbar */
     }
@@ -849,22 +858,28 @@ p, .p-small, p.small {
     }
 
     .mobile-case-card {
-        flex: 0 0 85vw; /* Each card takes up 85% viewport width */
+        flex: 0 0 82vw; /* Each card takes up 82% viewport width */
         scroll-snap-align: center;
-        background: transparent;
-        border: 1px solid var(--bordeaux);
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: none;
+        background: var(--bordeaux);
+        border-radius: 24px;
+        padding: 14px 14px 20px 14px;
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
+        text-decoration: none;
+        box-shadow: 0 10px 30px rgba(77, 16, 48, 0.15);
+        transition: transform 0.2s ease;
+    }
+
+    .mobile-case-card:active {
+        transform: scale(0.98);
     }
 
     .mobile-card-image-wrap {
         width: 100%;
-        height: 25vh;
+        height: 26vh;
         overflow: hidden;
-        border-bottom-right-radius: 40px;
+        border-radius: 14px 14px 40px 14px; /* Curved bottom-right image corner */
     }
 
     .mobile-card-image-wrap img {
@@ -874,53 +889,77 @@ p, .p-small, p.small {
     }
 
     .mobile-card-info {
-        padding: 1.5rem;
+        padding: 1.25rem 0.5rem 0.5rem 0.5rem;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
-        flex-grow: 1;
-        justify-content: space-between;
+        gap: 0.75rem;
     }
 
     .mobile-card-title {
         font-family: 'Gowun Batang', serif;
-        font-size: 1.5rem;
-        line-height: 1.15;
-        color: var(--bordeaux);
+        font-size: 1.35rem;
+        line-height: 1.2;
+        color: var(--beige);
         margin: 0;
+        font-weight: 400;
     }
 
     .mobile-card-desc {
         font-family: 'Inter', sans-serif;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         line-height: 1.4;
-        color: var(--bordeaux);
-        opacity: 0.8;
+        color: var(--beige);
+        opacity: 0.75;
         margin: 0;
     }
 
-    .mobile-card-actions {
+    .mobile-cases-footer-action {
         display: flex;
-        gap: 0.75rem;
-        align-items: center;
-        margin-top: 0.5rem;
+        justify-content: center;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
     }
 
-    .mobile-card-actions .btn-filled,
-    .mobile-card-actions .btn-outlined {
-        font-size: 0.95rem;
-        padding: 8px 12px 10px 12px;
-        border-radius: 6px;
-        text-align: center;
-        flex: 1;
+    .btn-outlined-bordeaux {
+        display: inline-block;
+        font-family: 'Gowun Batang', serif;
+        font-size: 1.125rem;
+        color: var(--bordeaux);
+        background: transparent;
+        border: 1px solid var(--bordeaux);
+        padding: 10px 28px;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn-outlined-bordeaux:hover {
+        background-color: rgba(77, 16, 48, 0.05);
+        transform: scale(1.03);
     }
 
     .mobile-cases-pagination {
         display: flex;
         gap: 0.75rem;
         justify-content: center;
-        margin-top: 1rem;
+        align-items: center;
         padding-bottom: 1.5rem;
+    }
+
+    .mobile-cases-pagination .dot {
+        background-color: var(--bordeaux);
+        opacity: 0.25;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        border: none;
+        padding: 0;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .mobile-cases-pagination .dot.active {
+        opacity: 1;
+        transform: scale(1.25);
     }
 }
 
