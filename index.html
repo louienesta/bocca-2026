@@ -10,13 +10,14 @@
 
     <!-- Fixed Navigation -->
     <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-        <a href="#" class="nav-cases">Cases</a>
-        <a href="#" class="nav-logo" aria-label="Bocca home">
+        <a href="cases.html" class="nav-cases">Cases</a>
+        <a href="index.html" class="nav-logo" aria-label="Bocca home">
             <img src="img/BoccaLogo.svg" alt="Bocca" class="nav-logo-img">
         </a>
-        <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
-            <img src="img/hamburgerIcon.svg" alt="" aria-hidden="true">
-        </button>
+        <div class="nav-right">
+            <a href="about.html" class="nav-link">Mød os</a>
+            <a href="#site-footer" class="nav-link nav-contact-trigger">Kontakt</a>
+        </div>
     </nav>
 
     <!-- Hero Section -->
@@ -517,6 +518,19 @@
                     }
                 });
             }
+
+            // --- 5. Nav Contact Trigger ---
+            const contactTriggers = document.querySelectorAll('.nav-contact-trigger');
+            contactTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (footer) {
+                        footer.scrollIntoView({ behavior: 'smooth' });
+                        footer.classList.add('drawer-open');
+                        if (blurOverlay) blurOverlay.classList.add('active');
+                    }
+                });
+            });
         });
     </script>
 </body>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cases - Bocca 2026</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Fixed Navigation -->
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="cases.html" class="nav-cases active">Cases</a>
+        <a href="index.html" class="nav-logo" aria-label="Bocca home">
+            <img src="img/BoccaLogo.svg" alt="Bocca" class="nav-logo-img">
+        </a>
+        <div class="nav-right">
+            <a href="about.html" class="nav-link">Mød os</a>
+            <a href="#site-footer" class="nav-link nav-contact-trigger">Kontakt</a>
+        </div>
+    </nav>
+
+    <!-- Placeholder Page Header -->
+    <section class="page-shell-header">
+        <h1>Cases</h1>
+        <p class="p-large" style="max-width: 600px; color: var(--bordeaux); opacity: 0.8;">Her kommer oversigten over alle vores cases.</p>
+    </section>
+
+    <!-- Page blur overlay -->
+    <div class="page-blur-overlay" id="page-blur-overlay" aria-hidden="true"></div>
+
+    <!-- Footer -->
+    <footer class="site-footer" id="site-footer">
+        <div class="footer-inner">
+
+            <!-- Top-left: address -->
+            <div class="footer-address">
+                <p class="p-large">Borgergade 2, 6. sal</p>
+                <p class="p-large">1300 København K</p>
+                <p class="p-large">TLF: 33 11 13 00</p>
+            </div>
+
+            <!-- Right: contact -->
+            <div class="footer-contact">
+                <a href="#" class="footer-cta-link" id="footer-cta-link">
+                    Get in touch
+                    <img src="img/arrowUpRight.svg" alt="" class="footer-arrow-icon" aria-hidden="true">
+                </a>
+            </div>
+
+            <!-- Bottom-left: large logo -->
+            <div class="footer-logo-wrap">
+                <img src="img/BoccaLogo.svg" alt="Bocca" class="footer-logo-img">
+            </div>
+
+            <!-- Cookie & Privatlivspolitik links -->
+            <div class="footer-links" id="footer-links">
+                <a href="#" class="footer-link">Cookiepolitik</a>
+                <a href="#" class="footer-link">Privatlivspolitik</a>
+            </div>
+
+        </div>
+
+        <!-- Slide-in Contact Card -->
+        <div class="contact-reveal-card" id="contact-reveal-card" aria-hidden="true">
+            <button class="reveal-close-btn" id="reveal-close-btn" aria-label="Close contact info">✕</button>
+            <div class="contact-reveal-inner">
+                <h3 class="reveal-title">Phone</h3>
+                <a href="tel:+4533111300" class="reveal-link">33 11 13 00</a>
+                
+                <h3 class="reveal-title" style="margin-top: 2rem;">Email</h3>
+                <a href="mailto:hello@bocca.dk" class="reveal-link">hello@bocca.dk</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shared Footer & Nav Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const footer = document.getElementById('site-footer');
+            const blurOverlay = document.getElementById('page-blur-overlay');
+
+            const footerObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        blurOverlay.classList.add('active');
+                        footer.classList.add('logo-visible');
+                    } else {
+                        if (!footer.classList.contains('drawer-open')) {
+                            blurOverlay.classList.remove('active');
+                        }
+                        footer.classList.remove('logo-visible');
+                    }
+                });
+            }, { threshold: 0.05 });
+
+            if (footer) footerObserver.observe(footer);
+
+            const ctaLink = document.getElementById('footer-cta-link');
+            const closeBtn = document.getElementById('reveal-close-btn');
+            
+            if (ctaLink && closeBtn) {
+                ctaLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    footer.classList.add('drawer-open');
+                    blurOverlay.classList.add('active');
+                });
+
+                closeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    footer.classList.remove('drawer-open');
+                    if (!footer.classList.contains('logo-visible')) {
+                        blurOverlay.classList.remove('active');
+                    }
+                });
+
+                blurOverlay.addEventListener('click', () => {
+                    footer.classList.remove('drawer-open');
+                    if (!footer.classList.contains('logo-visible')) {
+                        blurOverlay.classList.remove('active');
+                    }
+                });
+            }
+
+            const contactTriggers = document.querySelectorAll('.nav-contact-trigger');
+            contactTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (footer) {
+                        footer.scrollIntoView({ behavior: 'smooth' });
+                        footer.classList.add('drawer-open');
+                        if (blurOverlay) blurOverlay.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
