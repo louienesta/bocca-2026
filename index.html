@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +20,7 @@
         </div>
     </nav>
 
+    <main>
     <!-- Hero Section -->
     <section class="hero-section" id="hero">
         <div class="hero-grid">
@@ -117,7 +118,7 @@
             
             <div class="mobile-cases-track" id="mobile-cases-track">
                 <!-- Card 1 -->
-                <a href="#" class="mobile-case-card" data-card-slide="0">
+                <a href="case.html" class="mobile-case-card" data-card-slide="0">
                     <div class="mobile-card-image-wrap">
                         <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=80" alt="Creative Branding Case">
                     </div>
@@ -127,7 +128,7 @@
                     </div>
                 </a>
                 <!-- Card 2 -->
-                <a href="#" class="mobile-case-card" data-card-slide="1">
+                <a href="case.html" class="mobile-case-card" data-card-slide="1">
                     <div class="mobile-card-image-wrap">
                         <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80" alt="Digital Innovation Case">
                     </div>
@@ -137,7 +138,7 @@
                     </div>
                 </a>
                 <!-- Card 3 -->
-                <a href="#" class="mobile-case-card" data-card-slide="2">
+                <a href="case.html" class="mobile-case-card" data-card-slide="2">
                     <div class="mobile-card-image-wrap">
                         <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80" alt="Strategic Growth Case">
                     </div>
@@ -147,7 +148,7 @@
                     </div>
                 </a>
                 <!-- Card 4 -->
-                <a href="#" class="mobile-case-card" data-card-slide="3">
+                <a href="case.html" class="mobile-case-card" data-card-slide="3">
                     <div class="mobile-card-image-wrap">
                         <img src="https://images.unsplash.com/photo-1600508774634-4e11d34730e2?auto=format&fit=crop&w=1200&q=80" alt="Visual Identity Case">
                     </div>
@@ -157,7 +158,7 @@
                     </div>
                 </a>
                 <!-- Card 5 -->
-                <a href="#" class="mobile-case-card" data-card-slide="4">
+                <a href="case.html" class="mobile-case-card" data-card-slide="4">
                     <div class="mobile-card-image-wrap">
                         <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="Future Development Case">
                     </div>
@@ -185,43 +186,41 @@
         
     </section>
 
-    <!-- Main Scroll-driven sticky showcase module -->
-    <section class="showcase-track" id="showcase-track">
+    <!-- About teaser -->
+    <section class="about-teaser" id="about-teaser" aria-labelledby="about-teaser-heading">
         <!-- 3 Vertical Snap Points for smooth, deliberate scroll pacing -->
-        <div class="showcase-snap-point" data-snap="0"></div>
-        <div class="showcase-snap-point" data-snap="1"></div>
-        <div class="showcase-snap-point" data-snap="2"></div>
+        <div class="about-teaser-snap-point" data-snap="0"></div>
+        <div class="about-teaser-snap-point" data-snap="1"></div>
+        <div class="about-teaser-snap-point" data-snap="2"></div>
 
-        <div class="showcase-sticky">
+        <div class="about-teaser-sticky">
             
-            <!-- Background element -->
-            <div class="bg-overlay"></div>
-
             <!-- Floating scroll-reveal images -->
-            <div class="floating-img img-top-right">
+            <div class="about-teaser-image about-teaser-image-top-right">
                 <img src="img/ImgContent.png" alt="Bocca team collaborating">
             </div>
 
-            <div class="floating-img img-left">
+            <div class="about-teaser-image about-teaser-image-left">
                 <img src="img/ImgContent-1.png" alt="Bocca workspace discussion">
             </div>
 
-            <div class="floating-img img-bottom">
+            <div class="about-teaser-image about-teaser-image-bottom">
                 <img src="img/ImgContent-2.png" alt="Bocca team working">
             </div>
 
-            <div class="floating-img img-right-tall">
+            <div class="about-teaser-image about-teaser-image-right-tall">
                 <img src="img/ImgContent-3.png" alt="Bocca creative planning">
             </div>
 
             <!-- Centered Header and CTA -->
-            <div class="center-content">
-                <h1 class="headline">Mød BOCCA.</h1>
-                <a href="about.html" class="cta-btn" id="cta-button">Se mere</a>
+            <div class="about-teaser-content">
+                <h2 class="about-teaser-heading" id="about-teaser-heading">Mød BOCCA.</h2>
+                <a href="about.html" class="cta-btn">Se mere</a>
             </div>
 
         </div>
     </section>
+    </main>
 
     <!-- Page blur overlay (activated when footer enters view) -->
     <div class="page-blur-overlay" id="page-blur-overlay" aria-hidden="true"></div>
@@ -271,288 +270,6 @@
         </div>
     </footer>
 
-    <!-- JS Logic for both Showcase Reveal & Snap Carousel -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // --- 1. Featured Cases Carousel Controller ---
-            const casesData = [
-                {
-                    title: "Case overskrift: Lorem ipsum dolor sit amet",
-                    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
-                },
-                {
-                    title: "Creative Branding: Designing Bocca's Future",
-                    desc: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
-                },
-                {
-                    title: "Digital Innovation: Seamless Web Products",
-                    desc: "Sunt in culpa qui officia deserunt mollit anim id est laborum. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip."
-                },
-                {
-                    title: "Strategic Growth: Expanding Market Presence",
-                    desc: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias."
-                },
-                {
-                    title: "Visual Identity: Defining Modern Aesthetics",
-                    desc: "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla."
-                }
-            ];
-
-            const casesSection = document.getElementById('featured-cases');
-            const track = document.getElementById('cases-carousel-track');
-            const slides = document.querySelectorAll('.case-slide');
-            const titleEl = document.getElementById('case-title');
-            const descEl = document.getElementById('case-desc');
-            const dots = document.querySelectorAll('#cases-pagination .dot');
-            
-            let currentActiveIndex = 0;
-            let isClickScrolling = false;
-
-            let scrollSnapTimer = null;
-
-            function handleScroll() {
-                if (isClickScrolling) return;
-
-                const sectionRect = casesSection.getBoundingClientRect();
-                const sectionHeight = sectionRect.height;
-                const windowHeight = window.innerHeight;
-                
-                const scrollableRange = sectionHeight - windowHeight;
-                let rawProgress = -sectionRect.top / scrollableRange;
-
-                // Above section
-                if (rawProgress <= 0) {
-                    track.style.transform = `translateX(0%)`;
-                    if (currentActiveIndex !== 0) {
-                        currentActiveIndex = 0;
-                        updateActiveCaseText(0);
-                    }
-                    return;
-                }
-
-                // Below section
-                if (rawProgress >= 1) {
-                    track.style.transform = `translateX(-80%)`;
-                    if (currentActiveIndex !== 4) {
-                        currentActiveIndex = 4;
-                        updateActiveCaseText(4);
-                    }
-                    return;
-                }
-
-                // Pinned section: step-locked track translation (0%, -20%, -40%, -60%, -80%)
-                const progress = Math.max(0, Math.min(1, rawProgress));
-                const targetIndex = Math.round(progress * 4);
-                const stepProgress = targetIndex / 4;
-
-                // Track is step-locked so carousel always displays a single centered case image
-                track.style.transform = `translateX(-${stepProgress * 80}%)`;
-
-                if (targetIndex !== currentActiveIndex) {
-                    currentActiveIndex = targetIndex;
-                    updateActiveCaseText(targetIndex);
-                }
-            }
-
-            function updateActiveCaseText(index) {
-                titleEl.classList.add('transition-fade');
-                descEl.classList.add('transition-fade');
-                
-                setTimeout(() => {
-                    titleEl.textContent = casesData[index].title;
-                    descEl.textContent = casesData[index].desc;
-                    
-                    titleEl.classList.remove('transition-fade');
-                    descEl.classList.remove('transition-fade');
-                }, 250);
-
-                // Update active state on image slides for subtle scale effect
-                slides.forEach((slide, idx) => {
-                    if (idx === index) {
-                        slide.classList.add('active');
-                    } else {
-                        slide.classList.remove('active');
-                    }
-                });
-
-                // Update active state on dots
-                dots.forEach((dot, idx) => {
-                    if (idx === index) {
-                        dot.classList.add('active');
-                    } else {
-                        dot.classList.remove('active');
-                    }
-                });
-            }
-
-            window.addEventListener('scroll', handleScroll);
-            handleScroll(); // Initialize
-
-            // Click dots to scroll window vertically
-            dots.forEach(dot => {
-                dot.addEventListener('click', (e) => {
-                    const targetIndex = parseInt(e.target.getAttribute('data-slide'));
-                    currentActiveIndex = targetIndex;
-                    isClickScrolling = true;
-                    
-                    const sectionTop = window.scrollY + casesSection.getBoundingClientRect().top;
-                    const sectionHeight = casesSection.getBoundingClientRect().height;
-                    const windowHeight = window.innerHeight;
-                    const scrollableRange = sectionHeight - windowHeight;
-                    
-                    const targetProgress = targetIndex / 4;
-                    const targetScrollTop = sectionTop + targetProgress * scrollableRange;
-
-                    track.style.transform = `translateX(-${targetProgress * 80}%)`;
-                    updateActiveCaseText(targetIndex);
-
-                    window.scrollTo({
-                        top: targetScrollTop,
-                        behavior: 'smooth'
-                    });
-
-                    setTimeout(() => {
-                        isClickScrolling = false;
-                    }, 800);
-                });
-            });
-
-
-            // --- 1b. Mobile Horizontal Swipe Carousel Dots Sync ---
-            const mobileTrack = document.getElementById('mobile-cases-track');
-            const mobileDots = document.querySelectorAll('#mobile-cases-pagination .dot');
-
-            if (mobileTrack) {
-                mobileTrack.addEventListener('scroll', () => {
-                    const scrollLeft = mobileTrack.scrollLeft;
-                    const card = mobileTrack.querySelector('.mobile-case-card');
-                    if (!card) return;
-                    const cardWidth = card.offsetWidth;
-                    const gap = 16; // 1rem gap is 16px
-                    const activeIndex = Math.round(scrollLeft / (cardWidth + gap));
-                    
-                    mobileDots.forEach((dot, idx) => {
-                        if (idx === activeIndex) {
-                            dot.classList.add('active');
-                        } else {
-                            dot.classList.remove('active');
-                        }
-                    });
-                });
-
-                // Click mobile dots to scroll horizontally
-                mobileDots.forEach(dot => {
-                    dot.addEventListener('click', (e) => {
-                        const targetIndex = parseInt(e.target.getAttribute('data-slide'));
-                        const card = mobileTrack.querySelector('.mobile-case-card');
-                        if (!card) return;
-                        const cardWidth = card.offsetWidth;
-                        const gap = 16;
-                        mobileTrack.scrollTo({
-                            left: targetIndex * (cardWidth + gap),
-                            behavior: 'smooth'
-                        });
-                    });
-                });
-            }
-
-
-            // --- 2. Showcase Reveal Scroll Fallback Strategy ---
-            const supportsScrollTimeline = CSS.supports('(animation-timeline: view()) and (animation-range: entry)');
-            
-            if (!supportsScrollTimeline) {
-                console.log('Native scroll timelines not supported. Initializing JS fallback...');
-                document.body.classList.add('no-scroll-timeline');
-                
-                const track = document.querySelector('.showcase-track');
-                const images = document.querySelectorAll('.floating-img');
-                
-                window.addEventListener('scroll', () => {
-                    const trackRect = track.getBoundingClientRect();
-                    const trackHeight = trackRect.height;
-                    const stickyHeight = window.innerHeight;
-                    const scrollRange = trackHeight - stickyHeight;
-                    
-                    let progress = -trackRect.top / scrollRange;
-                    progress = Math.max(0, Math.min(1, progress));
-                    
-                    images.forEach((img, index) => {
-                        const delay = index * 0.1;
-                        let imgProgress = (progress - delay) / (1 - delay);
-                        imgProgress = Math.max(0, Math.min(1, imgProgress));
-                        
-                        const scale = 0.5 + (imgProgress * 0.5);
-                        const opacity = imgProgress;
-                        
-                        img.style.transform = `scale(${scale})`;
-                        img.style.opacity = opacity;
-                    });
-                });
-            }
-            // --- 3. Footer blur overlay ---
-            const footer = document.getElementById('site-footer');
-            const blurOverlay = document.getElementById('page-blur-overlay');
-
-            const footerObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        blurOverlay.classList.add('active');
-                        footer.classList.add('logo-visible');
-                    } else {
-                        // Only remove active if drawer is NOT open
-                        if (!footer.classList.contains('drawer-open')) {
-                            blurOverlay.classList.remove('active');
-                        }
-                        footer.classList.remove('logo-visible');
-                    }
-                });
-            }, { threshold: 0.05 });
-
-            footerObserver.observe(footer);
-
-            // --- 4. Footer Drawer Tap-to-Open and Close Controls ---
-            const ctaLink = document.getElementById('footer-cta-link');
-            const closeBtn = document.getElementById('reveal-close-btn');
-            
-            if (ctaLink && closeBtn) {
-                ctaLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    footer.classList.add('drawer-open');
-                    blurOverlay.classList.add('active');
-                });
-
-                closeBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    footer.classList.remove('drawer-open');
-                    // Only hide overlay if footer itself is not in viewport focus
-                    if (!footer.classList.contains('logo-visible')) {
-                        blurOverlay.classList.remove('active');
-                    }
-                });
-
-                // Close drawer when tapping the dimmed backdrop (blur overlay)
-                blurOverlay.addEventListener('click', () => {
-                    footer.classList.remove('drawer-open');
-                    if (!footer.classList.contains('logo-visible')) {
-                        blurOverlay.classList.remove('active');
-                    }
-                });
-            }
-
-            // --- 5. Nav Contact Trigger ---
-            const contactTriggers = document.querySelectorAll('.nav-contact-trigger');
-            contactTriggers.forEach(trigger => {
-                trigger.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (footer) {
-                        footer.scrollIntoView({ behavior: 'smooth' });
-                        footer.classList.add('drawer-open');
-                        if (blurOverlay) blurOverlay.classList.add('active');
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="app.js" defer></script>
 </body>
 </html>

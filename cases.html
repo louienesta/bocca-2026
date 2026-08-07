@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -207,6 +207,33 @@
             </div>
 
         </div>
+
+        <!-- About teaser -->
+        <section class="about-teaser" id="about-teaser" aria-labelledby="about-teaser-heading">
+            <div class="about-teaser-snap-point" data-snap="0"></div>
+            <div class="about-teaser-snap-point" data-snap="1"></div>
+            <div class="about-teaser-snap-point" data-snap="2"></div>
+
+            <div class="about-teaser-sticky">
+                <div class="about-teaser-image about-teaser-image-top-right">
+                    <img src="img/ImgContent.png" alt="Bocca team collaborating">
+                </div>
+                <div class="about-teaser-image about-teaser-image-left">
+                    <img src="img/ImgContent-1.png" alt="Bocca workspace discussion">
+                </div>
+                <div class="about-teaser-image about-teaser-image-bottom">
+                    <img src="img/ImgContent-2.png" alt="Bocca team working">
+                </div>
+                <div class="about-teaser-image about-teaser-image-right-tall">
+                    <img src="img/ImgContent-3.png" alt="Bocca creative planning">
+                </div>
+
+                <div class="about-teaser-content">
+                    <h2 class="about-teaser-heading" id="about-teaser-heading">Mød BOCCA.</h2>
+                    <a href="about.html" class="cta-btn">Se mere</a>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Page blur overlay -->
@@ -257,79 +284,6 @@
         </div>
     </footer>
 
-    <!-- Shared Footer & Nav Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Fade-in-up scroll animation controller
-            const fadeElements = document.querySelectorAll('.fade-in-up');
-            const fadeObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('in-view');
-                    }
-                });
-            }, { threshold: 0.15 });
-
-            fadeElements.forEach(el => fadeObserver.observe(el));
-
-            // Footer blur overlay observer
-            const footer = document.getElementById('site-footer');
-            const blurOverlay = document.getElementById('page-blur-overlay');
-
-            const footerObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        blurOverlay.classList.add('active');
-                        footer.classList.add('logo-visible');
-                    } else {
-                        if (!footer.classList.contains('drawer-open')) {
-                            blurOverlay.classList.remove('active');
-                        }
-                        footer.classList.remove('logo-visible');
-                    }
-                });
-            }, { threshold: 0.05 });
-
-            if (footer) footerObserver.observe(footer);
-
-            const ctaLink = document.getElementById('footer-cta-link');
-            const closeBtn = document.getElementById('reveal-close-btn');
-            
-            if (ctaLink && closeBtn) {
-                ctaLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    footer.classList.add('drawer-open');
-                    blurOverlay.classList.add('active');
-                });
-
-                closeBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    footer.classList.remove('drawer-open');
-                    if (!footer.classList.contains('logo-visible')) {
-                        blurOverlay.classList.remove('active');
-                    }
-                });
-
-                blurOverlay.addEventListener('click', () => {
-                    footer.classList.remove('drawer-open');
-                    if (!footer.classList.contains('logo-visible')) {
-                        blurOverlay.classList.remove('active');
-                    }
-                });
-            }
-
-            const contactTriggers = document.querySelectorAll('.nav-contact-trigger');
-            contactTriggers.forEach(trigger => {
-                trigger.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (footer) {
-                        footer.scrollIntoView({ behavior: 'smooth' });
-                        footer.classList.add('drawer-open');
-                        if (blurOverlay) blurOverlay.classList.add('active');
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="app.js" defer></script>
 </body>
 </html>

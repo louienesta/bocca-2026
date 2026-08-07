@@ -9,12 +9,19 @@
     --petroleum:  #2E4A50;
     --bocca-blue: #BADBFF;
     --beige:      #FAF4F0;
+    --page-gutter: 4rem;
+    --grid-gutter: 2rem;
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+:focus-visible {
+    outline: 2px solid var(--bocca-red);
+    outline-offset: 4px;
 }
 
 html {
@@ -181,31 +188,43 @@ p, .p-small, p.small {
     pointer-events: auto;
 }
 
-/* Page Shell Placeholder Header */
+/* Shared 12-column subpage shell */
 .page-shell-header {
-    padding: 8rem 4rem 4rem 4rem;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+    padding: 8rem var(--page-gutter) 4rem;
     min-height: 100dvh;
     scroll-snap-align: start;
+    align-items: center;
+    background-color: var(--beige);
+}
+
+.page-shell-content {
+    grid-column: 2 / 10;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    background-color: var(--beige);
-    box-sizing: border-box;
+    gap: 1.5rem;
 }
 
 .page-shell-header h1 {
-    font-family: 'Gowun Batang', serif;
-    font-size: 4rem;
+    font-size: clamp(3.5rem, 7vw, 6rem);
     color: var(--bordeaux);
-    margin: 0 0 1rem 0;
+}
+
+.page-shell-intro {
+    max-width: 38rem;
+    color: var(--bordeaux);
+    opacity: 0.8;
 }
 
 @media (max-width: 768px) {
     .page-shell-header {
-        padding: 5.5rem 1.5rem 2rem 1.5rem;
+        grid-template-columns: 1fr;
+        padding: 5.5rem 1.5rem 2rem;
         min-height: 100dvh;
     }
+    .page-shell-content { grid-column: 1; }
     .page-shell-header h1 {
         font-size: 2.5rem;
     }
@@ -431,22 +450,22 @@ p, .p-small, p.small {
     }
 }
 
-/* Main showcase track */
-.showcase-track {
+/* About teaser */
+.about-teaser {
     height: 300dvh; /* Length of scroll animation */
     position: relative;
-    view-timeline-name: --showcase-timeline;
+    view-timeline-name: --about-teaser-timeline;
     view-timeline-axis: block;
 }
 
-.showcase-snap-point {
+.about-teaser-snap-point {
     height: 100dvh;
     scroll-snap-align: start;
     pointer-events: none;
 }
 
 /* Sticky container that locks onto screen */
-.showcase-sticky {
+.about-teaser-sticky {
     position: sticky;
     top: 0;
     height: 100dvh;
@@ -460,23 +479,15 @@ p, .p-small, p.small {
     pointer-events: auto;
 }
 
-.bg-overlay {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(250,244,240,0) 70%); /* beige fade */
-    pointer-events: none;
-    z-index: 1;
-}
-
 /* Center Content Styling */
-.center-content {
+.about-teaser-content {
     text-align: center;
     z-index: 10;
     max-width: 90%;
     pointer-events: none;
 }
 
-.headline {
+.about-teaser-heading {
     font-family: 'Gowun Batang', serif;
     font-size: clamp(3rem, 10vw, 7rem);
     font-weight: 400;
@@ -529,7 +540,7 @@ p, .p-small, p.small {
     transform: scale(1.05);
 }
 
-/* Accent variant – red CTA (showcase section) */
+/* Accent variant – red CTA (about teaser) */
 .cta-btn {
     background: var(--bocca-red);
     border: 1px solid var(--bocca-red);
@@ -541,7 +552,7 @@ p, .p-small, p.small {
 }
 
 /* Floating Images Layout & Positions */
-.floating-img {
+.about-teaser-image {
     position: absolute;
     overflow: hidden;
     background-color: color-mix(in srgb, var(--beige) 70%, var(--bordeaux) 30%);
@@ -549,7 +560,7 @@ p, .p-small, p.small {
     will-change: transform, opacity;
 }
 
-.floating-img img {
+.about-teaser-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -557,12 +568,12 @@ p, .p-small, p.small {
     transition: transform 0.5s ease;
 }
 
-.floating-img:hover img {
+.about-teaser-image:hover img {
     transform: scale(1.05);
 }
 
 /* Specific Positions matching Figma design */
-.img-top-right {
+.about-teaser-image-top-right {
     top: 8vh;
     left: 45%;
     width: 20vw;
@@ -571,7 +582,7 @@ p, .p-small, p.small {
     min-height: 180px;
 }
 
-.img-left {
+.about-teaser-image-left {
     top: 36vh;
     left: 6vw;
     width: 25vw;
@@ -580,7 +591,7 @@ p, .p-small, p.small {
     min-height: 200px;
 }
 
-.img-bottom {
+.about-teaser-image-bottom {
     bottom: 6vh;
     left: 36vw;
     width: 13vw;
@@ -589,7 +600,7 @@ p, .p-small, p.small {
     min-height: 220px;
 }
 
-.img-right-tall {
+.about-teaser-image-right-tall {
     top: 20vh;
     right: 8vw;
     width: 18vw;
@@ -602,8 +613,8 @@ p, .p-small, p.small {
 @media (prefers-reduced-motion: no-preference) {
     @supports ((animation-timeline: view()) and (animation-range: entry)) {
         
-        .floating-img {
-            animation-timeline: --showcase-timeline;
+        .about-teaser-image {
+            animation-timeline: --about-teaser-timeline;
             animation-range: contain 0% contain 100%;
             animation-fill-mode: both;
             opacity: 0;
@@ -611,19 +622,19 @@ p, .p-small, p.small {
         }
 
         /* Staggered entrance and exit animations mapped to contain range */
-        .img-top-right {
+        .about-teaser-image-top-right {
             animation-name: anim-top-right;
         }
 
-        .img-left {
+        .about-teaser-image-left {
             animation-name: anim-left;
         }
 
-        .img-bottom {
+        .about-teaser-image-bottom {
             animation-name: anim-bottom;
         }
 
-        .img-right-tall {
+        .about-teaser-image-right-tall {
             animation-name: anim-right-tall;
         }
 
@@ -674,7 +685,7 @@ p, .p-small, p.small {
 }
 
 /* Fallback state when scroll animations are not supported natively and JS hasn't run yet */
-.no-scroll-timeline .floating-img {
+.about-teaser-js-animation .about-teaser-image {
     opacity: 0;
     transform: scale(0.5);
     transition: transform 0.1s ease-out, opacity 0.1s ease-out;
@@ -682,28 +693,28 @@ p, .p-small, p.small {
 
 /* Responsive adjustments for smaller viewports */
 @media (max-width: 900px) {
-    .img-top-right {
+    .about-teaser-image-top-right {
         width: 25vw;
         height: 20vh;
         left: 45%;
         top: 10vh;
     }
 
-    .img-left {
+    .about-teaser-image-left {
         width: 30vw;
         height: 25vh;
         left: 3vw;
         top: 38vh;
     }
 
-    .img-bottom {
+    .about-teaser-image-bottom {
         width: 20vw;
         height: 22vh;
         left: 35vw;
         bottom: 8vh;
     }
 
-    .img-right-tall {
+    .about-teaser-image-right-tall {
         width: 24vw;
         height: 35vh;
         right: 4vw;
@@ -712,21 +723,21 @@ p, .p-small, p.small {
 }
 
 @media (max-width: 600px) {
-    .headline {
+    .about-teaser-heading {
         font-size: 2.75rem;
     }
     
-    .center-content {
+    .about-teaser-content {
         max-width: 85%;
         padding: 0 1rem;
     }
     
-    .floating-img {
+    .about-teaser-image {
         box-shadow: 0 10px 20px rgba(77, 16, 48, 0.06); /* bordeaux tint */
     }
     
     /* On very small devices, position images closer to corners to prevent overlapping headline */
-    .img-top-right {
+    .about-teaser-image-top-right {
         width: 32vw;
         height: 15vh;
         left: 60%;
@@ -735,7 +746,7 @@ p, .p-small, p.small {
         min-height: unset;
     }
 
-    .img-left {
+    .about-teaser-image-left {
         width: 32vw;
         height: 18vh;
         left: 2vw;
@@ -744,7 +755,7 @@ p, .p-small, p.small {
         min-height: unset;
     }
 
-    .img-bottom {
+    .about-teaser-image-bottom {
         width: 32vw;
         height: 18vh;
         left: 32vw;
@@ -753,7 +764,7 @@ p, .p-small, p.small {
         min-height: unset;
     }
 
-    .img-right-tall {
+    .about-teaser-image-right-tall {
         width: 30vw;
         height: 22vh;
         right: 2vw;
@@ -1035,7 +1046,7 @@ p, .p-small, p.small {
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: 1fr auto; /* row 1: content, row 2: logo */
     min-height: 50vh;
-    padding: 2rem 4rem 2rem 4rem;
+    padding: 2rem var(--page-gutter);
     box-sizing: border-box;
     gap: 0;
 }
@@ -1206,6 +1217,10 @@ Trigger the slide-in when hovering EITHER:
     font-weight: 500;
 }
 
+.reveal-title-spaced {
+    margin-top: 2rem;
+}
+
 .reveal-link {
     font-family: 'Gowun Batang', serif;
     font-size: 3.5rem;
@@ -1282,7 +1297,8 @@ Trigger the slide-in when hovering EITHER:
    Margins: 64px | Gutters: 32px
    ========================================== */
 .cases-overview-section {
-    padding: 16rem 64px 10rem 64px; /* Increased top padding to give hero part more height */
+    --cases-page-gutter: var(--page-gutter);
+    padding: 16rem var(--page-gutter) 10rem; /* Increased top padding to give hero part more height */
     max-width: none;
     width: 100%;
     margin: 0 auto;
@@ -1290,10 +1306,15 @@ Trigger the slide-in when hovering EITHER:
     scroll-snap-align: start;
 }
 
+.cases-overview-section > .about-teaser {
+    width: calc(100% + (var(--cases-page-gutter) * 2));
+    margin: 10rem calc(var(--cases-page-gutter) * -1) -10rem;
+}
+
 .cases-page-header {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    column-gap: 32px;
+    column-gap: var(--grid-gutter);
     margin-bottom: 7rem;
 }
 
@@ -1331,7 +1352,7 @@ Trigger the slide-in when hovering EITHER:
 .cases-row {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    column-gap: 32px; /* 32px column gutters */
+    column-gap: var(--grid-gutter); /* 32px column gutters */
     align-items: center; /* Vertically center items in each row */
 }
 
@@ -1354,6 +1375,8 @@ Trigger the slide-in when hovering EITHER:
 }
 
 .case-grid-item {
+    --case-hover-duration: 0.45s;
+    --case-hover-easing: cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     flex-direction: column;
     text-decoration: none;
@@ -1361,7 +1384,7 @@ Trigger the slide-in when hovering EITHER:
     color: var(--bordeaux);
     width: 100%;
     transform-origin: center center;
-    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform var(--case-hover-duration) var(--case-hover-easing);
 }
 
 .case-grid-item:hover {
@@ -1374,7 +1397,7 @@ Trigger the slide-in when hovering EITHER:
     background-color: #d8d8d8;
     position: relative;
     border-radius: 0 0 0 0;
-    transition: border-radius 0.45s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+    transition: border-radius var(--case-hover-duration) var(--case-hover-easing), filter var(--case-hover-duration) var(--case-hover-easing);
 }
 
 .case-grid-item:hover .case-media-box {
@@ -1455,13 +1478,25 @@ Trigger the slide-in when hovering EITHER:
     filter: blur(0);
 }
 
-.cases-row .fade-in-up:nth-child(2) {
+/* Restore the matching card-hover timing once the entrance animation is complete. */
+.case-grid-item.animation-complete {
+    transition: transform var(--case-hover-duration) var(--case-hover-easing);
+    transition-delay: 0s;
+}
+
+/* The entrance stagger belongs only to the reveal, never to the hover state. */
+.cases-row .fade-in-up:nth-child(2).animation-complete {
+    transition-delay: 0s;
+}
+
+.cases-row .fade-in-up:nth-child(2):not(.animation-complete) {
     transition-delay: 0.18s; /* Elegant staggered delay for right item */
 }
 
 /* Responsive Grid for Tablets & Mobiles */
 @media (max-width: 1024px) {
     .cases-overview-section {
+        --cases-page-gutter: 24px;
         padding: 7rem 24px 4rem 24px;
     }
     .cases-page-header {
