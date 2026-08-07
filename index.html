@@ -6,7 +6,7 @@
     <title>Bocca 2026 - Scroll Prototype</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="home-page">
 
     <!-- Fixed Navigation -->
     <nav class="site-nav" id="site-nav" aria-label="Main navigation">
@@ -90,8 +90,8 @@
                             <p class="p-large case-desc" id="case-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                             
                             <div class="cases-actions">
-                                <a href="#" class="btn-filled">Se case</a>
-                                <a href="#" class="btn-outlined">Se alle cases</a>
+                                <a href="case.html" class="btn-filled">Se case</a>
+                                <a href="cases.html" class="btn-outlined">Se alle cases</a>
                             </div>
 
                             <!-- Indicator dots -->
@@ -170,7 +170,7 @@
 
             <!-- Mobile action button outside cards -->
             <div class="mobile-cases-footer-action">
-                <a href="#" class="btn-outlined-bordeaux">Se alle cases</a>
+                <a href="cases.html" class="btn-outlined-bordeaux">Se alle cases</a>
             </div>
             
             <!-- Mobile indicators -->
@@ -217,7 +217,7 @@
             <!-- Centered Header and CTA -->
             <div class="center-content">
                 <h1 class="headline">Mød BOCCA.</h1>
-                <a href="#" class="cta-btn" id="cta-button">Læs mere</a>
+                <a href="about.html" class="cta-btn" id="cta-button">Se mere</a>
             </div>
 
         </div>
@@ -309,6 +309,8 @@
             let currentActiveIndex = 0;
             let isClickScrolling = false;
 
+            let scrollSnapTimer = null;
+
             function handleScroll() {
                 if (isClickScrolling) return;
 
@@ -317,16 +319,35 @@
                 const windowHeight = window.innerHeight;
                 
                 const scrollableRange = sectionHeight - windowHeight;
-                
-                // Calculate progress (0 to 1) from when section enters top to leaves bottom
-                let progress = -sectionRect.top / scrollableRange;
-                progress = Math.max(0, Math.min(1, progress));
+                let rawProgress = -sectionRect.top / scrollableRange;
 
-                // 5 slides -> 4 gaps
+                // Above section
+                if (rawProgress <= 0) {
+                    track.style.transform = `translateX(0%)`;
+                    if (currentActiveIndex !== 0) {
+                        currentActiveIndex = 0;
+                        updateActiveCaseText(0);
+                    }
+                    return;
+                }
+
+                // Below section
+                if (rawProgress >= 1) {
+                    track.style.transform = `translateX(-80%)`;
+                    if (currentActiveIndex !== 4) {
+                        currentActiveIndex = 4;
+                        updateActiveCaseText(4);
+                    }
+                    return;
+                }
+
+                // Pinned section: step-locked track translation (0%, -20%, -40%, -60%, -80%)
+                const progress = Math.max(0, Math.min(1, rawProgress));
                 const targetIndex = Math.round(progress * 4);
-                
-                // Rotate images horizontally (from 0% to -80%)
-                track.style.transform = `translateX(-${progress * 80}%)`;
+                const stepProgress = targetIndex / 4;
+
+                // Track is step-locked so carousel always displays a single centered case image
+                track.style.transform = `translateX(-${stepProgress * 80}%)`;
 
                 if (targetIndex !== currentActiveIndex) {
                     currentActiveIndex = targetIndex;
