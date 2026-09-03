@@ -550,11 +550,6 @@ p, .p-small, p.small {
     color: var(--bordeaux);
 }
 
-.featured-cases-header .btn-outlined {
-    grid-column: 10 / 12;
-    justify-self: end;
-}
-
 .featured-cases-grid {
     display: flex;
     flex-direction: column;
@@ -572,10 +567,6 @@ p, .p-small, p.small {
         align-items: flex-start;
         gap: 1.5rem;
         margin-bottom: 3rem;
-    }
-
-    .featured-cases-header .btn-outlined {
-        justify-self: auto;
     }
 
     .featured-cases-grid {
@@ -1646,8 +1637,8 @@ Trigger the slide-in when hovering EITHER:
 .case-contact-profile {
     grid-column: 9 / 12;
     width: 100%;
-    height: 37.75rem;
-    grid-template-rows: 27.375rem 2.5rem 2.5rem 1.5rem;
+    height: auto;
+    grid-template-rows: auto 2.5rem auto auto;
     gap: 0;
     align-content: start;
     color: var(--white);
@@ -1655,8 +1646,8 @@ Trigger the slide-in when hovering EITHER:
 
 .case-contact-profile .employee-media {
     width: calc(100% - 0.875rem);
-    height: 26.5rem;
-    aspect-ratio: auto;
+    height: auto;
+    aspect-ratio: 1;
     margin: 0;
 }
 
