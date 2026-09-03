@@ -3,3 +3,5 @@
 node_modules/
 node_cache/
 .netlify/
+img/dm_case/*.psd
+img/dm_case/Frokost*tagterassen.mp4

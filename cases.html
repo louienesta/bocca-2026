@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cases - Bocca 2026</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260903-film-1">
 </head>
 <body class="subpage cases-page">
 
@@ -36,14 +36,16 @@
             <div class="cases-row">
                 <a href="case.html" class="case-grid-item col-left-landscape fade-in-up">
                     <div class="case-media-box aspect-3-2">
-                        <div class="media-placeholder"></div>
+                        <video class="case-card-video" autoplay muted loop playsinline preload="metadata" aria-label="Danish Minies casevideo">
+                            <source src="img/DM-Case-Video.mp4" type="video/mp4">
+                        </video>
                     </div>
                     <div class="case-item-meta">
                         <div class="case-item-header">
-                            <h2 class="case-item-title">Lorem ipsum dolor sit amet.</h2>
+                            <h2 class="case-item-title">Smørrebrød gentænkt. Serveret i mini.</h2>
                             <span class="case-item-year overtitle">2026</span>
                         </div>
-                        <p class="case-item-sub">Lorem ipsum dolor sit amet.</p>
+                        <p class="case-item-sub">Danish Minies</p>
                     </div>
                 </a>
 
@@ -208,29 +210,20 @@
 
         </div>
 
-        <!-- About teaser -->
+        <!-- Mød BOCCA teaser -->
         <section class="about-teaser" id="about-teaser" aria-labelledby="about-teaser-heading">
-            <div class="about-teaser-snap-point" data-snap="0"></div>
-            <div class="about-teaser-snap-point" data-snap="1"></div>
-            <div class="about-teaser-snap-point" data-snap="2"></div>
+            <div class="about-teaser-media about-teaser-media-left">
+                <img src="img/ImgContent-1.png" alt="Two BOCCA colleagues in conversation">
+            </div>
 
-            <div class="about-teaser-sticky">
-                <div class="about-teaser-image about-teaser-image-top-right">
-                    <img src="img/ImgContent.png" alt="Bocca team collaborating">
+            <div class="about-teaser-right">
+                <div class="about-teaser-media about-teaser-media-right">
+                    <img src="img/ImgContent.png" alt="Two BOCCA colleagues at a table">
                 </div>
-                <div class="about-teaser-image about-teaser-image-left">
-                    <img src="img/ImgContent-1.png" alt="Bocca workspace discussion">
-                </div>
-                <div class="about-teaser-image about-teaser-image-bottom">
-                    <img src="img/ImgContent-2.png" alt="Bocca team working">
-                </div>
-                <div class="about-teaser-image about-teaser-image-right-tall">
-                    <img src="img/ImgContent-3.png" alt="Bocca creative planning">
-                </div>
-
                 <div class="about-teaser-content">
-                    <h2 class="about-teaser-heading" id="about-teaser-heading">Mød BOCCA.</h2>
-                    <a href="about.html" class="cta-btn">Se mere</a>
+                    <h2 id="about-teaser-heading">Mød BOCCA</h2>
+                    <p class="p-large">Vi er et kreativt bureau, der kombinerer strategi, design og nysgerrighed for at skabe kommunikation med retning.</p>
+                    <a href="about.html" class="btn-filled">Mød os</a>
                 </div>
             </div>
         </section>
@@ -284,6 +277,6 @@
         </div>
     </footer>
 
-    <script src="app.js" defer></script>
+    <script src="app.js?v=20260903-film-1" defer></script>
 </body>
 </html>

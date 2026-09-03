@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bocca 2026 - Scroll Prototype</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260903-film-1">
 </head>
 <body class="home-page">
 
@@ -47,177 +47,165 @@
         </div>
     </section>
 
-    <!-- Featured Cases Section -->
-    <section class="featured-cases" id="featured-cases">
-        
-        <!-- Desktop Only Version (Sticky vertical-to-horizontal timeline scroll) -->
-        <div class="desktop-only-cases">
-            <!-- 5 Vertical Snap Points for mandatory page scroll snapping -->
-            <div class="case-snap-point" data-snap="0"></div>
-            <div class="case-snap-point" data-snap="1"></div>
-            <div class="case-snap-point" data-snap="2"></div>
-            <div class="case-snap-point" data-snap="3"></div>
-            <div class="case-snap-point" data-snap="4"></div>
-
-            <div class="cases-sticky">
-                <div class="cases-container">
-                    
-                    <!-- Left Side: Horizontal Image Carousel (spans 8/12 columns) -->
-                    <div class="cases-carousel-viewport">
-                        <div class="cases-carousel-track" id="cases-carousel-track">
-                            <div class="case-slide active">
-                                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=80" alt="Creative Branding Case">
-                            </div>
-                            <div class="case-slide">
-                                <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80" alt="Digital Innovation Case">
-                            </div>
-                            <div class="case-slide">
-                                <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80" alt="Strategic Growth Case">
-                            </div>
-                            <div class="case-slide">
-                                <img src="https://images.unsplash.com/photo-1600508774634-4e11d34730e2?auto=format&fit=crop&w=1200&q=80" alt="Visual Identity Case">
-                            </div>
-                            <div class="case-slide">
-                                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="Future Development Case">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Side: Details & pagination (spans 4/12 columns) -->
-                    <div class="cases-info">
-                        <div class="cases-info-content">
-                            <span class="overtitle">Udvalgte Cases</span>
-                            <h2 class="case-title" id="case-title">Case overskrift: Lorem ipsum dolor sit amet</h2>
-                            <p class="p-large case-desc" id="case-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            
-                            <div class="cases-actions">
-                                <a href="case.html" class="btn-filled">Se case</a>
-                                <a href="cases.html" class="btn-outlined">Se alle cases</a>
-                            </div>
-
-                            <!-- Indicator dots -->
-                            <div class="cases-pagination" id="cases-pagination">
-                                <button class="dot active" data-slide="0" aria-label="Go to case 1"></button>
-                                <button class="dot" data-slide="1" aria-label="Go to case 2"></button>
-                                <button class="dot" data-slide="2" aria-label="Go to case 3"></button>
-                                <button class="dot" data-slide="3" aria-label="Go to case 4"></button>
-                                <button class="dot" data-slide="4" aria-label="Go to case 5"></button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+    <!-- Logo ticker -->
+    <section class="logo-ticker" aria-label="Kundelogoer">
+        <div class="logo-ticker-track" aria-hidden="true">
+            <div class="logo-ticker-group">
+                <span class="logo-ticker-logo"><img src="img/logos/Ballerup-neg tværs.png" alt=""></span>
+                <span class="logo-ticker-logo"><img src="img/logos/HM.png" alt=""></span>
+                <span class="logo-ticker-logo logo-ticker-logo--compact"><img src="img/logos/ROstorv_shopping_WEB_hvid.png" alt=""></span>
+                <span class="logo-ticker-logo"><img src="img/logos/RUC@2x.png" alt=""></span>
+                <span class="logo-ticker-logo logo-ticker-logo--compact"><img src="img/logos/SCT_MATHIAS_NEG.PNG" alt=""></span>
+                <span class="logo-ticker-logo"><img src="img/logos/SP.png" alt=""></span>
+                <span class="logo-ticker-logo logo-ticker-logo--compact"><img src="img/logos/WF@2x.png" alt=""></span>
+                <span class="logo-ticker-logo"><img src="img/logos/alice-logo-white.png" alt=""></span>
+                <span class="logo-ticker-logo"><img src="img/logos/apotek@2x.png" alt=""></span>
+                <span class="logo-ticker-logo"><img src="img/logos/bh-logo-negativ.png" alt=""></span>
+                <span class="logo-ticker-logo"><img src="img/logos/danishminies@2x.png" alt=""></span>
+            </div>
+            <div class="logo-ticker-group">
+                <span class="logo-ticker-logo"><img src="img/logos/Ballerup-neg tværs.png" alt=""></span>
+                <span class="logo-ticker-logo"><img src="img/logos/HM.png" alt=""></span>
+                <span class="logo-ticker-logo logo-ticker-logo--compact"><img src="img/logos/ROstorv_shopping_WEB_hvid.png" alt=""></span>
+                <span class="logo-ticker-logo"><img src="img/logos/RUC@2x.png" alt=""></span>
+                <span class="logo-ticker-logo logo-ticker-logo--compact"><img src="img/logos/SCT_MATHIAS_NEG.PNG" alt=""></span>
+                <span class="logo-ticker-logo"><img src="img/logos/SP.png" alt=""></span>
+                <span class="logo-ticker-logo logo-ticker-logo--compact"><img src="img/logos/WF@2x.png" alt=""></span>
+                <span class="logo-ticker-logo"><img src="img/logos/alice-logo-white.png" alt=""></span>
+                <span class="logo-ticker-logo"><img src="img/logos/apotek@2x.png" alt=""></span>
+                <span class="logo-ticker-logo"><img src="img/logos/bh-logo-negativ.png" alt=""></span>
+                <span class="logo-ticker-logo"><img src="img/logos/danishminies@2x.png" alt=""></span>
             </div>
         </div>
-
-        <!-- Mobile Only Version (Horizontal swipe-based slider list) -->
-        <div class="mobile-only-cases">
-            <div class="mobile-cases-header">
-                <span class="overtitle">Udvalgte Cases</span>
-            </div>
-            
-            <div class="mobile-cases-track" id="mobile-cases-track">
-                <!-- Card 1 -->
-                <a href="case.html" class="mobile-case-card" data-card-slide="0">
-                    <div class="mobile-card-image-wrap">
-                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=80" alt="Creative Branding Case">
-                    </div>
-                    <div class="mobile-card-info">
-                        <h3 class="mobile-card-title">Case overskrift: Lorem ipsum dolor sit amet</h3>
-                        <p class="p-large mobile-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </div>
-                </a>
-                <!-- Card 2 -->
-                <a href="case.html" class="mobile-case-card" data-card-slide="1">
-                    <div class="mobile-card-image-wrap">
-                        <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80" alt="Digital Innovation Case">
-                    </div>
-                    <div class="mobile-card-info">
-                        <h3 class="mobile-card-title">Creative Branding: Designing Bocca's Future</h3>
-                        <p class="p-large mobile-card-desc">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
-                    </div>
-                </a>
-                <!-- Card 3 -->
-                <a href="case.html" class="mobile-case-card" data-card-slide="2">
-                    <div class="mobile-card-image-wrap">
-                        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80" alt="Strategic Growth Case">
-                    </div>
-                    <div class="mobile-card-info">
-                        <h3 class="mobile-card-title">Digital Innovation: Seamless Web Products</h3>
-                        <p class="p-large mobile-card-desc">Sunt in culpa qui officia deserunt mollit anim id est laborum. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
-                    </div>
-                </a>
-                <!-- Card 4 -->
-                <a href="case.html" class="mobile-case-card" data-card-slide="3">
-                    <div class="mobile-card-image-wrap">
-                        <img src="https://images.unsplash.com/photo-1600508774634-4e11d34730e2?auto=format&fit=crop&w=1200&q=80" alt="Visual Identity Case">
-                    </div>
-                    <div class="mobile-card-info">
-                        <h3 class="mobile-card-title">Strategic Growth: Expanding Market Presence</h3>
-                        <p class="p-large mobile-card-desc">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias.</p>
-                    </div>
-                </a>
-                <!-- Card 5 -->
-                <a href="case.html" class="mobile-case-card" data-card-slide="4">
-                    <div class="mobile-card-image-wrap">
-                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="Future Development Case">
-                    </div>
-                    <div class="mobile-card-info">
-                        <h3 class="mobile-card-title">Visual Identity: Defining Modern Aesthetics</h3>
-                        <p class="p-large mobile-card-desc">Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla.</p>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Mobile action button outside cards -->
-            <div class="mobile-cases-footer-action">
-                <a href="cases.html" class="btn-outlined-bordeaux">Se alle cases</a>
-            </div>
-            
-            <!-- Mobile indicators -->
-            <div class="mobile-cases-pagination" id="mobile-cases-pagination">
-                <button class="dot active" data-slide="0" aria-label="Go to case 1"></button>
-                <button class="dot" data-slide="1" aria-label="Go to case 2"></button>
-                <button class="dot" data-slide="2" aria-label="Go to case 3"></button>
-                <button class="dot" data-slide="3" aria-label="Go to case 4"></button>
-                <button class="dot" data-slide="4" aria-label="Go to case 5"></button>
-            </div>
-        </div>
-        
     </section>
 
-    <!-- About teaser -->
+    <!-- Featured cases -->
+    <section class="featured-cases" id="featured-cases" aria-labelledby="featured-cases-heading">
+        <header class="featured-cases-header">
+            <h2 id="featured-cases-heading">Udvalgte cases</h2>
+            <a href="cases.html" class="btn-outlined">Se alle cases</a>
+        </header>
+
+        <div class="featured-cases-grid">
+            <div class="cases-row">
+                <a href="case.html" class="case-grid-item col-left-landscape fade-in-up">
+                    <div class="case-media-box aspect-3-2">
+                        <video class="case-card-video" autoplay muted loop playsinline preload="metadata" aria-label="Danish Minies casevideo">
+                            <source src="img/DM-Case-Video.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="case-item-meta">
+                        <div class="case-item-header">
+                            <h3 class="case-item-title">Smørrebrød gentænkt. Serveret i mini.</h3>
+                            <span class="case-item-year overtitle">2026</span>
+                        </div>
+                        <p class="case-item-sub">Danish Minies</p>
+                    </div>
+                </a>
+
+                <a href="case.html" class="case-grid-item col-right-portrait fade-in-up">
+                    <div class="case-media-box aspect-3-4">
+                        <div class="media-placeholder"></div>
+                    </div>
+                    <div class="case-item-meta">
+                        <div class="case-item-header">
+                            <h3 class="case-item-title">Lorem ipsum dolor sit amet.</h3>
+                            <span class="case-item-year overtitle">2026</span>
+                        </div>
+                        <p class="case-item-sub">Lorem ipsum dolor sit amet.</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="cases-row">
+                <a href="case.html" class="case-grid-item col-left-portrait fade-in-up">
+                    <div class="case-media-box aspect-3-4">
+                        <div class="media-placeholder"></div>
+                    </div>
+                    <div class="case-item-meta">
+                        <div class="case-item-header">
+                            <h3 class="case-item-title">Lorem ipsum dolor sit amet.</h3>
+                            <span class="case-item-year overtitle">2026</span>
+                        </div>
+                        <p class="case-item-sub">Lorem ipsum dolor sit amet.</p>
+                    </div>
+                </a>
+
+                <a href="case.html" class="case-grid-item col-right-landscape fade-in-up">
+                    <div class="case-media-box aspect-3-2">
+                        <div class="media-placeholder"></div>
+                    </div>
+                    <div class="case-item-meta">
+                        <div class="case-item-header">
+                            <h3 class="case-item-title">Lorem ipsum dolor sit amet.</h3>
+                            <span class="case-item-year overtitle">2026</span>
+                        </div>
+                        <p class="case-item-sub">Lorem ipsum dolor sit amet.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services-accordion" aria-labelledby="services-heading">
+        <div class="services-accordion-inner">
+            <header class="services-accordion-intro">
+                <h2 id="services-heading">Services</h2>
+                <p class="p-large">Vi udfolder potentialet i vores kunders budskaber; skriver ord, skaber billeder og sætter i bevægelse. Kort sagt hjælper vi vores kunder med at definere deres historier, løfte og give dem luft under vingerne.</p>
+            </header>
+
+            <div class="services-accordion-list">
+                <details class="service-accordion-item">
+                    <summary><h4>Sociale medier</h4><span class="service-accordion-icon" aria-hidden="true"><img src="img/accordion-toggle-plus.svg" alt=""></span></summary>
+                    <div class="service-accordion-panel"><p class="p-large">På BOCCA skaber vi relevant og engagerende content, der sørger for synlighed for vores kunder. Vi måler på effekten af vores tilstedeværelse, så vi fortsat kan optimere og sikre sammenhængskraft på tværs af platforme.</p></div>
+                </details>
+                <details class="service-accordion-item">
+                    <summary><h4>Strategi</h4><span class="service-accordion-icon" aria-hidden="true"><img src="img/accordion-toggle-plus.svg" alt=""></span></summary>
+                    <div class="service-accordion-panel"><p class="p-large">Med indsigt i medier og målgrupper, starter vores arbejde altid med at udarbejde en klar strategi. Strategi hjælper med at navigere i bl.a. mediebrug og markedstendenser og skabe klar kommunikation med skarpe budskaber. Kort sagt gør strategi vores idéer bedre, så vi kan opnå vores kunders mål.</p></div>
+                </details>
+                <details class="service-accordion-item">
+                    <summary><h4>Branding</h4><span class="service-accordion-icon" aria-hidden="true"><img src="img/accordion-toggle-plus.svg" alt=""></span></summary>
+                    <div class="service-accordion-panel"><p class="p-large">Vores samtid er et tag-selv-bord af muligheder, derfor skal brands have værdi, så vores kunders kunder forbliver loyale. På BOCCA bringer vi brands til live, så de kan opleves gennem alle dine sanser: Vi gør dit brand distinkt og til det mest indbydende på hele buffeten.</p></div>
+                </details>
+                <details class="service-accordion-item">
+                    <summary><h4>Koncept og kampagner</h4><span class="service-accordion-icon" aria-hidden="true"><img src="img/accordion-toggle-plus.svg" alt=""></span></summary>
+                    <div class="service-accordion-panel"><p class="p-large">Når vi udvikler koncepter og kampagner, omsætter vi strategi og indsigter til kreative løsninger. Om budskabet er inspirerende, lærerigt eller tankevækkende stræber vi altid efter at skabe et holdbart og stærkt engagement vores kunder og deres kunder imellem.</p></div>
+                </details>
+                <details class="service-accordion-item">
+                    <summary><h4>Film og animation</h4><span class="service-accordion-icon" aria-hidden="true"><img src="img/accordion-toggle-plus.svg" alt=""></span></summary>
+                    <div class="service-accordion-panel service-accordion-panel--with-link">
+                        <p class="p-large">På BOCCA udvikler og skaber vi alt fra de helt korte film og animationer til sociale medier til dem, du oplever på flow-TV og i biografen. Vi filmer i fugle, frø og folk-perspektiv og kun fantasien sætter grænser, når virkeligheden skal animeres.</p>
+                        <a class="service-accordion-link" href="https://film.bocca.dk/">Se BOCCA Film</a>
+                    </div>
+                </details>
+                <details class="service-accordion-item">
+                    <summary><h4>Grafisk produktion – tryk og web</h4><span class="service-accordion-icon" aria-hidden="true"><img src="img/accordion-toggle-plus.svg" alt=""></span></summary>
+                    <div class="service-accordion-panel"><p class="p-large">Vores erfarne tegnestue er en af grundstenene i vores inhouse produktion, der altid sørger for en kreativ, sikker og smidig proces i vores arbejde.</p></div>
+                </details>
+                <details class="service-accordion-item">
+                    <summary><h4>Digitale løsninger</h4><span class="service-accordion-icon" aria-hidden="true"><img src="img/accordion-toggle-plus.svg" alt=""></span></summary>
+                    <div class="service-accordion-panel"><p class="p-large">En digital verden kalder på digitale løsninger. Vi udvikler, optimerer og producerer alt fra digitale strategier til landing pages, websites og UX design, der sikrer den gode brugeroplevelse.</p></div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mød BOCCA teaser -->
     <section class="about-teaser" id="about-teaser" aria-labelledby="about-teaser-heading">
-        <!-- 3 Vertical Snap Points for smooth, deliberate scroll pacing -->
-        <div class="about-teaser-snap-point" data-snap="0"></div>
-        <div class="about-teaser-snap-point" data-snap="1"></div>
-        <div class="about-teaser-snap-point" data-snap="2"></div>
+        <div class="about-teaser-media about-teaser-media-left">
+            <img src="img/ImgContent-1.png" alt="Two BOCCA colleagues in conversation">
+        </div>
 
-        <div class="about-teaser-sticky">
-            
-            <!-- Floating scroll-reveal images -->
-            <div class="about-teaser-image about-teaser-image-top-right">
-                <img src="img/ImgContent.png" alt="Bocca team collaborating">
+        <div class="about-teaser-right">
+            <div class="about-teaser-media about-teaser-media-right">
+                <img src="img/ImgContent.png" alt="Two BOCCA colleagues at a table">
             </div>
-
-            <div class="about-teaser-image about-teaser-image-left">
-                <img src="img/ImgContent-1.png" alt="Bocca workspace discussion">
-            </div>
-
-            <div class="about-teaser-image about-teaser-image-bottom">
-                <img src="img/ImgContent-2.png" alt="Bocca team working">
-            </div>
-
-            <div class="about-teaser-image about-teaser-image-right-tall">
-                <img src="img/ImgContent-3.png" alt="Bocca creative planning">
-            </div>
-
-            <!-- Centered Header and CTA -->
             <div class="about-teaser-content">
-                <h2 class="about-teaser-heading" id="about-teaser-heading">Mød BOCCA.</h2>
-                <a href="about.html" class="cta-btn">Se mere</a>
+                <h2 id="about-teaser-heading">Mød BOCCA</h2>
+                <p class="p-large">Vi er et kreativt bureau, der kombinerer strategi, design og nysgerrighed for at skabe kommunikation med retning.</p>
+                <a href="about.html" class="btn-filled">Mød os</a>
             </div>
-
         </div>
     </section>
     </main>
@@ -270,6 +258,6 @@
         </div>
     </footer>
 
-    <script src="app.js" defer></script>
+    <script src="app.js?v=20260903-film-1" defer></script>
 </body>
 </html>

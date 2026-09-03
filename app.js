@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     initialiseFooter();
     initialiseCaseGrid();
-    initialiseFeaturedCases();
-    initialiseAboutTeaser();
+    initialiseServicesAccordion();
 });
 
 function initialiseFooter() {
@@ -67,7 +66,7 @@ function initialiseFooter() {
 }
 
 function initialiseCaseGrid() {
-    const items = document.querySelectorAll('.fade-in-up');
+    const items = document.querySelectorAll('.fade-in-up, .friends-emblem-reveal');
     if (!items.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         items.forEach((item) => item.classList.add('in-view', 'animation-complete'));
         return;
@@ -92,97 +91,111 @@ function initialiseCaseGrid() {
     items.forEach((item) => observer.observe(item));
 }
 
-function initialiseFeaturedCases() {
-    const section = document.getElementById('featured-cases');
-    const track = document.getElementById('cases-carousel-track');
-    if (!section || !track) return;
+function initialiseServicesAccordion() {
+    const items = document.querySelectorAll('.service-accordion-item');
+    const closeDuration = 850;
+    const closeTimers = new WeakMap();
+    const getPanel = (item) => item.querySelector('.service-accordion-panel');
 
-    const cases = [
-        ['Case overskrift: Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'],
-        ["Creative Branding: Designing Bocca's Future", 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.'],
-        ['Digital Innovation: Seamless Web Products', 'Sunt in culpa qui officia deserunt mollit anim id est laborum. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.'],
-        ['Strategic Growth: Expanding Market Presence', 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias.'],
-        ['Visual Identity: Defining Modern Aesthetics', 'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla.']
-    ];
-    const title = document.getElementById('case-title');
-    const description = document.getElementById('case-desc');
-    const slides = document.querySelectorAll('.case-slide');
-    const dots = document.querySelectorAll('#cases-pagination .dot');
-    let activeIndex = 0;
-    let isProgrammaticScroll = false;
-
-    const updateActiveCase = (index) => {
-        if (index === activeIndex && title.textContent === cases[index][0]) return;
-        activeIndex = index;
-        title.classList.add('transition-fade');
-        description.classList.add('transition-fade');
-        window.setTimeout(() => {
-            title.textContent = cases[index][0];
-            description.textContent = cases[index][1];
-            title.classList.remove('transition-fade');
-            description.classList.remove('transition-fade');
-        }, 250);
-        slides.forEach((slide, slideIndex) => slide.classList.toggle('active', slideIndex === index));
-        dots.forEach((dot, dotIndex) => dot.classList.toggle('active', dotIndex === index));
+    const cancelClose = (item) => {
+        const closeState = closeTimers.get(item);
+        if (closeState) {
+            window.clearTimeout(closeState.timeout);
+            getPanel(item).removeEventListener('transitionend', closeState.onTransitionEnd);
+        }
+        closeTimers.delete(item);
+        item.classList.remove('is-closing');
     };
 
-    const updateDesktopCarousel = () => {
-        if (isProgrammaticScroll || window.innerWidth <= 900) return;
-        const sectionRect = section.getBoundingClientRect();
-        const scrollableRange = sectionRect.height - window.innerHeight;
-        if (scrollableRange <= 0) return;
-        const progress = Math.max(0, Math.min(1, -sectionRect.top / scrollableRange));
-        const index = Math.round(progress * (cases.length - 1));
-        track.style.transform = `translateX(-${index * 20}%)`;
-        updateActiveCase(index);
+    const animateOpen = (item) => {
+        const panel = getPanel(item);
+        const currentHeight = panel.getBoundingClientRect().height;
+        const currentOpacity = window.getComputedStyle(panel).opacity;
+
+        item.open = true;
+        panel.style.height = 'auto';
+        panel.style.opacity = '1';
+        const expandedHeight = panel.scrollHeight;
+
+        panel.style.height = `${currentHeight}px`;
+        panel.style.opacity = currentOpacity;
+        void panel.offsetHeight;
+
+        window.requestAnimationFrame(() => {
+            panel.style.height = `${expandedHeight}px`;
+            panel.style.opacity = '1';
+        });
+
+        const finishOpen = (event) => {
+            if (event.propertyName !== 'height' || !item.open || item.classList.contains('is-closing')) return;
+            panel.style.height = 'auto';
+            panel.removeEventListener('transitionend', finishOpen);
+        };
+        panel.addEventListener('transitionend', finishOpen);
     };
 
-    window.addEventListener('scroll', updateDesktopCarousel, { passive: true });
-    updateDesktopCarousel();
+    const closeItem = (item) => {
+        if (!item.open || item.classList.contains('is-closing')) return;
 
-    dots.forEach((dot) => {
-        dot.addEventListener('click', () => {
-            const index = Number(dot.dataset.slide);
-            const sectionTop = window.scrollY + section.getBoundingClientRect().top;
-            const range = section.getBoundingClientRect().height - window.innerHeight;
-            isProgrammaticScroll = true;
-            track.style.transform = `translateX(-${index * 20}%)`;
-            updateActiveCase(index);
-            window.scrollTo({ top: sectionTop + (index / (cases.length - 1)) * range, behavior: 'smooth' });
-            window.setTimeout(() => { isProgrammaticScroll = false; }, 800);
+        const panel = getPanel(item);
+        const currentHeight = panel.getBoundingClientRect().height;
+        const currentOpacity = window.getComputedStyle(panel).opacity;
+
+        panel.style.height = `${currentHeight}px`;
+        panel.style.opacity = currentOpacity;
+        void panel.offsetHeight;
+        item.classList.add('is-closing');
+
+        window.requestAnimationFrame(() => {
+            panel.style.height = '0px';
+            panel.style.opacity = '0';
+        });
+
+        const finishClose = () => {
+            const closeState = closeTimers.get(item);
+            if (!closeState || !item.classList.contains('is-closing')) return;
+
+            window.clearTimeout(closeState.timeout);
+            panel.removeEventListener('transitionend', closeState.onTransitionEnd);
+            item.open = false;
+            item.classList.remove('is-closing');
+            panel.style.removeProperty('height');
+            panel.style.removeProperty('opacity');
+            closeTimers.delete(item);
+        };
+
+        const onTransitionEnd = (event) => {
+            if (event.propertyName === 'height') finishClose();
+        };
+
+        panel.addEventListener('transitionend', onTransitionEnd);
+        closeTimers.set(item, {
+            onTransitionEnd,
+            timeout: window.setTimeout(finishClose, closeDuration + 200)
+        });
+    };
+
+    const openItem = (item) => {
+        cancelClose(item);
+        animateOpen(item);
+
+        items.forEach((otherItem) => {
+            if (otherItem !== item) closeItem(otherItem);
+        });
+    };
+
+    items.forEach((item) => {
+        const summary = item.querySelector('summary');
+
+        summary.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            if (item.open && !item.classList.contains('is-closing')) {
+                closeItem(item);
+                return;
+            }
+
+            openItem(item);
         });
     });
-
-    const mobileTrack = document.getElementById('mobile-cases-track');
-    const mobileDots = document.querySelectorAll('#mobile-cases-pagination .dot');
-    mobileTrack?.addEventListener('scroll', () => {
-        const card = mobileTrack.querySelector('.mobile-case-card');
-        if (!card) return;
-        const index = Math.round(mobileTrack.scrollLeft / (card.offsetWidth + 20));
-        mobileDots.forEach((dot, dotIndex) => dot.classList.toggle('active', dotIndex === index));
-    }, { passive: true });
-
-    mobileDots.forEach((dot) => {
-        dot.addEventListener('click', () => {
-            const card = mobileTrack?.querySelector('.mobile-case-card');
-            if (card) mobileTrack.scrollTo({ left: Number(dot.dataset.slide) * (card.offsetWidth + 20), behavior: 'smooth' });
-        });
-    });
-}
-
-function initialiseAboutTeaser() {
-    const track = document.querySelector('.about-teaser');
-    if (!track || CSS.supports('(animation-timeline: view()) and (animation-range: entry)') || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const images = document.querySelectorAll('.about-teaser-image');
-    document.body.classList.add('about-teaser-js-animation');
-    window.addEventListener('scroll', () => {
-        const rect = track.getBoundingClientRect();
-        const progress = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
-        images.forEach((image, index) => {
-            const imageProgress = Math.max(0, Math.min(1, (progress - index * 0.1) / (1 - index * 0.1)));
-            image.style.transform = `scale(${0.5 + imageProgress * 0.5})`;
-            image.style.opacity = imageProgress;
-        });
-    }, { passive: true });
 }
