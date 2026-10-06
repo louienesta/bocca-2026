@@ -32,7 +32,7 @@ bookkeeping legal-basis sentence is incomplete and also needs review.
 
 ## Requirements
 
-- Node.js 22.12 or newer
+- Node.js 22.23.3 (the version pinned in `.nvmrc`; its Corepack can verify the pinned pnpm release)
 - pnpm 10.33 or newer
 
 ## Setup
