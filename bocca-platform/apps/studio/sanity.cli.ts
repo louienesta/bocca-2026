@@ -8,6 +8,9 @@ export default defineCliConfig({
     projectId,
     dataset,
   },
+  deployment: {
+    appId: 'ewebqc4m1wbpwxdfq6mla1i0',
+  },
   vite: {
     server: {
       watch: {
