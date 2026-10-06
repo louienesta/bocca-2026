@@ -57,11 +57,7 @@ const logoSrc = (logo: ClientLogo, width: number) =>
     type="button"
     aria-label="Pause logoer"
     data-ticker-control
-  >
-    <span aria-hidden="true" data-ticker-control-label>
-      Pause
-    </span>
-  </button>
+  ></button>
 </section>
 
 <script>
@@ -81,10 +77,7 @@ const logoSrc = (logo: ClientLogo, width: number) =>
         const control = ticker.querySelector<HTMLButtonElement>(
           '[data-ticker-control]',
         );
-        const controlLabel = ticker.querySelector<HTMLElement>(
-          '[data-ticker-control-label]',
-        );
-        if (!track || !sequence || !control || !controlLabel) return;
+        if (!track || !sequence || !control) return;
 
         let frame = 0;
         const rebuild = () => {
@@ -141,7 +134,6 @@ const logoSrc = (logo: ClientLogo, width: number) =>
             'aria-label',
             paused ? 'Afspil logoer' : 'Pause logoer',
           );
-          controlLabel.textContent = paused ? 'Afspil' : 'Pause';
         });
 
         new ResizeObserver(scheduleRebuild).observe(ticker);
@@ -220,20 +212,17 @@ const logoSrc = (logo: ClientLogo, width: number) =>
   .logo-ticker__control {
     position: absolute;
     z-index: 1;
-    right: var(--page-gutter);
-    bottom: 1rem;
-    padding: 0.35rem 0.7rem;
-    border: 1px solid currentColor;
-    border-radius: var(--radius-control);
-    background: var(--color-bordeaux);
-    color: var(--color-beige);
-    font: 400 0.75rem var(--font-sans);
+    inset: 0;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
     cursor: pointer;
   }
 
-  .logo-ticker__control:hover {
-    background: var(--color-beige);
-    color: var(--color-bordeaux);
+  .logo-ticker__control:focus-visible {
+    outline: 2px solid var(--color-bocca-blue);
+    outline-offset: -4px;
   }
 
   @keyframes logo-ticker-pan {
