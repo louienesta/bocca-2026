@@ -1,0 +1,155 @@
+---
+import type { CaseCardData } from '../../lib/sanity/types';
+import SanityMedia from '../ui/SanityMedia.astro';
+
+type CardRatio = 'landscape' | 'portrait';
+
+export interface Props {
+  caseStudy: CaseCardData;
+  ratio: CardRatio;
+  position: number;
+  as?: 'li' | 'article' | 'div';
+  headingLevel?: 2 | 3;
+}
+
+const {
+  caseStudy,
+  ratio,
+  position,
+  as: Tag = 'li',
+  headingLevel = 3,
+} = Astro.props as Props;
+const Heading = headingLevel === 2 ? 'h2' : 'h3';
+const normalizeLabel = (label: string) =>
+  label.trim().toLocaleLowerCase('da-DK');
+const getDetail = (label: string) =>
+  caseStudy.projectDetails?.find(
+    (detail) => normalizeLabel(detail.label) === normalizeLabel(label),
+  )?.value;
+const client = getDetail('Kunde');
+const year = getDetail('År');
+const href = caseStudy.slug ? `/cases/${caseStudy.slug}` : '/cases';
+const revealDelay = position % 2 === 1 ? 180 : 0;
+---
+
+<Tag
+  class:list={['case-card-shell', `case-card-shell--${position}`]}
+  data-case-reveal
+  style={`--case-reveal-delay: ${revealDelay}ms`}
+>
+  <a class="case-card" href={href} aria-label={`Se casen ${caseStudy.title}`}>
+    <SanityMedia
+      media={caseStudy.heroMedia ?? null}
+      ratio={ratio}
+      class="case-card__media"
+      sizes="(max-width: 64rem) calc(100vw - 3rem), 42vw"
+    />
+
+    <div class="case-card__meta">
+      <div class="case-card__heading">
+        <Heading>{caseStudy.title}</Heading>
+        {year && <span class="case-card__year">{year}</span>}
+      </div>
+      {client && <p class="case-card__client">{client}</p>}
+    </div>
+  </a>
+</Tag>
+
+<style>
+  .case-card-shell {
+    min-width: 0;
+    list-style: none;
+    opacity: 0;
+    filter: blur(0.25rem);
+    transform: translateY(6.875rem) scale(0.96);
+    transition:
+      opacity var(--animate-duration-slow) var(--ease-expressive),
+      transform var(--animate-duration-slow) var(--ease-expressive),
+      filter var(--animate-duration-slow) var(--ease-expressive);
+    transition-delay: var(--case-reveal-delay, 0ms);
+    will-change: opacity, transform, filter;
+  }
+
+  .case-card-shell.is-visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+
+  .case-card {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    color: var(--color-bordeaux);
+    text-decoration: none;
+    transform-origin: center;
+    transition: transform var(--animate-duration-medium) var(--ease-expressive);
+  }
+
+  .case-card :global(.case-card__media) {
+    width: 100%;
+    transition:
+      border-radius var(--animate-duration-medium) var(--ease-expressive),
+      filter var(--animate-duration-medium) var(--ease-expressive);
+  }
+
+  .case-card__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-top: 1.25rem;
+  }
+
+  .case-card__heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .case-card__heading :is(h2, h3) {
+    font-size: clamp(1.65rem, 2.2vw, 2.5rem);
+    line-height: 1.15;
+  }
+
+  .case-card__year {
+    flex: 0 0 auto;
+    color: var(--color-bocca-red);
+    font-family: var(--font-mono);
+    font-size: clamp(0.875rem, 1.2vw, 1.125rem);
+    letter-spacing: 0.15em;
+    line-height: 1.05;
+    text-transform: uppercase;
+  }
+
+  .case-card__client {
+    opacity: 0.6;
+    font-size: 0.95rem;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .case-card:hover {
+      transform: scale(1.04);
+    }
+
+    .case-card:hover :global(.case-card__media) {
+      border-radius: 0 var(--radius-editorial) 0 0;
+      filter: brightness(0.96);
+    }
+  }
+
+  .case-card:focus-visible {
+    outline: 0;
+  }
+
+  .case-card:focus-visible :global(.case-card__media) {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+
+  @media (max-width: 40rem) {
+    .case-card__heading {
+      align-items: flex-start;
+    }
+  }
+</style>

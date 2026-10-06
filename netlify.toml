@@ -1,5 +1,10 @@
 [build]
-  publish = "."
+  base = "bocca-platform"
+  command = "node scripts/check-deploy-env.mjs && pnpm --filter @bocca/web check && pnpm --filter @bocca/web build"
+  publish = "apps/web/dist"
+
+[build.environment]
+  NODE_VERSION = "22"
 
 [[headers]]
   for = "/*"

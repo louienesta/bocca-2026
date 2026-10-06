@@ -1,0 +1,103 @@
+---
+import type { CaseMediaEditorialBlock } from '../../../lib/sanity/types';
+import SanityMedia from '../../ui/SanityMedia.astro';
+
+export interface Props {
+  block: CaseMediaEditorialBlock;
+}
+
+const { block } = Astro.props as Props;
+---
+
+<section class="case-block case-block--editorial" aria-label="Case-medier">
+  <div class="case-block__editorial-stack">
+    <SanityMedia
+      media={block.topLeftMedia ?? null}
+      ratio="free"
+      class="case-block__editorial-landscape"
+      sizes="(max-width: 45rem) calc(100vw - 3rem), 50vw"
+    />
+    <SanityMedia
+      media={block.bottomLeftMedia ?? null}
+      ratio="free"
+      class="case-block__editorial-landscape"
+      sizes="(max-width: 45rem) calc(100vw - 3rem), 50vw"
+    />
+  </div>
+  <SanityMedia
+    media={block.rightMedia ?? null}
+    ratio="free"
+    class="case-block__editorial-portrait"
+    sizes="(max-width: 45rem) calc(100vw - 3rem), 34vw"
+  />
+</section>
+
+<style>
+  .case-block {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: start;
+    gap: var(--grid-gutter);
+    padding: 4rem;
+    background: var(--color-beige);
+  }
+
+  .case-block__editorial-stack {
+    display: grid;
+    grid-column: 2 / 8;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    align-self: stretch;
+    gap: var(--grid-gutter);
+    min-height: 0;
+  }
+
+  .case-block__editorial-stack > :global(.case-block__editorial-landscape) {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .case-block > :global(.case-block__editorial-portrait) {
+    grid-column: 8 / 12;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+  }
+
+  @media (max-width: 64rem) {
+    .case-block {
+      padding-right: 1.5rem;
+      padding-left: 1.5rem;
+    }
+  }
+
+  @media (max-width: 45rem) {
+    .case-block {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .case-block__editorial-stack,
+    .case-block > :global(.case-block__editorial-portrait) {
+      grid-column: 1;
+    }
+
+    .case-block__editorial-stack {
+      grid-template-rows: auto auto;
+      gap: 1.5rem;
+    }
+
+    .case-block__editorial-stack
+      > :global(.case-block__editorial-landscape:first-child) {
+      height: auto;
+      aspect-ratio: 3 / 4;
+    }
+
+    .case-block__editorial-stack
+      > :global(.case-block__editorial-landscape:nth-child(2)) {
+      height: auto;
+      aspect-ratio: 9 / 16;
+    }
+  }
+</style>

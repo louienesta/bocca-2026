@@ -1,0 +1,55 @@
+---
+type Ratio = 'landscape' | 'portrait' | 'square' | 'video' | 'free';
+type Corner =
+  'none' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
+type Fit = 'cover' | 'contain';
+
+export interface Props {
+  as?: 'div' | 'figure';
+  ratio?: Ratio;
+  corner?: Corner;
+  fit?: Fit;
+  class?: string;
+}
+
+const {
+  as: Tag = 'div',
+  ratio = 'landscape',
+  corner = 'none',
+  fit = 'cover',
+  class: className,
+} = Astro.props as Props;
+
+const ratios: Record<Ratio, string> = {
+  landscape: 'aspect-3/2',
+  portrait: 'aspect-3/4',
+  square: 'aspect-square',
+  video: 'aspect-video',
+  free: '',
+};
+
+const corners: Record<Corner, string> = {
+  none: '',
+  'top-right': 'editorial-corner-tr',
+  'top-left': 'editorial-corner-tl',
+  'bottom-right': 'editorial-corner-br',
+  'bottom-left': 'editorial-corner-bl',
+};
+
+const fits: Record<Fit, string> = {
+  cover: '[&>img]:object-cover [&>video]:object-cover',
+  contain: '[&>img]:object-contain [&>video]:object-contain',
+};
+---
+
+<Tag
+  class:list={[
+    'relative m-0 overflow-hidden bg-media [&>img]:size-full [&>video]:size-full',
+    ratios[ratio],
+    corners[corner],
+    fits[fit],
+    className,
+  ]}
+>
+  <slot />
+</Tag>

@@ -1,0 +1,521 @@
+---
+import type { NavigationLink, SiteSettings } from '../../lib/sanity/types';
+
+export interface Props {
+  settings: SiteSettings;
+}
+
+const { settings } = Astro.props;
+const telephoneHref = `tel:${settings.phone.replace(/[^+\d]/g, '')}`;
+
+function linkTarget(link: NavigationLink): string | undefined {
+  return link.linkType === 'external' && link.openInNewTab
+    ? '_blank'
+    : undefined;
+}
+---
+
+<button
+  class="contact-backdrop"
+  type="button"
+  aria-label="Luk kontaktoplysninger"
+  aria-hidden="true"
+  tabindex="-1"
+  data-contact-backdrop
+></button>
+
+<footer class="site-footer" id="site-footer" data-site-footer>
+  <div class="site-footer__inner">
+    <address class="site-footer__address type-body-lg">
+      {settings.address.mapUrl ? (
+        <a
+          href={settings.address.mapUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>{settings.address.street}</span>
+          <span>
+            {settings.address.postalCode} {settings.address.city}
+          </span>
+        </a>
+      ) : (
+        <>
+          <span>{settings.address.street}</span>
+          <span>
+            {settings.address.postalCode} {settings.address.city}
+          </span>
+        </>
+      )}
+      <a href={telephoneHref}>TLF: {settings.phone}</a>
+    </address>
+
+    <div class="site-footer__contact">
+      <button
+        class="site-footer__cta"
+        type="button"
+        data-contact-trigger
+        aria-controls="contact-panel"
+        aria-expanded="false"
+      >
+        <span>{settings.footerHeading}</span>
+        <img src="/brand/arrow-up-right.svg" alt="" width="62" height="62" />
+      </button>
+    </div>
+
+    <div class="site-footer__logo" aria-hidden="true">
+      <img src="/brand/bocca-logo.svg" alt="" width="236" height="64" />
+    </div>
+
+    <nav class="site-footer__links" aria-label="Footer-navigation">
+      {settings.footerNavigation.map((link) => (
+        <a
+          href={link.href}
+          target={linkTarget(link)}
+          rel={linkTarget(link) ? 'noopener noreferrer' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+      {settings.socialLinks.map((link) => (
+        <a href={link.url} target="_blank" rel="noopener noreferrer">
+          {link.platform}
+        </a>
+      ))}
+    </nav>
+  </div>
+
+  <section
+    class="contact-panel"
+    id="contact-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="contact-panel-title"
+    aria-hidden="true"
+    inert
+    data-contact-panel
+  >
+    <h2 class="sr-only" id="contact-panel-title">
+      Kontakt {settings.siteName}
+    </h2>
+    <button
+      class="contact-panel__close"
+      type="button"
+      aria-label="Luk kontaktoplysninger"
+      data-contact-close
+    >
+      ✕
+    </button>
+    <div class="contact-panel__content">
+      <p class="contact-panel__label">Telefon</p>
+      <a class="contact-panel__link" href={telephoneHref}>
+        {settings.phone}
+      </a>
+      <p class="contact-panel__label contact-panel__label--spaced">E-mail</p>
+      <a class="contact-panel__link" href={`mailto:${settings.email}`}>
+        {settings.email}
+      </a>
+    </div>
+  </section>
+</footer>
+
+<script>
+  const footer = document.querySelector<HTMLElement>('[data-site-footer]');
+  const panel = document.querySelector<HTMLElement>('[data-contact-panel]');
+  const backdrop = document.querySelector<HTMLElement>(
+    '[data-contact-backdrop]',
+  );
+  const closeButton = document.querySelector<HTMLButtonElement>(
+    '[data-contact-close]',
+  );
+  const triggers = document.querySelectorAll<HTMLElement>(
+    '[data-contact-trigger]',
+  );
+
+  if (footer && panel && backdrop && closeButton && triggers.length) {
+    let returnFocus: HTMLElement | null = null;
+    let openWhenVisible = false;
+    let openedByHover = false;
+
+    const setOpen = (open: boolean, trigger?: HTMLElement) => {
+      if (open) returnFocus = trigger ?? returnFocus;
+
+      footer.dataset.contactOpen = String(open);
+      backdrop.dataset.open = String(open);
+      panel.setAttribute('aria-hidden', String(!open));
+      panel.inert = !open;
+      triggers.forEach((item) =>
+        item.setAttribute('aria-expanded', String(open)),
+      );
+
+      if (open) {
+        closeButton.focus({ preventScroll: true });
+      } else if (returnFocus) {
+        returnFocus.focus({ preventScroll: true });
+        returnFocus = null;
+      }
+    };
+
+    const footerObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+
+        footer.classList.toggle('logo-visible', entry.isIntersecting);
+
+        if (entry.isIntersecting && openWhenVisible) {
+          openWhenVisible = false;
+          setOpen(true, returnFocus ?? undefined);
+        }
+      },
+      { threshold: 0.05 },
+    );
+
+    footerObserver.observe(footer);
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener('click', (event) => {
+        event.preventDefault();
+        openedByHover = false;
+        returnFocus = trigger;
+
+        const footerIsVisible =
+          footer.getBoundingClientRect().top < window.innerHeight;
+        if (!footerIsVisible) {
+          openWhenVisible = true;
+          footer.scrollIntoView({ behavior: 'smooth' });
+          return;
+        }
+
+        setOpen(true, trigger);
+      });
+    });
+
+    const footerTrigger = footer.querySelector<HTMLElement>(
+      '[data-contact-trigger]',
+    );
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+    footerTrigger?.addEventListener('pointerenter', () => {
+      if (!finePointer.matches || footer.dataset.contactOpen === 'true') return;
+      openedByHover = true;
+      setOpen(true, footerTrigger);
+    });
+
+    footer.addEventListener('pointerleave', () => {
+      if (openedByHover) {
+        openedByHover = false;
+        setOpen(false);
+      }
+    });
+
+    closeButton.addEventListener('click', () => setOpen(false));
+    backdrop.addEventListener('click', () => setOpen(false));
+
+    panel.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setOpen(false);
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+
+      const focusable = Array.from(
+        panel.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'),
+      );
+      const first = focusable[0];
+      const last = focusable.at(-1);
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    });
+  }
+</script>
+
+<style>
+  .contact-backdrop {
+    position: fixed;
+    z-index: 90;
+    inset: 0;
+    width: 100%;
+    border: 0;
+    background: var(--color-overlay);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 600ms var(--ease-expressive);
+  }
+
+  .contact-backdrop[data-open='true'] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .site-footer {
+    position: relative;
+    z-index: 95;
+    min-height: 50dvh;
+    overflow: hidden;
+    background: var(--color-bocca-red);
+    color: var(--color-white);
+  }
+
+  .site-footer__inner {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: 1fr auto;
+    min-height: 50dvh;
+    padding: 2rem var(--page-gutter);
+  }
+
+  .site-footer__address {
+    display: flex;
+    grid-column: 1 / 5;
+    flex-direction: column;
+    align-self: start;
+    gap: 0.15rem;
+    color: rgb(255 255 255 / 80%);
+    font-style: normal;
+  }
+
+  .site-footer__address a {
+    width: max-content;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .site-footer__address a:first-child {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .site-footer__address a:hover {
+    color: var(--color-white);
+  }
+
+  .site-footer__contact {
+    display: flex;
+    grid-column: 9 / 13;
+    align-self: start;
+    justify-content: flex-end;
+  }
+
+  .site-footer__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: var(--text-heading-4);
+    font-weight: 400;
+    line-height: 1.05;
+    text-align: right;
+    white-space: pre-line;
+    transition: opacity var(--animate-duration-fast) ease;
+  }
+
+  .site-footer__cta:hover {
+    opacity: 0.75;
+  }
+
+  .site-footer__cta img {
+    width: 2.5rem;
+    height: 2.5rem;
+    flex: none;
+  }
+
+  .site-footer__logo {
+    display: flex;
+    grid-column: 1 / 9;
+    grid-row: 2;
+    align-items: flex-end;
+  }
+
+  .site-footer__logo img {
+    display: block;
+    width: auto;
+    height: clamp(8rem, 24vw, 20rem);
+    filter: brightness(0) invert(1);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .site-footer__logo img {
+      opacity: 0;
+      transform: translateY(10rem);
+      transition:
+        opacity 1s var(--ease-expressive),
+        transform 1s var(--ease-expressive);
+    }
+
+    .site-footer.logo-visible .site-footer__logo img {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .site-footer__links {
+    display: flex;
+    grid-column: 9 / 13;
+    grid-row: 2;
+    flex-wrap: wrap;
+    align-self: end;
+    justify-self: end;
+    justify-content: flex-end;
+    gap: 1rem 2rem;
+  }
+
+  .site-footer__links a {
+    color: inherit;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: opacity var(--animate-duration-fast) ease;
+  }
+
+  .site-footer__links a:hover {
+    opacity: 0.7;
+  }
+
+  .contact-panel {
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem var(--page-gutter);
+    background: var(--color-bordeaux);
+    color: var(--color-beige);
+    transform: translateX(100%);
+    transition: transform 600ms var(--ease-expressive);
+  }
+
+  .site-footer[data-contact-open='true'] .contact-panel {
+    transform: translateX(0);
+  }
+
+  .contact-panel__close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    padding: 0.5rem;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-size: 1.75rem;
+    opacity: 0.8;
+  }
+
+  .contact-panel__close:hover {
+    opacity: 1;
+  }
+
+  .contact-panel__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contact-panel__label {
+    color: var(--color-bocca-red);
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+
+  .contact-panel__label--spaced {
+    margin-top: 2rem;
+  }
+
+  .contact-panel__link {
+    width: max-content;
+    max-width: 100%;
+    color: inherit;
+    font-family: var(--font-display);
+    font-size: var(--text-heading-4);
+    line-height: 1.05;
+    overflow-wrap: anywhere;
+    text-decoration: none;
+    transition: opacity var(--animate-duration-fast) ease;
+  }
+
+  .contact-panel__link:hover {
+    opacity: 0.7;
+  }
+
+  @media (max-width: 48rem) {
+    .site-footer,
+    .site-footer__inner {
+      min-height: auto;
+    }
+
+    .site-footer__inner {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto;
+      gap: 2rem;
+      padding-top: 3rem;
+      padding-bottom: 2rem;
+    }
+
+    .site-footer__address,
+    .site-footer__contact,
+    .site-footer__logo,
+    .site-footer__links {
+      grid-column: 1;
+    }
+
+    .site-footer__address {
+      grid-row: 1;
+    }
+
+    .site-footer__contact {
+      grid-row: 2;
+      justify-content: flex-start;
+    }
+
+    .site-footer__cta {
+      font-size: 2.25rem;
+      text-align: left;
+    }
+
+    .site-footer__cta img {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+
+    .site-footer__logo {
+      grid-row: 3;
+      margin-top: 1rem;
+    }
+
+    .site-footer__logo img {
+      height: clamp(5rem, 15vw, 8rem);
+    }
+
+    .site-footer__links {
+      grid-row: 4;
+      justify-self: start;
+      justify-content: flex-start;
+      margin-top: 0.5rem;
+    }
+
+    .contact-panel {
+      width: 100%;
+    }
+
+    .contact-panel__link {
+      font-size: 2.25rem;
+    }
+  }
+</style>

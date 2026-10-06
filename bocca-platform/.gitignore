@@ -1,0 +1,15 @@
+node_modules/
+.pnpm-store/
+.DS_Store
+
+.env
+.env.*
+!.env.example
+
+dist/
+.astro/
+.sanity/
+
+apps/*/dist/
+apps/*/.astro/
+apps/*/.sanity/

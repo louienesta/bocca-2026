@@ -1,0 +1,43 @@
+---
+type Tone = 'beige' | 'white' | 'bordeaux' | 'red' | 'petroleum' | 'blue';
+type Spacing = 'none' | 'small' | 'default' | 'large';
+
+export interface Props {
+  as?: 'section' | 'div' | 'article';
+  class?: string;
+  tone?: Tone;
+  spacing?: Spacing;
+  'aria-labelledby'?: string;
+}
+
+const {
+  as: Tag = 'section',
+  class: className,
+  tone = 'beige',
+  spacing = 'default',
+  'aria-labelledby': ariaLabelledby,
+} = Astro.props as Props;
+
+const tones: Record<Tone, string> = {
+  beige: 'bg-beige text-bordeaux',
+  white: 'bg-white text-bordeaux',
+  bordeaux: 'bg-bordeaux text-white',
+  red: 'bg-bocca-red text-white',
+  petroleum: 'bg-petroleum text-white',
+  blue: 'bg-bocca-blue text-bordeaux',
+};
+
+const spacings: Record<Spacing, string> = {
+  none: '',
+  small: 'py-(--spacing-section-sm)',
+  default: 'py-(--spacing-section)',
+  large: 'py-(--spacing-section-lg)',
+};
+---
+
+<Tag
+  class:list={[tones[tone], spacings[spacing], className]}
+  aria-labelledby={ariaLabelledby}
+>
+  <slot />
+</Tag>

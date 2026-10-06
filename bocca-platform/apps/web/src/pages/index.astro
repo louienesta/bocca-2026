@@ -1,0 +1,25 @@
+---
+import HomeHero from '../components/home/HomeHero.astro';
+import LogoTicker from '../components/home/LogoTicker.astro';
+import FeaturedCases from '../components/home/FeaturedCases.astro';
+import ServicesAccordion from '../components/home/ServicesAccordion.astro';
+import AboutTeaser from '../components/about/AboutTeaser.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getAboutTeaser } from '../lib/sanity/aboutTeaser';
+import { getHomePage } from '../lib/sanity/homePage';
+
+const [page, teaser] = await Promise.all([getHomePage(), getAboutTeaser()]);
+---
+
+<BaseLayout title="BOCCA — kreativt bureau" description={page.hero.body}>
+  <main id="main-content">
+    <HomeHero content={page.hero} />
+    <LogoTicker logos={page.clientLogos} />
+    <FeaturedCases
+      heading={page.featuredCasesHeading}
+      cases={page.featuredCases}
+    />
+    <ServicesAccordion content={page.services} />
+    <AboutTeaser content={teaser} />
+  </main>
+</BaseLayout>

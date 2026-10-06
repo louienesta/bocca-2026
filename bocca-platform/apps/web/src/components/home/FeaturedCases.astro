@@ -1,0 +1,116 @@
+---
+import type { CaseCardData } from '../../lib/sanity/types';
+import CaseCard from '../cases/CaseCard.astro';
+import CaseReveal from '../cases/CaseReveal.astro';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+
+export interface Props {
+  heading: string;
+  cases: CaseCardData[];
+}
+
+const { heading, cases } = Astro.props as Props;
+const visibleCases = cases.filter(Boolean).slice(0, 4);
+const ratios = ['landscape', 'portrait', 'portrait', 'landscape'] as const;
+---
+
+{visibleCases.length > 0 && (
+  <Section
+    class="featured-cases"
+    spacing="none"
+    aria-labelledby="featured-cases-heading"
+  >
+    <Container>
+      <header class="featured-cases__header">
+        <h2 id="featured-cases-heading">{heading}</h2>
+      </header>
+
+      <ul class="featured-cases__grid">
+        {visibleCases.map((caseStudy, index) => (
+          <CaseCard
+            caseStudy={caseStudy}
+            ratio={ratios[index] ?? 'landscape'}
+            position={index}
+          />
+        ))}
+      </ul>
+    </Container>
+  </Section>
+)}
+<CaseReveal />
+
+<style>
+  :global(.featured-cases) {
+    padding-top: 6rem;
+    padding-bottom: 8rem;
+  }
+
+  .featured-cases__header,
+  .featured-cases__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+  }
+
+  .featured-cases__header {
+    margin-bottom: 4rem;
+  }
+
+  .featured-cases__header h2 {
+    grid-column: 2 / 8;
+  }
+
+  .featured-cases__grid {
+    margin: 0;
+    padding: 0;
+    row-gap: 8rem;
+  }
+
+  .featured-cases__grid > :global(.case-card-shell--0) {
+    grid-row: 1;
+    grid-column: 2 / 7;
+  }
+
+  .featured-cases__grid > :global(.case-card-shell--1) {
+    grid-row: 1;
+    grid-column: 8 / 12;
+  }
+
+  .featured-cases__grid > :global(.case-card-shell--2) {
+    grid-row: 2;
+    grid-column: 2 / 6;
+  }
+
+  .featured-cases__grid > :global(.case-card-shell--3) {
+    grid-row: 2;
+    grid-column: 7 / 12;
+  }
+
+  .featured-cases__grid > :global(.case-card-shell) {
+    align-self: center;
+  }
+
+  @media (max-width: 64rem) {
+    :global(.featured-cases) {
+      padding-top: 6rem;
+      padding-bottom: 4rem;
+    }
+
+    :global(.featured-cases [data-container]) {
+      padding-right: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    .featured-cases__header {
+      display: block;
+      margin-bottom: 3rem;
+    }
+
+    .featured-cases__grid {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+    }
+  }
+</style>

@@ -1,0 +1,28 @@
+{
+  "name": "@bocca/studio",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "CHOKIDAR_USEPOLLING=1 sanity dev --port 3333",
+    "build": "sanity build",
+    "check": "tsc --noEmit",
+    "deploy": "sanity deploy"
+  },
+  "dependencies": {
+    "@sanity/locale-da-dk": "^1.0.33",
+    "@sanity/vision": "^6.16.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "sanity": "^6.16.0",
+    "styled-components": "^6.5.3"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^6.0.3"
+  }
+}

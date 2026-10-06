@@ -1,0 +1,95 @@
+---
+import type { AboutTeaserData } from '../../lib/sanity/types';
+import AboutMedia from './AboutMedia.astro';
+import Button from '../ui/Button.astro';
+
+export interface Props {
+  content: AboutTeaserData;
+}
+
+const { content } = Astro.props as Props;
+---
+
+<section class="about-teaser" aria-labelledby="about-teaser-heading">
+  <AboutMedia
+    media={content.leftMedia ?? null}
+    fallbackSrc="/images/about/teaser-left.png"
+    fallbackAlt="To BOCCA-kollegaer i samtale"
+    ratio="square"
+    corner="top-right"
+    class="about-teaser__left-media"
+    sizes="(max-width: 64rem) calc(100vw - 3rem), 50vw"
+  />
+
+  <div class="about-teaser__right">
+    <AboutMedia
+      media={content.rightMedia ?? null}
+      fallbackSrc="/images/about/teaser-right.png"
+      fallbackAlt="To BOCCA-kollegaer ved et bord"
+      ratio="landscape"
+      corner="top-right"
+      class="about-teaser__right-media"
+      sizes="(max-width: 64rem) calc(100vw - 3rem), 50vw"
+    />
+    <div class="about-teaser__content">
+      <h2 id="about-teaser-heading">{content.heading}</h2>
+      <p class="type-body-lg">{content.body}</p>
+      <Button href="/moed-bocca/" class="about-teaser__button">
+        {content.buttonLabel}
+      </Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-teaser {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+    padding: 5rem var(--page-gutter) 7.5rem;
+    background: var(--color-beige);
+  }
+
+  .about-teaser > :global(.about-teaser__left-media) {
+    grid-column: 1 / 7;
+    width: 100%;
+  }
+
+  .about-teaser__right {
+    grid-column: 7 / 13;
+    min-width: 0;
+  }
+
+  .about-teaser__right > :global(.about-teaser__right-media) {
+    width: 100%;
+  }
+
+  .about-teaser__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 4rem clamp(2rem, 7.92vw, 9.5rem) 0;
+  }
+
+  .about-teaser__content > :global(.about-teaser__button) {
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 64rem) {
+    .about-teaser {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 3rem;
+      padding: 6rem 1.5rem 4rem;
+    }
+
+    .about-teaser > :global(.about-teaser__left-media),
+    .about-teaser__right {
+      grid-column: 1;
+    }
+
+    .about-teaser__content {
+      padding: 2.5rem 0 0;
+    }
+  }
+</style>

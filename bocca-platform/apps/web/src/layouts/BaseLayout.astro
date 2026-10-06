@@ -1,0 +1,58 @@
+---
+import '../styles/global.css';
+
+import SiteFooter from '../components/site/SiteFooter.astro';
+import SiteHeader from '../components/site/SiteHeader.astro';
+import { getSiteSettings } from '../lib/sanity/siteSettings';
+import type { SiteSettings } from '../lib/sanity/types';
+
+export interface Props {
+  title: string;
+  description: string;
+  robots?: string;
+  showChrome?: boolean;
+  settings?: SiteSettings;
+}
+
+const {
+  title,
+  description,
+  robots,
+  showChrome = true,
+  settings: providedSettings,
+} = Astro.props;
+const settings = showChrome
+  ? providedSettings || (await getSiteSettings())
+  : null;
+const resolvedRobots =
+  import.meta.env.PUBLIC_SITE_ENV === 'production'
+    ? robots
+    : 'noindex, nofollow';
+---
+
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    {resolvedRobots && <meta name="robots" content={resolvedRobots} />}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400&family=Gowun+Batang:wght@400&family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="sr-only focus:not-sr-only" href="#main-content">
+      Spring til indhold
+    </a>
+    {settings && <SiteHeader settings={settings} />}
+    <slot />
+    {settings && <SiteFooter settings={settings} />}
+  </body>
+</html>

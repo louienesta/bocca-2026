@@ -1,0 +1,42 @@
+---
+import type { CmsMedia, MediaCorner } from '../../lib/sanity/types';
+import Media from '../ui/Media.astro';
+import SanityMedia from '../ui/SanityMedia.astro';
+
+export interface Props {
+  media?: CmsMedia | null;
+  fallbackSrc: string;
+  fallbackAlt: string;
+  ratio: 'landscape' | 'square';
+  corner: MediaCorner;
+  class?: string;
+  sizes?: string;
+}
+
+const {
+  media,
+  fallbackSrc,
+  fallbackAlt,
+  ratio,
+  corner,
+  class: className,
+  sizes = '(max-width: 48rem) calc(100vw - 3rem), 50vw',
+} = Astro.props as Props;
+const hasMedia = Boolean(
+  (media?.mediaType === 'image' && media.image?.asset) ||
+  (media?.mediaType === 'video' && media.videoUrl),
+);
+---
+
+{hasMedia ? (
+  <SanityMedia
+    media={{ ...media!, corner }}
+    ratio={ratio}
+    class={className || ''}
+    sizes={sizes}
+  />
+) : (
+  <Media ratio={ratio} corner={corner} class={className || ''}>
+    <img src={fallbackSrc} alt={fallbackAlt} loading="lazy" decoding="async" />
+  </Media>
+)}

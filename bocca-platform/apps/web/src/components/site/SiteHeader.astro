@@ -1,0 +1,198 @@
+---
+import type { NavigationLink, SiteSettings } from '../../lib/sanity/types';
+
+export interface Props {
+  settings: SiteSettings;
+}
+
+const { settings } = Astro.props;
+const pathname = Astro.url.pathname;
+
+function isActive(link: NavigationLink): boolean {
+  if (link.linkType !== 'internal') return false;
+
+  const linkPath = link.href.replace(/\/$/, '') || '/';
+  const currentPath = pathname.replace(/\/$/, '') || '/';
+  return linkPath === currentPath;
+}
+
+function linkTarget(link: NavigationLink): string | undefined {
+  return link.linkType === 'external' && link.openInNewTab
+    ? '_blank'
+    : undefined;
+}
+---
+
+<header class="site-header">
+  <nav class="site-navigation" aria-label="Primær navigation">
+    <a
+      class:list={[
+        'site-navigation__link',
+        { active: isActive(settings.headerPrimaryLink) },
+      ]}
+      href={settings.headerPrimaryLink.href}
+      target={linkTarget(settings.headerPrimaryLink)}
+      rel={
+        linkTarget(settings.headerPrimaryLink)
+          ? 'noopener noreferrer'
+          : undefined
+      }
+      aria-current={isActive(settings.headerPrimaryLink) ? 'page' : undefined}
+      data-contact-trigger={
+        settings.headerPrimaryLink.linkType === 'contact' ? '' : undefined
+      }
+      aria-controls={
+        settings.headerPrimaryLink.linkType === 'contact'
+          ? 'contact-panel'
+          : undefined
+      }
+      aria-expanded={
+        settings.headerPrimaryLink.linkType === 'contact' ? 'false' : undefined
+      }
+    >
+      {settings.headerPrimaryLink.label}
+    </a>
+
+    <a
+      class="site-navigation__logo"
+      href="/"
+      aria-label={`${settings.siteName} – forside`}
+    >
+      <img src="/brand/bocca-logo.svg" alt="" width="236" height="64" />
+    </a>
+
+    <div class="site-navigation__secondary">
+      {settings.headerSecondaryLinks.map((link) => (
+        <a
+          class:list={['site-navigation__link', { active: isActive(link) }]}
+          href={link.href}
+          target={linkTarget(link)}
+          rel={linkTarget(link) ? 'noopener noreferrer' : undefined}
+          aria-current={isActive(link) ? 'page' : undefined}
+          data-contact-trigger={link.linkType === 'contact' ? '' : undefined}
+          aria-controls={
+            link.linkType === 'contact' ? 'contact-panel' : undefined
+          }
+          aria-expanded={link.linkType === 'contact' ? 'false' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    left: 0;
+    padding: 2rem var(--page-gutter);
+    pointer-events: none;
+  }
+
+  .site-navigation {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .site-navigation__link {
+    position: relative;
+    display: inline-block;
+    width: max-content;
+    padding-bottom: 0.25rem;
+    color: var(--color-bocca-red);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: normal;
+    text-decoration: none;
+    pointer-events: auto;
+  }
+
+  .site-navigation__link::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: currentColor;
+    content: '';
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 350ms var(--ease-expressive);
+  }
+
+  .site-navigation__link:hover::after,
+  .site-navigation__link:focus-visible::after,
+  .site-navigation__link.active::after {
+    transform: scaleX(1);
+  }
+
+  .site-navigation__logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    line-height: 0;
+    pointer-events: auto;
+    transform: translate(-50%, -50%);
+  }
+
+  .site-navigation__logo img {
+    display: block;
+    width: auto;
+    height: 4rem;
+  }
+
+  .site-navigation__secondary {
+    display: flex;
+    align-items: center;
+    justify-self: end;
+    gap: 2rem;
+  }
+
+  @media (max-width: 48rem) {
+    .site-header {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .site-navigation {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      row-gap: 0.75rem;
+    }
+
+    .site-navigation__logo {
+      position: static;
+      grid-column: 1 / -1;
+      grid-row: 1;
+      justify-self: center;
+      transform: none;
+    }
+
+    .site-navigation > .site-navigation__link {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .site-navigation__link {
+      font-size: 1.125rem;
+    }
+
+    .site-navigation__logo img {
+      height: 1.5rem;
+    }
+
+    .site-navigation__secondary {
+      grid-column: 2;
+      grid-row: 2;
+      gap: 0.75rem;
+    }
+  }
+</style>

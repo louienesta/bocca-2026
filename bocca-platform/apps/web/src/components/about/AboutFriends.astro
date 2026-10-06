@@ -1,0 +1,134 @@
+---
+export interface Props {
+  body: string;
+}
+
+const { body } = Astro.props as Props;
+---
+
+<section class="about-friends" aria-label="BOCCA & Friends">
+  <div class="about-friends__mark">
+    <img
+      class="about-friends__logo"
+      src="/brand/bocca-logo.svg"
+      width="236"
+      height="64"
+      alt="BOCCA"
+      loading="lazy"
+    />
+    <div class="about-friends__reveal" data-friends-reveal>
+      <span class="about-friends__emblem">&amp; Friends</span>
+    </div>
+  </div>
+  <p class="about-friends__copy">{body}</p>
+</section>
+
+<script>
+  const revealFriends = () => {
+    const emblem = document.querySelector<HTMLElement>(
+      '[data-friends-reveal]:not([data-reveal-ready])',
+    );
+    if (!emblem) return;
+
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+    if (reducedMotion || !('IntersectionObserver' in window)) return;
+
+    emblem.dataset.revealReady = 'true';
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        emblem.classList.add('is-visible');
+        observer.disconnect();
+      },
+      { rootMargin: '0px 0px -15% 0px', threshold: 0.1 },
+    );
+    observer.observe(emblem);
+  };
+
+  revealFriends();
+  document.addEventListener('astro:page-load', revealFriends);
+</script>
+
+<style>
+  .about-friends {
+    display: grid;
+    justify-items: center;
+    gap: 4rem;
+    padding: 9rem var(--page-gutter) 7rem;
+    overflow: hidden;
+    background: var(--color-beige);
+  }
+
+  .about-friends__mark {
+    position: relative;
+    width: min(100%, 74rem);
+    padding-bottom: 7rem;
+  }
+
+  .about-friends__logo {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .about-friends__reveal {
+    position: absolute;
+    right: 11%;
+    bottom: 0;
+    width: min(42%, 30rem);
+    transform: rotate(7deg);
+    transition:
+      opacity var(--animate-duration-reveal) var(--ease-expressive),
+      transform var(--animate-duration-reveal) var(--ease-expressive);
+  }
+
+  .about-friends__reveal[data-reveal-ready]:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(2.25rem) rotate(7deg) scale(0.98);
+  }
+
+  .about-friends__emblem {
+    display: grid;
+    min-height: 8rem;
+    place-items: center;
+    border-radius: var(--radius-label);
+    background: var(--color-bordeaux);
+    color: var(--color-beige);
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4vw, 5rem);
+    line-height: 1.05;
+    white-space: nowrap;
+  }
+
+  .about-friends__copy {
+    width: min(100%, 74rem);
+    font-size: var(--text-body-lg);
+    text-align: center;
+  }
+
+  @media (max-width: 48rem) {
+    .about-friends {
+      gap: 2.5rem;
+      padding: 5rem var(--page-gutter);
+    }
+
+    .about-friends__mark {
+      padding-bottom: 0;
+    }
+
+    .about-friends__reveal {
+      position: relative;
+      right: auto;
+      bottom: auto;
+      width: min(80%, 29rem);
+      margin: 1.25rem auto 0;
+    }
+
+    .about-friends__emblem {
+      min-height: 5rem;
+      font-size: clamp(2.5rem, 10vw, 4rem);
+    }
+  }
+</style>

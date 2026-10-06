@@ -1,0 +1,40 @@
+<script>
+  const revealCaseCards = () => {
+    const cards = document.querySelectorAll<HTMLElement>(
+      '[data-case-reveal]:not([data-reveal-ready])',
+    );
+
+    if (!cards.length) return;
+
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      cards.forEach((card) => {
+        card.dataset.revealReady = 'true';
+        card.classList.add('is-visible');
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: '0px 0px -15% 0px', threshold: 0.1 },
+    );
+
+    cards.forEach((card) => {
+      card.dataset.revealReady = 'true';
+      observer.observe(card);
+    });
+  };
+
+  revealCaseCards();
+  document.addEventListener('astro:page-load', revealCaseCards);
+</script>

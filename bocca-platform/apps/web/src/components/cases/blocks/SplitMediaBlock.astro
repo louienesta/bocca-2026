@@ -1,0 +1,64 @@
+---
+import type { CaseMediaSplitBlock } from '../../../lib/sanity/types';
+import SanityMedia from '../../ui/SanityMedia.astro';
+
+export interface Props {
+  block: CaseMediaSplitBlock;
+}
+
+const { block } = Astro.props as Props;
+---
+
+<section class="case-block case-block--split" aria-label="Case-medier">
+  <SanityMedia
+    media={block.leftMedia ?? null}
+    ratio="portrait"
+    class="case-block__split-left"
+    sizes="(max-width: 45rem) calc(100vw - 3rem), 42vw"
+  />
+  <SanityMedia
+    media={block.rightMedia ?? null}
+    ratio="portrait"
+    class="case-block__split-right"
+    sizes="(max-width: 45rem) calc(100vw - 3rem), 42vw"
+  />
+</section>
+
+<style>
+  .case-block {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--grid-gutter);
+    padding: 4rem;
+    background: var(--color-beige);
+  }
+
+  .case-block > :global(.case-block__split-left) {
+    grid-column: 2 / 7;
+  }
+
+  .case-block > :global(.case-block__split-right) {
+    grid-column: 7 / 12;
+  }
+
+  @media (max-width: 64rem) {
+    .case-block {
+      padding-right: 1.5rem;
+      padding-left: 1.5rem;
+    }
+  }
+
+  @media (max-width: 45rem) {
+    .case-block {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .case-block > :global(.case-block__split-left),
+    .case-block > :global(.case-block__split-right) {
+      grid-column: 1;
+    }
+  }
+</style>

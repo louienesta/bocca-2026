@@ -1,0 +1,73 @@
+---
+import AboutFriends from '../components/about/AboutFriends.astro';
+import AboutStory from '../components/about/AboutStory.astro';
+import AboutTeam from '../components/about/AboutTeam.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getAboutPage } from '../lib/sanity/aboutPage';
+
+const page = await getAboutPage();
+const title = page.seo?.metaTitle || `${page.heading} — BOCCA`;
+const description = page.seo?.metaDescription || page.introduction;
+---
+
+<BaseLayout title={title} description={description}>
+  <main id="main-content">
+    <header class="about-intro">
+      <div class="about-intro__content">
+        <h1>{page.heading}</h1>
+        <p>{page.introduction}</p>
+      </div>
+    </header>
+    <AboutStory page={page} />
+    <AboutFriends body={page.friendsBody} />
+    <AboutTeam heading={page.teamHeading} employees={page.employees} />
+  </main>
+</BaseLayout>
+
+<style>
+  .about-intro {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+    min-height: 28.25rem;
+    align-items: end;
+    padding: 10.5rem var(--page-gutter) 6rem;
+    background: var(--color-beige);
+  }
+
+  .about-intro__content {
+    display: grid;
+    grid-column: 2 / 8;
+    gap: 1.5rem;
+  }
+
+  .about-intro h1 {
+    font-size: 5rem;
+  }
+
+  .about-intro p {
+    font-size: var(--text-body-lg);
+  }
+
+  @media (max-width: 64rem) {
+    .about-intro {
+      min-height: 0;
+      padding-top: 9rem;
+    }
+
+    .about-intro__content {
+      grid-column: 1 / 10;
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .about-intro {
+      display: block;
+      padding: 7rem var(--page-gutter) 4rem;
+    }
+
+    .about-intro h1 {
+      font-size: 3.5rem;
+    }
+  }
+</style>

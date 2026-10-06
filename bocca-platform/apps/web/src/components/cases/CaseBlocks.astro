@@ -1,0 +1,26 @@
+---
+import type { CaseContentBlock } from '../../lib/sanity/types';
+import EditorialMediaBlock from './blocks/EditorialMediaBlock.astro';
+import MediaTextBlock from './blocks/MediaTextBlock.astro';
+import SingleMediaBlock from './blocks/SingleMediaBlock.astro';
+import SplitMediaBlock from './blocks/SplitMediaBlock.astro';
+
+export interface Props {
+  blocks?: CaseContentBlock[] | null;
+}
+
+const { blocks = [] } = Astro.props as Props;
+---
+
+{blocks?.map((block) => {
+  switch (block._type) {
+    case 'caseMediaSingle':
+      return <SingleMediaBlock block={block} />;
+    case 'caseMediaSplit':
+      return <SplitMediaBlock block={block} />;
+    case 'caseMediaEditorial':
+      return <EditorialMediaBlock block={block} />;
+    case 'caseMediaText':
+      return <MediaTextBlock block={block} />;
+  }
+})}

@@ -1,0 +1,186 @@
+---
+import Button from '../components/ui/Button.astro';
+import Container from '../components/ui/Container.astro';
+import Columns from '../components/ui/LayoutGrid.astro';
+import Media from '../components/ui/Media.astro';
+import Section from '../components/ui/Section.astro';
+import TextLink from '../components/ui/TextLink.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const colors = [
+  { name: 'BOCCA red', className: 'bg-bocca-red', hex: '#FF4931' },
+  { name: 'Bordeaux', className: 'bg-bordeaux', hex: '#4D1030' },
+  { name: 'Petroleum', className: 'bg-petroleum', hex: '#2E4A50' },
+  { name: 'BOCCA blue', className: 'bg-bocca-blue', hex: '#BADBFF' },
+  { name: 'Beige', className: 'bg-beige', hex: '#FAF4F0' },
+  { name: 'Media placeholder', className: 'bg-media', hex: '#D8D8D8' },
+];
+
+const typeSamples = [
+  { tag: 'H1', className: 'type-heading-1' },
+  { tag: 'H2', className: 'type-heading-2' },
+  { tag: 'H3', className: 'type-heading-3' },
+  { tag: 'H4', className: 'type-heading-4' },
+  { tag: 'H5', className: 'type-heading-5' },
+  { tag: 'H6', className: 'type-heading-6' },
+];
+---
+
+<BaseLayout
+  title="Design system — BOCCA"
+  description="Intern reference for BOCCAs coded design system."
+  robots="noindex, nofollow"
+  showChrome={false}
+>
+  <main id="main-content">
+    <Section spacing="large">
+      <Container>
+        <Columns>
+          <header class="col-span-4 space-y-5 md:col-span-8 md:col-start-2">
+            <p class="type-label">Internal reference</p>
+            <h1>Design system</h1>
+            <p class="type-body-lg max-w-3xl">
+              The prototype is the coded source of truth. This page exposes the
+              shared tokens and primitives that future BOCCA sections will use.
+            </p>
+          </header>
+        </Columns>
+      </Container>
+    </Section>
+
+    <Section class="border-t border-(--color-border)" spacing="large">
+      <Container>
+        <h2 class="mb-12">Colors</h2>
+        <ul class="grid list-none grid-cols-2 gap-(--grid-gutter) p-0 md:grid-cols-3">
+          {colors.map((color) => (
+            <li>
+              <div
+                class:list={[
+                  'aspect-3/2 rounded-label border border-bordeaux/10',
+                  color.className,
+                ]}
+              />
+              <p class="mt-4 font-medium">{color.name}</p>
+              <p class="mt-1 font-mono text-sm uppercase opacity-65">
+                {color.hex}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </Container>
+    </Section>
+
+    <Section class="border-t border-(--color-border)" spacing="large">
+      <Container>
+        <h2 class="mb-12">Typography</h2>
+        <div class="space-y-14">
+          {typeSamples.map(({ tag, className }) => (
+            <div class="grid gap-3 border-b border-(--color-border) pb-8 md:grid-cols-[8rem_1fr] md:items-baseline">
+              <p class="font-mono text-sm tracking-label uppercase opacity-60">
+                {tag}
+              </p>
+              <p class={className}>Klar retning. Stærke idéer.</p>
+            </div>
+          ))}
+          <div class="grid gap-3 md:grid-cols-[8rem_1fr] md:items-baseline">
+            <p class="font-mono text-sm tracking-label uppercase opacity-60">
+              Body
+            </p>
+            <div class="max-w-3xl space-y-5">
+              <p class="type-body-lg">
+                Vi udfolder potentialet i vores kunders budskaber og sætter dem
+                i bevægelse.
+              </p>
+              <p class="type-body">
+                De bedste løsninger opstår, når strategi og kreativitet arbejder
+                tæt sammen.
+              </p>
+            </div>
+          </div>
+          <div class="grid gap-3 border-b border-(--color-border) pb-8 md:grid-cols-[8rem_1fr] md:items-baseline"></div>
+          <div class="grid gap-3 md:grid-cols-[8rem_1fr] md:items-baseline">
+            <p class="font-mono text-sm tracking-label uppercase opacity-60">
+              Overtitle
+            </p>
+            <div class="max-w-3xl space-y-5">
+              <p class="type-label">Overtitle</p>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </Section>
+
+    <Section class="border-t border-(--color-border)" spacing="large">
+      <Container>
+        <h2 class="mb-12">Grid</h2>
+        <Columns class="h-80">
+          {Array.from({ length: 12 }, (_, index) => (
+            <div class="hidden bg-bocca-blue/55 md:block">
+              <span class="p-2 font-mono text-xs">{index + 1}</span>
+            </div>
+          ))}
+          {Array.from({ length: 4 }, (_, index) => (
+            <div class="bg-bocca-blue/55 md:hidden">
+              <span class="p-2 font-mono text-xs">{index + 1}</span>
+            </div>
+          ))}
+        </Columns>
+      </Container>
+    </Section>
+
+    <Section class="border-t border-(--color-border)" spacing="large">
+      <Container>
+        <h2 class="mb-12">Controls</h2>
+        <div class="flex flex-wrap items-center gap-5">
+          <Button href="#">Primary</Button>
+          <Button href="#" variant="secondary">
+            Secondary
+          </Button>
+          <Button disabled>Disabled</Button>
+          <TextLink href="#">Text link</TextLink>
+        </div>
+      </Container>
+    </Section>
+
+    <Section class="border-t border-(--color-border)" spacing="large">
+      <Container>
+        <h2 class="mb-12">Media</h2>
+        <Columns class="items-start gap-y-12">
+          <div class="col-span-4 md:col-span-5 md:col-start-2">
+            <Media corner="top-right" ratio="landscape" />
+            <p class="mt-4 font-mono text-sm uppercase opacity-60">
+              Landscape · 3:2
+            </p>
+          </div>
+          <div class="col-span-3 md:col-span-3 md:col-start-8">
+            <Media corner="bottom-right" ratio="portrait" />
+            <p class="mt-4 font-mono text-sm uppercase opacity-60">
+              Portrait · 3:4
+            </p>
+          </div>
+          <div class="col-span-3 md:col-span-3 md:col-start-2">
+            <Media corner="top-right" ratio="square" />
+            <p class="mt-4 font-mono text-sm uppercase opacity-60">
+              Square · 1:1
+            </p>
+          </div>
+        </Columns>
+      </Container>
+    </Section>
+
+    <Section tone="bordeaux" spacing="large">
+      <Container>
+        <Columns>
+          <div class="col-span-4 space-y-5 md:col-span-8 md:col-start-3">
+            <p class="type-label">Tone example</p>
+            <h2>Designed to stay consistent.</h2>
+            <p class="type-body-lg max-w-2xl">
+              Every section can change tone without introducing a new color or
+              losing the shared grid, spacing and typography rules.
+            </p>
+          </div>
+        </Columns>
+      </Container>
+    </Section>
+  </main>
+</BaseLayout>

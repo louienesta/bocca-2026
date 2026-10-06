@@ -1,0 +1,30 @@
+---
+export interface Props {
+  href: string;
+  class?: string;
+  target?: string;
+  rel?: string;
+}
+
+const { href, class: className, target, rel } = Astro.props;
+---
+
+<a
+  href={href}
+  target={target}
+  rel={rel}
+  class:list={[
+    'group inline-flex w-fit items-center gap-2 font-medium underline decoration-current/40 underline-offset-4 transition-colors duration-(--animate-duration-fast) hover:text-bocca-red',
+    className,
+  ]}
+>
+  <span>
+    <slot />
+  </span>
+  <span
+    aria-hidden="true"
+    class="transition-transform duration-(--animate-duration-control) ease-expressive motion-safe:group-hover:translate-x-1"
+  >
+    →
+  </span>
+</a>

@@ -1,0 +1,106 @@
+---
+import { getSanityImageUrl } from '../../lib/sanity/image';
+import type { CmsMedia } from '../../lib/sanity/types';
+import Media from './Media.astro';
+
+type Ratio = 'landscape' | 'portrait' | 'square' | 'video' | 'free';
+
+export interface Props {
+  media?: CmsMedia | null;
+  ratio?: Ratio;
+  class?: string;
+  sizes?: string;
+  loading?: 'eager' | 'lazy';
+}
+
+const {
+  media: mediaValue,
+  ratio = 'landscape',
+  class: className,
+  sizes = '(max-width: 64rem) calc(100vw - 3rem), 42vw',
+  loading = 'lazy',
+} = Astro.props as Props;
+
+const media: CmsMedia = mediaValue || { mediaType: 'image' };
+const fit = media.objectFit || 'cover';
+const corner = media.corner || 'none';
+const ratioValues = {
+  landscape: 3 / 2,
+  portrait: 3 / 4,
+  square: 1,
+  video: 16 / 9,
+  free: undefined,
+};
+const aspectRatio = ratioValues[ratio];
+const widths = [480, 768, 1200, 1600];
+const imageUrl = (image: CmsMedia['image'], width: number) =>
+  getSanityImageUrl(image, {
+    width,
+    ...(fit === 'cover' && aspectRatio
+      ? { height: Math.round(width / aspectRatio) }
+      : {}),
+    fit,
+  });
+const imageSrc = imageUrl(media.image, 1200);
+const imageSrcset = media.image
+  ? widths
+      .map((width) => {
+        const url = imageUrl(media.image, width);
+        return url ? `${url} ${width}w` : undefined;
+      })
+      .filter(Boolean)
+      .join(', ')
+  : undefined;
+const poster = imageUrl(media.posterImage, 1200);
+---
+
+<Media
+  ratio={ratio}
+  corner={corner}
+  fit={fit}
+  class={['sanity-media', className].filter(Boolean).join(' ')}
+>
+  {media.mediaType === 'image' && imageSrc ? (
+    <img
+      src={imageSrc}
+      srcset={imageSrcset}
+      sizes={sizes}
+      alt={media.isDecorative ? '' : media.alt || ''}
+      loading={loading}
+      decoding="async"
+    />
+  ) : media.mediaType === 'video' && media.videoUrl ? (
+    <video
+      autoplay={media.autoplay ?? true}
+      loop={media.loop ?? true}
+      muted={media.muted ?? true}
+      controls={media.controls ?? false}
+      playsinline
+      preload="metadata"
+      poster={poster}
+      aria-hidden={media.isDecorative ? 'true' : undefined}
+      aria-label={media.isDecorative ? undefined : media.videoTitle}
+    >
+      <source src={media.videoUrl} type={media.videoMimeType} />
+      {media.captionsUrl && (
+        <track
+          kind="captions"
+          src={media.captionsUrl}
+          srclang="da"
+          label="Dansk"
+          default
+        />
+      )}
+    </video>
+  ) : (
+    <span class="sanity-media__placeholder" aria-hidden="true"></span>
+  )}
+</Media>
+
+<style>
+  .sanity-media__placeholder {
+    position: absolute;
+    inset: 0;
+    background: var(--color-media);
+  }
+</style>

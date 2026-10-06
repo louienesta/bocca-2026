@@ -1,0 +1,79 @@
+---
+import type { CaseMediaTextBlock } from '../../../lib/sanity/types';
+import SanityMedia from '../../ui/SanityMedia.astro';
+
+export interface Props {
+  block: CaseMediaTextBlock;
+}
+
+const { block } = Astro.props as Props;
+const headingId = `case-block-heading-${block._key}`;
+---
+
+<section class="case-block case-block--media-text" aria-labelledby={headingId}>
+  <SanityMedia
+    media={block.media ?? null}
+    ratio="free"
+    class="case-block__media-text-media"
+    sizes="(max-width: 45rem) calc(100vw - 3rem), 58vw"
+  />
+  <div class="case-block__copy">
+    <h2 id={headingId}>{block.heading}</h2>
+    <p class="type-body-lg">{block.body}</p>
+  </div>
+</section>
+
+<style>
+  .case-block {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: center;
+    gap: var(--grid-gutter);
+    padding: 4rem;
+    background: var(--color-beige);
+  }
+
+  .case-block > :global(.case-block__media-text-media) {
+    grid-column: 2 / 9;
+    aspect-ratio: 13 / 9;
+  }
+
+  .case-block__copy {
+    display: grid;
+    grid-column: 9 / 12;
+    gap: 1.5rem;
+  }
+
+  .case-block__copy h2 {
+    font-size: 5rem;
+  }
+
+  @media (max-width: 64rem) {
+    .case-block {
+      padding-right: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    .case-block__copy h2 {
+      font-size: clamp(3rem, 6vw, 5rem);
+    }
+  }
+
+  @media (max-width: 45rem) {
+    .case-block {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    .case-block > :global(.case-block__media-text-media),
+    .case-block__copy {
+      grid-column: 1;
+    }
+
+    .case-block__copy h2 {
+      font-size: 2.5rem;
+    }
+  }
+</style>

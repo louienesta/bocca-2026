@@ -1,0 +1,193 @@
+---
+import type { AboutPage } from '../../lib/sanity/types';
+import AboutMedia from './AboutMedia.astro';
+
+export interface Props {
+  page: AboutPage;
+}
+
+const { page } = Astro.props as Props;
+---
+
+<section class="about-story" aria-label="Om BOCCA">
+  <article class="story-row">
+    <div class="story-copy">
+      <h2>{page.firstStory.heading}</h2>
+      <p>{page.firstStory.body}</p>
+    </div>
+    <AboutMedia
+      media={page.firstStory.media ?? null}
+      fallbackSrc="/images/about/story-01.jpeg"
+      fallbackAlt="Kollegaer i samtale i BOCCAs køkken"
+      ratio="landscape"
+      corner="top-left"
+      class="story-media"
+      sizes="(max-width: 48rem) calc(100vw - 3rem), 50vw"
+    />
+  </article>
+
+  <article class="story-dual">
+    <AboutMedia
+      media={page.middleStory.leftMedia ?? null}
+      fallbackSrc="/images/about/story-02-left.jpg"
+      fallbackAlt="Kollega læser materiale ved vinduet på BOCCAs kontor"
+      ratio="square"
+      corner="top-right"
+      class="story-dual__left"
+      sizes="(max-width: 48rem) calc(100vw - 3rem), 50vw"
+    />
+    <div class="story-dual__right">
+      <AboutMedia
+        media={page.middleStory.rightMedia ?? null}
+        fallbackSrc="/images/about/story-02-right.jpg"
+        fallbackAlt="To kollegaer samarbejder ved et bord på BOCCAs kontor"
+        ratio="landscape"
+        corner="top-right"
+        class="story-dual__media"
+        sizes="(max-width: 48rem) calc(100vw - 3rem), 50vw"
+      />
+      <div class="story-dual__copy">
+        <h2>{page.middleStory.heading}</h2>
+        <p>{page.middleStory.body}</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="story-row">
+    <div class="story-copy">
+      <h2>{page.finalStory.heading}</h2>
+      <p>{page.finalStory.body}</p>
+    </div>
+    <AboutMedia
+      media={page.finalStory.media ?? null}
+      fallbackSrc="/images/about/story-03.jpeg"
+      fallbackAlt="Kollegaer i samtale på BOCCAs kontor"
+      ratio="landscape"
+      corner="top-left"
+      class="story-media"
+      sizes="(max-width: 48rem) calc(100vw - 3rem), 50vw"
+    />
+  </article>
+</section>
+
+<style>
+  .about-story {
+    display: grid;
+    gap: 6rem;
+    padding: 6rem var(--page-gutter);
+    background: var(--color-beige);
+  }
+
+  .story-row,
+  .story-dual {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+  }
+
+  .story-row {
+    min-height: 37.5rem;
+    align-items: center;
+  }
+
+  .story-copy {
+    display: grid;
+    grid-column: 2 / 6;
+    align-content: center;
+    gap: 1.5rem;
+    padding: 0 4rem 0 0;
+  }
+
+  .story-copy h2 {
+    font-size: 2.75rem;
+  }
+
+  .story-copy p,
+  .story-dual__copy p {
+    font-size: var(--text-body-lg);
+  }
+
+  .story-row > :global(.story-media) {
+    grid-column: 6 / 12;
+    width: 100%;
+  }
+
+  .story-dual {
+    min-height: 55rem;
+    align-items: start;
+  }
+
+  .story-dual > :global(.story-dual__left) {
+    grid-column: 1 / 7;
+    width: 100%;
+  }
+
+  .story-dual__right {
+    grid-column: 7 / 13;
+    min-width: 0;
+  }
+
+  .story-dual__right > :global(.story-dual__media) {
+    width: 100%;
+  }
+
+  .story-dual__copy {
+    display: grid;
+    gap: 2rem;
+    padding-top: 4rem;
+  }
+
+  .story-dual__copy h2 {
+    font-size: var(--text-heading-4);
+  }
+
+  @media (max-width: 64rem) {
+    .story-copy {
+      grid-column: 1 / 6;
+      padding: 0 1.5rem 0 0;
+    }
+
+    .story-copy h2 {
+      font-size: 2.25rem;
+    }
+
+    .story-row > :global(.story-media) {
+      grid-column: 6 / 13;
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .about-story {
+      gap: 4rem;
+      padding: 4rem var(--page-gutter);
+    }
+
+    .story-row,
+    .story-dual {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2rem;
+      min-height: 0;
+    }
+
+    .story-copy,
+    .story-row > :global(.story-media),
+    .story-dual > :global(.story-dual__left),
+    .story-dual__right {
+      grid-column: 1;
+    }
+
+    .story-copy {
+      padding: 0;
+    }
+
+    .story-copy h2,
+    .story-dual__copy h2 {
+      font-size: 2rem;
+    }
+
+    .story-dual__copy {
+      gap: 1.5rem;
+      padding-top: 2rem;
+    }
+  }
+</style>

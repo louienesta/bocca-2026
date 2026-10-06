@@ -1,0 +1,53 @@
+---
+import type { CaseMediaSingleBlock } from '../../../lib/sanity/types';
+import SanityMedia from '../../ui/SanityMedia.astro';
+
+export interface Props {
+  block: CaseMediaSingleBlock;
+}
+
+const { block } = Astro.props as Props;
+---
+
+<section class="case-block case-block--single" aria-label="Case-medie">
+  <SanityMedia
+    media={block.media ?? null}
+    ratio="landscape"
+    class="case-block__single-media"
+    sizes="(max-width: 45rem) calc(100vw - 3rem), 82vw"
+  />
+</section>
+
+<style>
+  .case-block {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--grid-gutter);
+    padding: 4rem;
+    background: var(--color-beige);
+  }
+
+  .case-block > :global(.case-block__single-media) {
+    grid-column: 2 / 12;
+  }
+
+  @media (max-width: 64rem) {
+    .case-block {
+      padding-right: 1.5rem;
+      padding-left: 1.5rem;
+    }
+  }
+
+  @media (max-width: 45rem) {
+    .case-block {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .case-block > :global(.case-block__single-media) {
+      grid-column: 1;
+    }
+  }
+</style>

@@ -1,0 +1,298 @@
+---
+import type { HomeServices } from '../../lib/sanity/types';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+
+export interface Props {
+  content: HomeServices;
+}
+
+const { content } = Astro.props as Props;
+---
+
+<Section class="services-accordion" aria-labelledby="services-heading">
+  <Container>
+    <div class="services-accordion__grid" data-services-accordion>
+      <header class="services-accordion__intro">
+        <h2 id="services-heading">{content.heading}</h2>
+        <p class="type-body-lg">{content.introduction}</p>
+      </header>
+
+      <div class="services-accordion__list">
+        {content.items.map((item) => (
+          <details class="services-accordion__item" data-service-item>
+            <summary>
+              <h3>{item.heading}</h3>
+              <span class="services-accordion__icon" aria-hidden="true" />
+            </summary>
+            <div class="services-accordion__panel" data-service-panel>
+              <div class="services-accordion__panel-content">
+                <p>{item.body}</p>
+                {item.linkLabel && item.linkUrl && (
+                  <a href={item.linkUrl}>{item.linkLabel}</a>
+                )}
+              </div>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </Container>
+</Section>
+
+<script>
+  const initializedAccordions = new WeakSet<HTMLElement>();
+
+  function initializeServicesAccordions() {
+    document
+      .querySelectorAll<HTMLElement>('[data-services-accordion]')
+      .forEach((accordion) => {
+        if (initializedAccordions.has(accordion)) return;
+        initializedAccordions.add(accordion);
+
+        const items = Array.from(
+          accordion.querySelectorAll<HTMLDetailsElement>('[data-service-item]'),
+        );
+        const animations = new WeakMap<HTMLDetailsElement, Animation>();
+        const reducedMotion = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        );
+
+        function setOpen(item: HTMLDetailsElement, shouldOpen: boolean) {
+          const panel = item.querySelector<HTMLElement>('[data-service-panel]');
+          if (!panel) return;
+
+          const running = animations.get(item);
+          const currentHeight = running
+            ? panel.getBoundingClientRect().height
+            : item.open
+              ? panel.getBoundingClientRect().height
+              : 0;
+          const currentOpacity = running
+            ? Number.parseFloat(getComputedStyle(panel).opacity)
+            : item.open
+              ? 1
+              : 0;
+
+          if (running) {
+            panel.style.height = `${currentHeight}px`;
+            panel.style.opacity = String(currentOpacity);
+            running.cancel();
+            animations.delete(item);
+          }
+
+          if (reducedMotion.matches) {
+            item.open = shouldOpen;
+            item.classList.remove('is-closing');
+            panel.style.removeProperty('height');
+            panel.style.removeProperty('opacity');
+            return;
+          }
+
+          // Keep <details> open until its full content, including bottom spacing,
+          // has animated to zero; closing the element early clips that spacing.
+          item.open = true;
+          item.classList.toggle('is-closing', !shouldOpen);
+          const endHeight = shouldOpen ? panel.scrollHeight : 0;
+          panel.style.height = `${currentHeight}px`;
+          panel.style.opacity = String(currentOpacity);
+
+          const animation = panel.animate(
+            [
+              { height: `${currentHeight}px`, opacity: currentOpacity },
+              { height: `${endHeight}px`, opacity: shouldOpen ? 1 : 0 },
+            ],
+            {
+              duration: 850,
+              easing: 'cubic-bezier(0.65, 0, 0.35, 1)',
+              fill: 'forwards',
+            },
+          );
+          animations.set(item, animation);
+          animation.onfinish = () => {
+            if (animations.get(item) !== animation) return;
+            if (shouldOpen) {
+              panel.style.height = 'auto';
+              panel.style.opacity = '1';
+            } else {
+              item.open = false;
+            }
+            animation.cancel();
+            item.classList.remove('is-closing');
+            panel.style.removeProperty('height');
+            panel.style.removeProperty('opacity');
+            animations.delete(item);
+          };
+        }
+
+        items.forEach((item) => {
+          const summary = item.querySelector('summary');
+          summary?.addEventListener('click', (event) => {
+            event.preventDefault();
+            const shouldOpen =
+              !item.open || item.classList.contains('is-closing');
+            if (shouldOpen) {
+              items.forEach((other) => {
+                if (
+                  other !== item &&
+                  other.open &&
+                  !other.classList.contains('is-closing')
+                ) {
+                  setOpen(other, false);
+                }
+              });
+            }
+            setOpen(item, shouldOpen);
+          });
+        });
+      });
+  }
+
+  initializeServicesAccordions();
+  document.addEventListener('astro:page-load', initializeServicesAccordions);
+</script>
+
+<style>
+  :global(.services-accordion) {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  .services-accordion__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+  }
+
+  .services-accordion__intro,
+  .services-accordion__list {
+    grid-column: 3 / 11;
+  }
+
+  .services-accordion__intro h2 {
+    margin-bottom: 1.5rem;
+    font-size: 4rem;
+  }
+
+  .services-accordion__list {
+    margin-top: 4.5rem;
+  }
+
+  .services-accordion__item {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .services-accordion__item:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .services-accordion__item summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 1.5rem;
+    align-items: center;
+    gap: 1rem;
+    min-height: 6.25rem;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .services-accordion__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .services-accordion__item h3 {
+    font-size: 2.75rem;
+  }
+
+  .services-accordion__icon {
+    position: relative;
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: transform 450ms var(--ease-balanced);
+  }
+
+  .services-accordion__icon::before,
+  .services-accordion__icon::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1.25rem;
+    height: 1px;
+    background: currentColor;
+    content: '';
+    transform: translate(-50%, -50%);
+  }
+
+  .services-accordion__icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .services-accordion__item[open]:not(.is-closing) .services-accordion__icon {
+    transform: rotate(45deg);
+  }
+
+  .services-accordion__panel {
+    overflow: hidden;
+  }
+
+  .services-accordion__panel-content {
+    padding-bottom: 1.75rem;
+  }
+
+  .services-accordion__panel p {
+    max-width: calc(100% - 15.5rem);
+    font-size: 1.125rem;
+  }
+
+  .services-accordion__panel a {
+    display: inline-block;
+    margin-top: 0.875rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-underline-offset: 0.2em;
+  }
+
+  .services-accordion__panel a:hover {
+    color: var(--color-bocca-red);
+  }
+
+  @media (max-width: 64rem) {
+    .services-accordion__intro,
+    .services-accordion__list {
+      grid-column: 1 / 13;
+    }
+  }
+
+  @media (max-width: 45rem) {
+    :global(.services-accordion) {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+
+    .services-accordion__intro h2 {
+      font-size: var(--text-heading-2);
+    }
+
+    .services-accordion__list {
+      margin-top: 3rem;
+    }
+
+    .services-accordion__item summary {
+      min-height: 5.5rem;
+    }
+
+    .services-accordion__item h3 {
+      font-size: clamp(2rem, 8vw, 2.5rem);
+    }
+
+    .services-accordion__panel-content {
+      padding-bottom: 1.5rem;
+    }
+
+    .services-accordion__panel p {
+      max-width: 100%;
+    }
+  }
+</style>

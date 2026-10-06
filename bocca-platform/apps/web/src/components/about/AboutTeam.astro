@@ -1,0 +1,86 @@
+---
+import type { EmployeeData } from '../../lib/sanity/types';
+import EmployeeCard from '../employees/EmployeeCard.astro';
+
+export interface Props {
+  heading: string;
+  employees: EmployeeData[];
+}
+
+const { heading, employees } = Astro.props as Props;
+const shadows = [
+  'red',
+  'blue',
+  'red',
+  'petroleum',
+  'blue',
+  'red',
+  'petroleum',
+] as const;
+---
+
+<section class="about-team" aria-labelledby="team-heading">
+  <h2 id="team-heading">{heading}</h2>
+  {employees.length > 0 && (
+    <div class="about-team__grid">
+      {employees.map((employee, index) => (
+        <EmployeeCard
+          employee={employee}
+          shadow={shadows[index % shadows.length] ?? 'red'}
+        />
+      ))}
+    </div>
+  )}
+</section>
+
+<style>
+  .about-team {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 4rem var(--grid-gutter);
+    padding: 6rem var(--page-gutter) 8rem;
+    background: var(--color-beige);
+  }
+
+  .about-team > h2,
+  .about-team__grid {
+    grid-column: 2 / 12;
+  }
+
+  .about-team__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 7rem var(--grid-gutter);
+  }
+
+  .about-team__grid :global(.employee-card) {
+    min-width: 0;
+    text-align: center;
+  }
+
+  @media (max-width: 64rem) {
+    .about-team__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      row-gap: 4rem;
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .about-team {
+      display: block;
+      padding: 4rem var(--page-gutter) 5rem;
+    }
+
+    .about-team__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4rem 1.5rem;
+      margin-top: 3rem;
+    }
+  }
+
+  @media (max-width: 28rem) {
+    .about-team__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

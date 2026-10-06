@@ -1,0 +1,18 @@
+---
+export interface Props {
+  as?: 'div' | 'header' | 'main' | 'section' | 'footer';
+  class?: string;
+}
+
+const { as: Tag = 'div', class: classAttribute } = Astro.props as Props;
+---
+
+<Tag
+  class:list={[
+    'mx-auto w-full max-w-(--content-max-width) px-(--page-gutter)',
+    classAttribute,
+  ]}
+  data-container
+>
+  <slot />
+</Tag>

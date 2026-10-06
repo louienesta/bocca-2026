@@ -1,0 +1,164 @@
+---
+import type { CasesPage } from '../../lib/sanity/types';
+import CaseCard from './CaseCard.astro';
+import CaseReveal from './CaseReveal.astro';
+
+export interface Props {
+  page: CasesPage;
+}
+
+const { page } = Astro.props as Props;
+const rows = Array.from(
+  { length: Math.ceil(page.cases.length / 2) },
+  (_, index) => page.cases.slice(index * 2, index * 2 + 2),
+);
+const ratioFor = (index: number) =>
+  index % 4 === 0 || index % 4 === 3 ? 'landscape' : 'portrait';
+---
+
+<section class="cases-overview" aria-labelledby="cases-overview-heading">
+  <header class="cases-overview__header">
+    <div class="cases-overview__intro">
+      <h1 id="cases-overview-heading">{page.heading}</h1>
+      <p>{page.introduction}</p>
+    </div>
+  </header>
+
+  {rows.length > 0 ? (
+    <div class="cases-overview__grid" aria-label="Cases">
+      {rows.map((row, rowIndex) => (
+        <div
+          class:list={[
+            'cases-overview__row',
+            rowIndex % 2 === 0
+              ? 'cases-overview__row--landscape-first'
+              : 'cases-overview__row--portrait-first',
+          ]}
+        >
+          {row.map((caseStudy, columnIndex) => {
+            const index = rowIndex * 2 + columnIndex;
+            return (
+              <CaseCard
+                caseStudy={caseStudy}
+                ratio={ratioFor(index)}
+                position={index}
+                as="article"
+                headingLevel={2}
+              />
+            );
+          })}
+        </div>
+      ))}
+    </div>
+  ) : (
+    <p class="cases-overview__empty">Der er endnu ikke publiceret cases.</p>
+  )}
+</section>
+
+<CaseReveal />
+
+<style>
+  .cases-overview {
+    width: 100%;
+    padding: 16rem var(--page-gutter) 10rem;
+    background: var(--color-beige);
+  }
+
+  .cases-overview__header,
+  .cases-overview__row {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+  }
+
+  .cases-overview__header {
+    margin-bottom: 7rem;
+  }
+
+  .cases-overview__intro {
+    display: flex;
+    grid-column: 2 / 10;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .cases-overview__intro h1 {
+    font-size: 5rem;
+  }
+
+  .cases-overview__intro p {
+    max-width: 40rem;
+    opacity: 0.85;
+    font-size: 1.25rem;
+    line-height: 1.6;
+  }
+
+  .cases-overview__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8rem;
+  }
+
+  .cases-overview__row {
+    align-items: center;
+  }
+
+  .cases-overview__row--landscape-first
+    > :global(.case-card-shell:first-child) {
+    grid-column: 2 / 7;
+  }
+
+  .cases-overview__row--landscape-first
+    > :global(.case-card-shell:nth-child(2)) {
+    grid-column: 8 / 12;
+  }
+
+  .cases-overview__row--portrait-first > :global(.case-card-shell:first-child) {
+    grid-column: 2 / 6;
+  }
+
+  .cases-overview__row--portrait-first
+    > :global(.case-card-shell:nth-child(2)) {
+    grid-column: 7 / 12;
+  }
+
+  .cases-overview__empty {
+    grid-column: 2 / 10;
+  }
+
+  @media (max-width: 64rem) {
+    .cases-overview {
+      padding: 7rem 1.5rem 4rem;
+    }
+
+    .cases-overview__header {
+      display: block;
+      margin-bottom: 3rem;
+    }
+
+    .cases-overview__intro h1 {
+      font-size: 3rem;
+    }
+
+    .cases-overview__grid,
+    .cases-overview__row {
+      gap: 4rem;
+    }
+
+    .cases-overview__row {
+      grid-template-columns: 100%;
+    }
+
+    .cases-overview__row > :global(.case-card-shell) {
+      grid-column: 1 / -1;
+    }
+
+    .cases-overview :global(.case-card__heading h2) {
+      font-size: 1.25rem;
+    }
+
+    .cases-overview :global(.case-card__year) {
+      font-size: 1.125rem;
+    }
+  }
+</style>

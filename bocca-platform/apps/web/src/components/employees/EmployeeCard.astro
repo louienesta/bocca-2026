@@ -1,0 +1,118 @@
+---
+import { getSanityImageUrl } from '../../lib/sanity/image';
+import type { EmployeeData } from '../../lib/sanity/types';
+import Media from '../ui/Media.astro';
+
+export interface Props {
+  employee: EmployeeData;
+  class?: string;
+  shadow?: 'red' | 'blue' | 'petroleum';
+  loading?: 'eager' | 'lazy';
+}
+
+const {
+  employee,
+  class: className,
+  shadow = 'red',
+  loading = 'lazy',
+} = Astro.props as Props;
+const widths = [320, 480, 640, 800];
+const portraitUrl = (width: number) =>
+  getSanityImageUrl(employee.portrait || undefined, {
+    width,
+    height: width,
+    fit: 'cover',
+  });
+const portraitSrc = portraitUrl(640);
+const portraitSrcset = employee.portrait
+  ? widths
+      .map((width) => {
+        const url = portraitUrl(width);
+        return url ? `${url} ${width}w` : undefined;
+      })
+      .filter(Boolean)
+      .join(', ')
+  : undefined;
+---
+
+<article class:list={['employee-card', `employee-card--${shadow}`, className]}>
+  <div class="employee-card__portrait-wrap">
+    <Media ratio="square" corner="top-right" class="employee-card__portrait">
+      {portraitSrc ? (
+        <img
+          src={portraitSrc}
+          srcset={portraitSrcset}
+          sizes="(max-width: 45rem) 20rem, 25vw"
+          alt={employee.portrait?.alt || `Portræt af ${employee.name}`}
+          loading={loading}
+        />
+      ) : (
+        <span class="employee-card__placeholder" aria-hidden="true"></span>
+      )}
+    </Media>
+  </div>
+
+  <h3>{employee.name}</h3>
+  <p>{employee.role}</p>
+</article>
+
+<style>
+  .employee-card {
+    display: grid;
+    align-content: start;
+    color: inherit;
+    --employee-shadow: var(--color-bocca-red);
+  }
+
+  .employee-card--blue {
+    --employee-shadow: var(--color-bocca-blue);
+  }
+
+  .employee-card--petroleum {
+    --employee-shadow: var(--color-petroleum);
+  }
+
+  .employee-card__portrait-wrap {
+    padding-right: 0.875rem;
+    padding-bottom: 0.875rem;
+  }
+
+  .employee-card__portrait-wrap :global(.employee-card__portrait) {
+    overflow: hidden;
+    box-shadow: 0.875rem 0.875rem 0 var(--employee-shadow);
+  }
+
+  .employee-card__portrait-wrap :global(.employee-card__portrait > img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .employee-card__placeholder {
+    position: absolute;
+    inset: 0;
+    background: var(--color-media);
+  }
+
+  .employee-card h3 {
+    margin-top: 2.5rem;
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+
+  .employee-card p {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+
+  @media (max-width: 45rem) {
+    .employee-card h3 {
+      font-size: 1.5rem;
+    }
+
+    .employee-card p {
+      font-size: 1rem;
+    }
+  }
+</style>

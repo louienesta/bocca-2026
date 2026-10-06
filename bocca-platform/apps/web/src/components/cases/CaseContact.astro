@@ -1,0 +1,112 @@
+---
+import type { CaseStudyData, SiteSettings } from '../../lib/sanity/types';
+import EmployeeCard from '../employees/EmployeeCard.astro';
+
+export interface Props {
+  caseStudy: CaseStudyData;
+  settings: SiteSettings;
+}
+
+const { caseStudy, settings } = Astro.props as Props;
+const employee = caseStudy.contactPerson;
+const email = employee?.email || settings.email;
+const phone = employee?.phone || settings.phone;
+const telephoneHref = `tel:${phone.replace(/[^+\d]/g, '')}`;
+---
+
+<section class="case-contact" aria-labelledby="case-contact-heading">
+  <div class="case-contact__content">
+    <h2 id="case-contact-heading">{settings.caseContactHeading}</h2>
+    <p class="type-body-lg">
+      <a href={`mailto:${email}`}>{email}</a>
+      <br />
+      <a href={telephoneHref}>{phone}</a>
+    </p>
+  </div>
+
+  {employee && (
+    <EmployeeCard
+      employee={employee}
+      class="case-contact__profile"
+      loading="eager"
+    />
+  )}
+</section>
+
+<style>
+  .case-contact {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    min-height: 56.25rem;
+    align-items: center;
+    column-gap: var(--grid-gutter);
+    padding: 9.25rem var(--page-gutter);
+    background: var(--color-bordeaux);
+    color: var(--color-white);
+  }
+
+  .case-contact__content {
+    display: grid;
+    grid-column: 2 / 8;
+    align-self: stretch;
+    align-content: space-between;
+  }
+
+  .case-contact__content h2 {
+    font-size: 4rem;
+    white-space: pre-line;
+  }
+
+  .case-contact__content a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .case-contact__content a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .case-contact > :global(.case-contact__profile) {
+    grid-column: 9 / 12;
+    width: 100%;
+  }
+
+  @media (max-width: 64rem) {
+    .case-contact {
+      padding-right: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    .case-contact__content h2 {
+      font-size: clamp(3rem, 5vw, 4rem);
+    }
+  }
+
+  @media (max-width: 45rem) {
+    .case-contact {
+      grid-template-columns: 1fr;
+      min-height: 0;
+      gap: 4rem;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+
+    .case-contact__content,
+    .case-contact > :global(.case-contact__profile) {
+      grid-column: 1;
+    }
+
+    .case-contact__content {
+      gap: 3rem;
+    }
+
+    .case-contact__content h2 {
+      font-size: 2.5rem;
+    }
+
+    .case-contact > :global(.case-contact__profile) {
+      max-width: 20rem;
+    }
+  }
+</style>

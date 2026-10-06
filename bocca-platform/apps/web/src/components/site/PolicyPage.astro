@@ -1,0 +1,157 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export interface Props {
+  title: string;
+  introduction: string;
+}
+
+const { title, introduction } = Astro.props as Props;
+---
+
+<BaseLayout
+  title={`${title} — BOCCA`}
+  description={introduction}
+  robots="noindex, nofollow"
+>
+  <main id="main-content" class="policy-page">
+    <header class="policy-page__header">
+      <div class="policy-page__intro">
+        <h1>{title}</h1>
+        <p>{introduction}</p>
+      </div>
+    </header>
+
+    <article class="policy-page__article" aria-label={`${title} – indhold`}>
+      <div class="policy-page__body">
+        <slot />
+      </div>
+    </article>
+  </main>
+</BaseLayout>
+
+<style>
+  .policy-page {
+    background: var(--color-beige);
+  }
+
+  .policy-page__header,
+  .policy-page__article {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+    padding-right: var(--page-gutter);
+    padding-left: var(--page-gutter);
+  }
+
+  .policy-page__header {
+    min-height: 28.25rem;
+    align-items: end;
+    padding-top: 10.5rem;
+    padding-bottom: 6rem;
+  }
+
+  .policy-page__intro {
+    display: grid;
+    grid-column: 3 / 11;
+    justify-self: center;
+    width: 100%;
+    max-width: 48rem;
+    gap: 1.5rem;
+  }
+
+  .policy-page__intro h1 {
+    font-size: 5rem;
+  }
+
+  .policy-page__intro p {
+    max-width: 40rem;
+    font-size: var(--text-body-lg);
+  }
+
+  .policy-page__article {
+    padding-top: 2rem;
+    padding-bottom: 10rem;
+  }
+
+  .policy-page__body {
+    grid-column: 3 / 11;
+    justify-self: center;
+    width: 100%;
+    max-width: 48rem;
+    min-width: 0;
+  }
+
+  .policy-page__body :global(h2) {
+    margin-top: 3.5rem;
+    margin-bottom: 1.25rem;
+    font-size: var(--text-heading-5);
+  }
+
+  .policy-page__body :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .policy-page__body :global(h3) {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-size: var(--text-heading-6);
+  }
+
+  .policy-page__body :global(p),
+  .policy-page__body :global(li) {
+    max-width: 65ch;
+    font-size: var(--text-body-lg);
+    font-weight: 300;
+    line-height: 1.55;
+  }
+
+  .policy-page__body :global(p + p),
+  .policy-page__body :global(p + ul),
+  .policy-page__body :global(p + ol),
+  .policy-page__body :global(ul + p),
+  .policy-page__body :global(ol + p) {
+    margin-top: 1rem;
+  }
+
+  .policy-page__body :global(ul),
+  .policy-page__body :global(ol) {
+    padding-left: 1.5rem;
+  }
+
+  .policy-page__body :global(a) {
+    text-underline-offset: 0.2em;
+  }
+
+  @media (max-width: 64rem) {
+    .policy-page__intro {
+      grid-column: 2 / 12;
+    }
+
+    .policy-page__body {
+      grid-column: 2 / 12;
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .policy-page__header {
+      min-height: 0;
+      padding-top: 9rem;
+      padding-bottom: 4rem;
+    }
+
+    .policy-page__intro,
+    .policy-page__body {
+      grid-column: 1 / -1;
+    }
+
+    .policy-page__intro h1 {
+      font-size: 3.5rem;
+    }
+
+    .policy-page__article {
+      padding-top: 1rem;
+      padding-bottom: 5rem;
+    }
+  }
+</style>

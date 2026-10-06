@@ -1,0 +1,18 @@
+---
+import CasesOverview from '../../components/cases/CasesOverview.astro';
+import AboutTeaser from '../../components/about/AboutTeaser.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAboutTeaser } from '../../lib/sanity/aboutTeaser';
+import { getCasesPage } from '../../lib/sanity/casesPage';
+
+const [page, teaser] = await Promise.all([getCasesPage(), getAboutTeaser()]);
+const title = page.seo?.metaTitle || `${page.heading} — BOCCA`;
+const description = page.seo?.metaDescription || page.introduction;
+---
+
+<BaseLayout title={title} description={description}>
+  <main id="main-content">
+    <CasesOverview page={page} />
+    <AboutTeaser content={teaser} />
+  </main>
+</BaseLayout>

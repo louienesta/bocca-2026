@@ -1,0 +1,271 @@
+---
+import { getSanityImageUrl } from '../../lib/sanity/image';
+import type { ClientLogo } from '../../lib/sanity/types';
+
+export interface Props {
+  logos: ClientLogo[];
+}
+
+const { logos } = Astro.props as Props;
+const placeholders = [72, 58, 84, 64, 78, 55];
+const isSvg = (logo: ClientLogo) =>
+  logo.image.asset.url.toLowerCase().split('?')[0]?.endsWith('.svg');
+const logoSrc = (logo: ClientLogo, width: number) =>
+  isSvg(logo)
+    ? logo.image.asset.url
+    : getSanityImageUrl(logo.image, { width, fit: 'contain' }) ||
+      logo.image.asset.url;
+---
+
+<section class="logo-ticker" aria-label="Kundelogoer" data-logo-ticker>
+  <div class="logo-ticker__track" data-ticker-track>
+    <ul class="logo-ticker__sequence" data-ticker-sequence>
+      {logos.length > 0
+        ? logos.map((logo) => (
+            <li
+              class:list={[
+                'logo-ticker__slot',
+                { 'logo-ticker__slot--small': logo.size === 'small' },
+              ]}
+            >
+              <img
+                src={logoSrc(logo, 480)}
+                srcset={
+                  isSvg(logo)
+                    ? undefined
+                    : `${logoSrc(logo, 240)} 240w, ${logoSrc(logo, 480)} 480w`
+                }
+                sizes="(max-width: 48rem) 7.5rem, 10rem"
+                alt={logo.name}
+                loading="lazy"
+                decoding="async"
+              />
+            </li>
+          ))
+        : placeholders.map((width) => (
+            <li class="logo-ticker__slot" aria-hidden="true">
+              <span
+                class="logo-ticker__placeholder"
+                style={`--placeholder-width: ${width}%`}
+              ></span>
+            </li>
+          ))}
+    </ul>
+  </div>
+  <button
+    class="logo-ticker__control"
+    type="button"
+    aria-label="Pause logoer"
+    data-ticker-control
+  >
+    <span aria-hidden="true" data-ticker-control-label>
+      Pause
+    </span>
+  </button>
+</section>
+
+<script>
+  const initializedTickers = new WeakSet<HTMLElement>();
+
+  const initializeLogoTickers = () => {
+    document
+      .querySelectorAll<HTMLElement>('[data-logo-ticker]')
+      .forEach((ticker) => {
+        if (initializedTickers.has(ticker)) return;
+        initializedTickers.add(ticker);
+
+        const track = ticker.querySelector<HTMLElement>('[data-ticker-track]');
+        const sequence = ticker.querySelector<HTMLElement>(
+          '[data-ticker-sequence]',
+        );
+        const control = ticker.querySelector<HTMLButtonElement>(
+          '[data-ticker-control]',
+        );
+        const controlLabel = ticker.querySelector<HTMLElement>(
+          '[data-ticker-control-label]',
+        );
+        if (!track || !sequence || !control || !controlLabel) return;
+
+        let frame = 0;
+        const rebuild = () => {
+          ticker.removeAttribute('data-ticker-ready');
+          track.querySelector('[data-ticker-cycle-copy]')?.remove();
+          sequence
+            .querySelectorAll('[data-ticker-item-copy]')
+            .forEach((item) => item.remove());
+
+          const originals = Array.from(sequence.children);
+          if (!originals.length) return;
+
+          const gap = Number.parseFloat(getComputedStyle(track).columnGap) || 0;
+          const targetWidth =
+            ticker.clientWidth +
+            (originals[0]?.getBoundingClientRect().width || 0) +
+            gap;
+          let index = 0;
+
+          while (
+            sequence.getBoundingClientRect().width < targetWidth &&
+            index < 200
+          ) {
+            const copy = originals[index % originals.length]?.cloneNode(true);
+            if (!(copy instanceof HTMLElement)) break;
+            copy.dataset.tickerItemCopy = 'true';
+            copy.setAttribute('aria-hidden', 'true');
+            sequence.append(copy);
+            index += 1;
+          }
+
+          const cycle = sequence.cloneNode(true);
+          if (!(cycle instanceof HTMLElement)) return;
+          cycle.dataset.tickerCycleCopy = 'true';
+          cycle.removeAttribute('data-ticker-sequence');
+          cycle.setAttribute('aria-hidden', 'true');
+          track.append(cycle);
+
+          const distance = sequence.getBoundingClientRect().width + gap;
+          track.style.setProperty('--ticker-distance', `${distance}px`);
+          track.style.setProperty('--ticker-duration', `${distance / 48}s`);
+          ticker.dataset.tickerReady = 'true';
+        };
+
+        const scheduleRebuild = () => {
+          cancelAnimationFrame(frame);
+          frame = requestAnimationFrame(rebuild);
+        };
+
+        control.addEventListener('click', () => {
+          const paused = ticker.dataset.tickerPaused !== 'true';
+          ticker.dataset.tickerPaused = String(paused);
+          control.setAttribute(
+            'aria-label',
+            paused ? 'Afspil logoer' : 'Pause logoer',
+          );
+          controlLabel.textContent = paused ? 'Afspil' : 'Pause';
+        });
+
+        new ResizeObserver(scheduleRebuild).observe(ticker);
+        scheduleRebuild();
+      });
+  };
+
+  initializeLogoTickers();
+  document.addEventListener('astro:page-load', initializeLogoTickers);
+</script>
+
+<style>
+  .logo-ticker {
+    --ticker-gap: 2rem;
+    position: relative;
+    display: flex;
+    height: 14rem;
+    align-items: center;
+    overflow: hidden;
+    background: var(--color-bordeaux);
+  }
+
+  .logo-ticker__track,
+  .logo-ticker__sequence {
+    display: flex;
+    width: max-content;
+    flex: none;
+    align-items: center;
+    gap: var(--ticker-gap);
+  }
+
+  .logo-ticker__sequence {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .logo-ticker[data-ticker-ready='true'] .logo-ticker__track {
+    animation: logo-ticker-pan var(--ticker-duration) linear infinite;
+    will-change: transform;
+  }
+
+  .logo-ticker[data-ticker-paused='true'] .logo-ticker__track {
+    animation-play-state: paused;
+  }
+
+  .logo-ticker__slot {
+    display: grid;
+    width: 10rem;
+    height: 5.5rem;
+    flex: 0 0 10rem;
+    place-items: center;
+    padding: 0.5rem;
+  }
+
+  .logo-ticker__slot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .logo-ticker__slot--small img {
+    width: 78%;
+    height: 78%;
+  }
+
+  .logo-ticker__placeholder {
+    display: block;
+    width: var(--placeholder-width);
+    height: 2.5rem;
+    border-radius: 0.2rem;
+    background: var(--color-media);
+  }
+
+  .logo-ticker__control {
+    position: absolute;
+    z-index: 1;
+    right: var(--page-gutter);
+    bottom: 1rem;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-control);
+    background: var(--color-bordeaux);
+    color: var(--color-beige);
+    font: 400 0.75rem var(--font-sans);
+    cursor: pointer;
+  }
+
+  .logo-ticker__control:hover {
+    background: var(--color-beige);
+    color: var(--color-bordeaux);
+  }
+
+  @keyframes logo-ticker-pan {
+    to {
+      transform: translateX(calc(-1 * var(--ticker-distance)));
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .logo-ticker {
+      --ticker-gap: 1.5rem;
+      height: 10rem;
+    }
+
+    .logo-ticker__slot {
+      width: 7.5rem;
+      height: 4rem;
+      flex-basis: 7.5rem;
+    }
+
+    .logo-ticker__placeholder {
+      height: 1.75rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-ticker[data-ticker-ready='true'] .logo-ticker__track {
+      animation: none;
+    }
+
+    .logo-ticker__control {
+      display: none;
+    }
+  }
+</style>

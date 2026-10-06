@@ -1,0 +1,25 @@
+{
+  "name": "bocca-platform",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.33.2",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter @bocca/web --filter @bocca/studio dev",
+    "dev:web": "pnpm --filter @bocca/web dev",
+    "dev:studio": "pnpm --filter @bocca/studio dev",
+    "build": "pnpm --recursive build",
+    "check": "pnpm --recursive check",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^1.0.0",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "typescript": "^6.0.3"
+  }
+}

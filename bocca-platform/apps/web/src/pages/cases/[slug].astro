@@ -1,0 +1,35 @@
+---
+import CaseBlocks from '../../components/cases/CaseBlocks.astro';
+import CaseContact from '../../components/cases/CaseContact.astro';
+import CaseHero from '../../components/cases/CaseHero.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCaseStudies } from '../../lib/sanity/caseStudies';
+import { getSiteSettings } from '../../lib/sanity/siteSettings';
+import type { CaseStudyData } from '../../lib/sanity/types';
+
+export async function getStaticPaths() {
+  const cases = await getCaseStudies();
+
+  return cases.map((caseStudy) => ({
+    params: { slug: caseStudy.slug },
+    props: { caseStudy },
+  }));
+}
+
+export interface Props {
+  caseStudy: CaseStudyData;
+}
+
+const { caseStudy } = Astro.props as Props;
+const settings = await getSiteSettings();
+const title = caseStudy.seo?.metaTitle || `${caseStudy.title} — BOCCA`;
+const description = caseStudy.seo?.metaDescription || caseStudy.introduction;
+---
+
+<BaseLayout title={title} description={description} settings={settings}>
+  <main id="main-content">
+    <CaseHero caseStudy={caseStudy} />
+    <CaseBlocks blocks={caseStudy.contentBlocks} />
+    <CaseContact caseStudy={caseStudy} settings={settings} />
+  </main>
+</BaseLayout>
