@@ -89,11 +89,13 @@ read-only. Ask colleagues to accept their invitations using the same sign-in
 method they plan to keep using (for example, Google).
 
 The Astro site is static, so publishing content in Sanity requires a new
-Netlify build. Connect a Sanity webhook to a Netlify build hook before handing
-the Studio to editors. Treat the Netlify build-hook URL as a secret: do not put
-it in this repository. When creating the Sanity webhook, trigger on published
-document changes, not drafts, and use a filter that excludes Sanity asset
-documents to avoid unnecessary builds.
+Netlify build. The Sanity webhook **Netlify rebuild — published BOCCA content**
+is connected to the existing preview site's Netlify build hook. It watches
+create, update, and delete events in the `production` dataset for the six
+website document types, with drafts and versions excluded. Treat the Netlify
+build-hook URL as a secret: do not put it in this repository. A future launch
+site needs its own build hook and webhook so staging and production can be
+rebuilt independently.
 
 At launch, use a separate production Netlify project built from this same code
 and dataset, set `PUBLIC_SITE_ENV=production`, and point `bocca.dk` to it after
