@@ -23,7 +23,10 @@ export interface Props {
 const { caseStudy } = Astro.props as Props;
 const settings = await getSiteSettings();
 const title = caseStudy.seo?.metaTitle || `${caseStudy.title} — BOCCA`;
-const description = caseStudy.seo?.metaDescription || caseStudy.introduction;
+const description =
+  caseStudy.seo?.metaDescription?.trim() ||
+  caseStudy.introduction?.trim() ||
+  settings.defaultSeo.metaDescription;
 ---
 
 <BaseLayout title={title} description={description} settings={settings}>

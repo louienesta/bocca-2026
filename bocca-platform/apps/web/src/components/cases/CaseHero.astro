@@ -1,16 +1,17 @@
 ---
 import type { CaseStudyData } from '../../lib/sanity/types';
 import { getCaseSectionStyle } from '../../lib/caseSectionColor';
-import SanityMedia from '../ui/SanityMedia.astro';
 
 export interface Props {
   caseStudy: CaseStudyData;
 }
 
 const { caseStudy } = Astro.props as Props;
-const details = caseStudy.projectDetails?.filter(
-  (detail) => detail.label?.trim() && detail.value?.trim(),
-);
+const introduction = caseStudy.introduction?.trim();
+const details =
+  caseStudy.projectDetails?.filter(
+    (detail) => detail.label?.trim() && detail.value?.trim(),
+  ) ?? [];
 ---
 
 <section
@@ -18,61 +19,53 @@ const details = caseStudy.projectDetails?.filter(
   style={getCaseSectionStyle(caseStudy.heroBackgroundColor, '#faf4f0')}
   aria-labelledby="case-title"
 >
-  <div class="case-hero__content">
-    <div class="case-hero__main">
-      <h1 id="case-title">{caseStudy.title}</h1>
-      <p class="type-body-lg">{caseStudy.introduction}</p>
-    </div>
-
-    {details.length > 0 && (
-      <dl class="case-hero__details">
-        {details.map((detail) => (
-          <div>
-            <dt>{detail.label}</dt>
-            <dd>{detail.value}</dd>
-          </div>
-        ))}
-      </dl>
-    )}
+  <div class="case-hero__main">
+    <h1 id="case-title">{caseStudy.title}</h1>
+    {introduction && <p class="type-body-lg">{introduction}</p>}
   </div>
 
-  <SanityMedia
-    media={caseStudy.heroMedia ?? null}
-    ratio="free"
-    class="case-hero__media"
-    sizes="(max-width: 45rem) 100vw, 50vw"
-    loading="eager"
-  />
+  {details.length > 0 && (
+    <dl class="case-hero__details">
+      {details.map((detail) => (
+        <div>
+          <dt>{detail.label}</dt>
+          <dd>{detail.value}</dd>
+        </div>
+      ))}
+    </dl>
+  )}
 </section>
 
 <style>
   .case-hero {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    min-height: 100dvh;
-  }
-
-  .case-hero__content {
-    display: flex;
-    grid-column: 1 / 7;
-    flex-direction: column;
-    justify-content: center;
-    gap: clamp(5rem, 8vh, 8rem);
-    padding: 10.5rem 4rem 6rem;
+    align-items: end;
+    column-gap: var(--grid-gutter);
+    min-height: 31.625rem;
+    padding: 10.5rem var(--page-gutter) 6rem;
   }
 
   .case-hero__main {
-    display: grid;
+    display: flex;
+    grid-column: 2 / span 6;
+    flex-direction: column;
+    justify-content: end;
     gap: 1.5rem;
+    min-width: 0;
   }
 
   .case-hero__main h1 {
+    font-size: clamp(4rem, 5vw, var(--text-heading-1));
+    overflow-wrap: anywhere;
     white-space: pre-line;
   }
 
   .case-hero__details {
     display: grid;
+    grid-column: 9 / span 4;
     gap: 1.75rem;
+    min-width: 0;
     margin: 0;
   }
 
@@ -82,7 +75,7 @@ const details = caseStudy.projectDetails?.filter(
   }
 
   .case-hero__details dt {
-    color: inherit;
+    color: var(--color-bocca-red);
     font-family: var(--font-mono);
     font-size: var(--text-label);
     letter-spacing: var(--tracking-label);
@@ -95,48 +88,38 @@ const details = caseStudy.projectDetails?.filter(
     font-size: var(--text-body-lg);
     font-weight: 300;
     line-height: var(--text-body-lg--line-height);
-  }
-
-  .case-hero > :global(.case-hero__media) {
-    grid-column: 7 / 13;
-    width: 100%;
-    height: 100%;
-    min-height: 100%;
+    overflow-wrap: anywhere;
   }
 
   @media (max-width: 64rem) {
-    .case-hero__content {
-      padding-right: 1.5rem;
-      padding-left: 1.5rem;
+    .case-hero {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 3rem;
+      min-height: 0;
+      padding-top: 11rem;
+      padding-bottom: 5rem;
+    }
+
+    .case-hero__main,
+    .case-hero__details {
+      grid-column: auto;
     }
 
     .case-hero__main h1 {
-      font-size: clamp(3.5rem, 8vw, 6rem);
+      font-size: clamp(3rem, 7vw, 5rem);
     }
   }
 
-  @media (max-width: 45rem) {
+  @media (max-width: 48rem) {
     .case-hero {
       grid-template-columns: 1fr;
-      grid-template-rows: 45vh auto;
-      min-height: 0;
-    }
-
-    .case-hero__content {
-      grid-row: 2;
-      grid-column: 1;
-      gap: 3rem;
-      padding: 3rem 1.5rem 4rem;
-    }
-
-    .case-hero > :global(.case-hero__media) {
-      grid-row: 1;
-      grid-column: 1;
-      min-height: 45vh;
+      gap: 3.5rem;
+      padding-top: 10rem;
+      padding-bottom: 4rem;
     }
 
     .case-hero__main h1 {
-      font-size: 3.5rem;
+      font-size: var(--text-heading-1);
     }
 
     .case-hero__details {

@@ -49,19 +49,19 @@ export const caseStudy = defineType({
     }),
     defineField({
       name: 'introduction',
-      title: 'Kort introduktion',
+      title: 'Projektbeskrivelse',
       description:
-        'Den indledende tekst, der præsenterer opgaven på den enkelte case.',
+        'Valgfri tekst under casens titel. Udelad den, hvis titlen og projektdetaljerne skal stå alene.',
       type: 'text',
       rows: 5,
       group: 'content',
-      validation: (rule) => rule.required().max(500),
+      validation: (rule) => rule.max(500),
     }),
     defineField({
       name: 'heroMedia',
-      title: 'Hero-medie',
+      title: 'Oversigtsmedie',
       description:
-        'Casens primære billede eller video. Mediet kan også genbruges på caseoversigten, medmindre vi senere tilføjer et særskilt oversigtsmedie.',
+        'Vises på caseoversigten og i Udvalgte cases på forsiden, men ikke i casens tekstbaserede hero.',
       type: 'media',
       group: 'content',
       validation: (rule) => rule.required(),
@@ -121,7 +121,7 @@ export const caseStudy = defineType({
       name: 'seo',
       title: 'SEO-overskrivning',
       description:
-        'Valgfrit. Hvis feltet er tomt, bruger websitet titel, introduktion og de globale SEO-indstillinger.',
+        'Valgfrit. Hvis feltet er tomt, bruger websitet titel, eventuel projektbeskrivelse og de globale SEO-indstillinger.',
       type: 'seo',
       group: 'seo',
     }),

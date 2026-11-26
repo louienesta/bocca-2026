@@ -140,7 +140,7 @@ export interface CaseCardData {
   _id: string;
   title: string;
   slug: string;
-  introduction: string;
+  introduction?: string | null;
   projectDetails: ProjectDetail[];
   heroMedia?: CmsMedia | null;
 }
