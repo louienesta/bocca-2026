@@ -192,8 +192,6 @@ export const CASES_PAGE_QUERY = `
 export const CASE_STUDIES_QUERY = `
   *[_type == "caseStudy" && defined(slug.current)] | order(_createdAt desc){
     ${CASE_CARD_PROJECTION},
-    heroBackgroundColor,
-    contactBackgroundColor,
     contactPerson->{
       _id,
       name,

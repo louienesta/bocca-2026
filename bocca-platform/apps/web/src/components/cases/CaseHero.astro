@@ -1,6 +1,5 @@
 ---
 import type { CaseStudyData } from '../../lib/sanity/types';
-import { getCaseSectionStyle } from '../../lib/caseSectionColor';
 
 export interface Props {
   caseStudy: CaseStudyData;
@@ -14,11 +13,7 @@ const details =
   ) ?? [];
 ---
 
-<section
-  class="case-hero case-section"
-  style={getCaseSectionStyle(caseStudy.heroBackgroundColor, '#faf4f0')}
-  aria-labelledby="case-title"
->
+<section class="case-hero" aria-labelledby="case-title">
   <div class="case-hero__main">
     <h1 id="case-title">{caseStudy.title}</h1>
     {introduction && <p class="type-body-lg">{introduction}</p>}
@@ -41,7 +36,9 @@ const details =
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     align-items: end;
+    background: var(--color-beige);
     column-gap: var(--grid-gutter);
+    color: var(--color-bordeaux);
     min-height: 31.625rem;
     padding: 10.5rem var(--page-gutter) 6rem;
   }

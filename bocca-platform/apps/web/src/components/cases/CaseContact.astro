@@ -1,6 +1,5 @@
 ---
 import type { CaseStudyData, SiteSettings } from '../../lib/sanity/types';
-import { getCaseSectionStyle } from '../../lib/caseSectionColor';
 import EmployeeCard from '../employees/EmployeeCard.astro';
 
 export interface Props {
@@ -15,11 +14,7 @@ const phone = employee?.phone || settings.phone;
 const telephoneHref = `tel:${phone.replace(/[^+\d]/g, '')}`;
 ---
 
-<section
-  class="case-contact case-section"
-  style={getCaseSectionStyle(caseStudy.contactBackgroundColor, '#4d1030')}
-  aria-labelledby="case-contact-heading"
->
+<section class="case-contact" aria-labelledby="case-contact-heading">
   <div class="case-contact__content">
     <h2 id="case-contact-heading">{settings.caseContactHeading}</h2>
     <p class="type-body-lg">
@@ -44,7 +39,9 @@ const telephoneHref = `tel:${phone.replace(/[^+\d]/g, '')}`;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     min-height: 56.25rem;
     align-items: center;
+    background: var(--color-bordeaux);
     column-gap: var(--grid-gutter);
+    color: var(--color-white);
     padding: 9.25rem var(--page-gutter);
   }
 

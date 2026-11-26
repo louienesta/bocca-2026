@@ -208,8 +208,6 @@ export type CaseContentBlock =
   | CaseTextSplitBlock;
 
 export interface CaseStudyData extends CaseCardData {
-  heroBackgroundColor?: string;
-  contactBackgroundColor?: string;
   contentBlocks: CaseContentBlock[];
   contactPerson?: EmployeeData | null;
   seo?: DefaultSeo;
