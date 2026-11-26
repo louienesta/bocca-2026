@@ -1,5 +1,6 @@
 ---
 import type { CaseMediaSplitBlock } from '../../../lib/sanity/types';
+import { getCaseSectionStyle } from '../../../lib/caseSectionColor';
 import SanityMedia from '../../ui/SanityMedia.astro';
 
 export interface Props {
@@ -11,7 +12,7 @@ const { block } = Astro.props as Props;
 
 <section
   class="case-block case-block--split case-section"
-  data-background-color={block.backgroundColor || 'beige'}
+  style={getCaseSectionStyle(block.backgroundColor, '#faf4f0')}
   aria-label="Case-medier"
 >
   <SanityMedia

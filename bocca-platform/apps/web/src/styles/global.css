@@ -170,22 +170,8 @@
 
 @layer components {
   .case-section {
-    background-color: var(--color-beige);
-    color: var(--color-bordeaux);
-  }
-  .case-section[data-background-color='white'] {
-    background-color: var(--color-white);
-  }
-  .case-section[data-background-color='blue'] {
-    background-color: var(--color-bocca-blue);
-  }
-  .case-section[data-background-color='bordeaux'] {
-    background-color: var(--color-bordeaux);
-    color: var(--color-white);
-  }
-  .case-section[data-background-color='petroleum'] {
-    background-color: var(--color-petroleum);
-    color: var(--color-white);
+    background-color: var(--case-section-background);
+    color: var(--case-section-foreground);
   }
 
   .type-heading-1,

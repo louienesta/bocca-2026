@@ -1,5 +1,6 @@
 ---
 import type { CaseStudyData, SiteSettings } from '../../lib/sanity/types';
+import { getCaseSectionStyle } from '../../lib/caseSectionColor';
 import EmployeeCard from '../employees/EmployeeCard.astro';
 
 export interface Props {
@@ -16,7 +17,7 @@ const telephoneHref = `tel:${phone.replace(/[^+\d]/g, '')}`;
 
 <section
   class="case-contact case-section"
-  data-background-color={caseStudy.contactBackgroundColor || 'bordeaux'}
+  style={getCaseSectionStyle(caseStudy.contactBackgroundColor, '#4d1030')}
   aria-labelledby="case-contact-heading"
 >
   <div class="case-contact__content">

@@ -66,7 +66,7 @@ export const caseStudy = defineType({
       group: 'content',
       validation: (rule) => rule.required(),
     }),
-    caseBackgroundColorField('heroBackgroundColor', 'beige', 'content'),
+    caseBackgroundColorField('heroBackgroundColor', '#faf4f0', 'content'),
     defineField({
       name: 'projectDetails',
       title: 'Projektdetaljer',
@@ -101,7 +101,7 @@ export const caseStudy = defineType({
       to: [{ type: 'employee' }],
       group: 'content',
     }),
-    caseBackgroundColorField('contactBackgroundColor', 'bordeaux', 'content'),
+    caseBackgroundColorField('contactBackgroundColor', '#4d1030', 'content'),
     defineField({
       name: 'contentBlocks',
       title: 'Indholdsblokke',

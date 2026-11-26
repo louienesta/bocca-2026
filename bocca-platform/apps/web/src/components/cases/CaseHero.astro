@@ -1,5 +1,6 @@
 ---
 import type { CaseStudyData } from '../../lib/sanity/types';
+import { getCaseSectionStyle } from '../../lib/caseSectionColor';
 import SanityMedia from '../ui/SanityMedia.astro';
 
 export interface Props {
@@ -14,7 +15,7 @@ const details = caseStudy.projectDetails?.filter(
 
 <section
   class="case-hero case-section"
-  data-background-color={caseStudy.heroBackgroundColor || 'beige'}
+  style={getCaseSectionStyle(caseStudy.heroBackgroundColor, '#faf4f0')}
   aria-labelledby="case-title"
 >
   <div class="case-hero__content">

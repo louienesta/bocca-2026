@@ -1,5 +1,6 @@
 ---
 import type { CaseMediaTextBlock } from '../../../lib/sanity/types';
+import { getCaseSectionStyle } from '../../../lib/caseSectionColor';
 import SanityMedia from '../../ui/SanityMedia.astro';
 
 export interface Props {
@@ -12,7 +13,7 @@ const headingId = `case-block-heading-${block._key}`;
 
 <section
   class="case-block case-block--media-text case-section"
-  data-background-color={block.backgroundColor || 'beige'}
+  style={getCaseSectionStyle(block.backgroundColor, '#faf4f0')}
   aria-labelledby={headingId}
 >
   <SanityMedia
