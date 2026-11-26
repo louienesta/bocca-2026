@@ -9,7 +9,11 @@ export interface Props {
 const { block } = Astro.props as Props;
 ---
 
-<section class="case-block case-block--split" aria-label="Case-medier">
+<section
+  class="case-block case-block--split case-section"
+  data-background-color={block.backgroundColor || 'beige'}
+  aria-label="Case-medier"
+>
   <SanityMedia
     media={block.leftMedia ?? null}
     ratio="portrait"
@@ -30,7 +34,6 @@ const { block } = Astro.props as Props;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: var(--grid-gutter);
     padding: 4rem;
-    background: var(--color-beige);
   }
 
   .case-block > :global(.case-block__split-left) {

@@ -9,7 +9,11 @@ export interface Props {
 const { block } = Astro.props as Props;
 ---
 
-<section class="case-block case-block--editorial" aria-label="Case-medier">
+<section
+  class="case-block case-block--editorial case-section"
+  data-background-color={block.backgroundColor || 'beige'}
+  aria-label="Case-medier"
+>
   <div class="case-block__editorial-stack">
     <SanityMedia
       media={block.topLeftMedia ?? null}
@@ -39,7 +43,6 @@ const { block } = Astro.props as Props;
     align-items: start;
     gap: var(--grid-gutter);
     padding: 4rem;
-    background: var(--color-beige);
   }
 
   .case-block__editorial-stack {

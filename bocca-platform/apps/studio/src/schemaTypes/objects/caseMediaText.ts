@@ -1,10 +1,12 @@
 import { defineField, defineType } from 'sanity';
+import { caseBackgroundColorField } from './caseBackgroundColor';
 
 export const caseMediaText = defineType({
   name: 'caseMediaText',
   title: 'Medie + tekst – 7/3',
   type: 'object',
   fields: [
+    caseBackgroundColorField('backgroundColor'),
     defineField({
       name: 'media',
       title: 'Medie',

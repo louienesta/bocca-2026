@@ -10,7 +10,11 @@ const { block } = Astro.props as Props;
 const headingId = `case-block-heading-${block._key}`;
 ---
 
-<section class="case-block case-block--media-text" aria-labelledby={headingId}>
+<section
+  class="case-block case-block--media-text case-section"
+  data-background-color={block.backgroundColor || 'beige'}
+  aria-labelledby={headingId}
+>
   <SanityMedia
     media={block.media ?? null}
     ratio="free"
@@ -30,7 +34,6 @@ const headingId = `case-block-heading-${block._key}`;
     align-items: center;
     gap: var(--grid-gutter);
     padding: 4rem;
-    background: var(--color-beige);
   }
 
   .case-block > :global(.case-block__media-text-media) {

@@ -162,8 +162,12 @@ export interface CasesPage {
   seo?: DefaultSeo;
 }
 
+export type CaseBackgroundColor =
+  'beige' | 'white' | 'bordeaux' | 'petroleum' | 'blue';
+
 interface CaseBlockBase {
   _key: string;
+  backgroundColor?: CaseBackgroundColor;
 }
 
 export interface CaseMediaSingleBlock extends CaseBlockBase {
@@ -198,6 +202,8 @@ export type CaseContentBlock =
   | CaseMediaTextBlock;
 
 export interface CaseStudyData extends CaseCardData {
+  heroBackgroundColor?: CaseBackgroundColor;
+  contactBackgroundColor?: CaseBackgroundColor;
   contentBlocks: CaseContentBlock[];
   contactPerson?: EmployeeData | null;
   seo?: DefaultSeo;

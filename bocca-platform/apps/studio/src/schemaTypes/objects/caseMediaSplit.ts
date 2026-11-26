@@ -1,10 +1,12 @@
 import { defineField, defineType } from 'sanity';
+import { caseBackgroundColorField } from './caseBackgroundColor';
 
 export const caseMediaSplit = defineType({
   name: 'caseMediaSplit',
   title: '2 medier – 50/50',
   type: 'object',
   fields: [
+    caseBackgroundColorField('backgroundColor'),
     defineField({
       name: 'leftMedia',
       title: 'Venstre medie',

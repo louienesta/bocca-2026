@@ -14,7 +14,11 @@ const phone = employee?.phone || settings.phone;
 const telephoneHref = `tel:${phone.replace(/[^+\d]/g, '')}`;
 ---
 
-<section class="case-contact" aria-labelledby="case-contact-heading">
+<section
+  class="case-contact case-section"
+  data-background-color={caseStudy.contactBackgroundColor || 'bordeaux'}
+  aria-labelledby="case-contact-heading"
+>
   <div class="case-contact__content">
     <h2 id="case-contact-heading">{settings.caseContactHeading}</h2>
     <p class="type-body-lg">
@@ -41,8 +45,6 @@ const telephoneHref = `tel:${phone.replace(/[^+\d]/g, '')}`;
     align-items: center;
     column-gap: var(--grid-gutter);
     padding: 9.25rem var(--page-gutter);
-    background: var(--color-bordeaux);
-    color: var(--color-white);
   }
 
   .case-contact__content {

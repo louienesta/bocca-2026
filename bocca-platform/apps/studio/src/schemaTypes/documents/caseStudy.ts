@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
+import { caseBackgroundColorField } from '../objects/caseBackgroundColor';
 
 type ProjectDetailValue = {
   label?: string;
@@ -65,6 +66,7 @@ export const caseStudy = defineType({
       group: 'content',
       validation: (rule) => rule.required(),
     }),
+    caseBackgroundColorField('heroBackgroundColor', 'beige', 'content'),
     defineField({
       name: 'projectDetails',
       title: 'Projektdetaljer',
@@ -99,6 +101,7 @@ export const caseStudy = defineType({
       to: [{ type: 'employee' }],
       group: 'content',
     }),
+    caseBackgroundColorField('contactBackgroundColor', 'bordeaux', 'content'),
     defineField({
       name: 'contentBlocks',
       title: 'Indholdsblokke',
