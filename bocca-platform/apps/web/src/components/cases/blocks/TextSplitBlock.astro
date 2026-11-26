@@ -1,0 +1,64 @@
+---
+import type { CaseTextSplitBlock } from '../../../lib/sanity/types';
+import { getCaseSectionStyle } from '../../../lib/caseSectionColor';
+
+export interface Props {
+  block: CaseTextSplitBlock;
+}
+
+const { block } = Astro.props as Props;
+const headingId = `case-block-heading-${block._key}`;
+const paragraphs = block.body
+  .split(/\n\s*\n/)
+  .map((paragraph) => paragraph.trim())
+  .filter(Boolean);
+---
+
+<section
+  class="case-block case-block--text-split case-section"
+  style={getCaseSectionStyle(block.backgroundColor, '#faf4f0', block.textColor)}
+  aria-labelledby={headingId}
+>
+  <h2 id={headingId}>{block.heading}</h2>
+  <div class="case-block__body type-body-lg">
+    {paragraphs.map((paragraph) => (
+      <p>{paragraph}</p>
+    ))}
+  </div>
+</section>
+
+<style>
+  .case-block {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: var(--grid-gutter);
+    padding: 4rem var(--page-gutter);
+  }
+
+  .case-block h2 {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .case-block__body {
+    min-width: 0;
+  }
+
+  .case-block__body p {
+    font-size: inherit;
+    line-height: inherit;
+    white-space: pre-line;
+  }
+
+  .case-block__body p + p {
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 48rem) {
+    .case-block {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

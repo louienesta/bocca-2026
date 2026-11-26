@@ -37,16 +37,21 @@ function contrast(first: string, second: string): number {
 export function getCaseSectionColors(
   value: string | null | undefined,
   fallback: string,
+  textColor?: string | null,
 ) {
   const backgroundColor =
     legacyColors[value || ''] ||
     (value && /^#[0-9a-f]{6}$/i.test(value) ? value.toLowerCase() : fallback);
-  const foregroundColor =
+  const automaticForeground =
     contrast(backgroundColor, bordeaux) >= 4.5
       ? bordeaux
       : contrast(backgroundColor, white) >= 4.5
         ? white
         : black;
+  const foregroundColor =
+    textColor && /^#[0-9a-f]{6}$/i.test(textColor)
+      ? textColor.toLowerCase()
+      : automaticForeground;
 
   return { backgroundColor, foregroundColor };
 }
@@ -54,10 +59,12 @@ export function getCaseSectionColors(
 export function getCaseSectionStyle(
   value: string | null | undefined,
   fallback: string,
+  textColor?: string | null,
 ): string {
   const { backgroundColor, foregroundColor } = getCaseSectionColors(
     value,
     fallback,
+    textColor,
   );
   return `--case-section-background:${backgroundColor};--case-section-foreground:${foregroundColor}`;
 }

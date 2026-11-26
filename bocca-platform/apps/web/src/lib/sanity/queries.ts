@@ -229,6 +229,12 @@ export const CASE_STUDIES_QUERY = `
       },
       _type == "caseMediaText" => {
         media{${MEDIA_PROJECTION}},
+        textColor,
+        heading,
+        body
+      },
+      _type == "caseTextSplit" => {
+        textColor,
         heading,
         body
       }

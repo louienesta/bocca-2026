@@ -4,6 +4,7 @@ import EditorialMediaBlock from './blocks/EditorialMediaBlock.astro';
 import MediaTextBlock from './blocks/MediaTextBlock.astro';
 import SingleMediaBlock from './blocks/SingleMediaBlock.astro';
 import SplitMediaBlock from './blocks/SplitMediaBlock.astro';
+import TextSplitBlock from './blocks/TextSplitBlock.astro';
 
 export interface Props {
   blocks?: CaseContentBlock[] | null;
@@ -22,5 +23,7 @@ const { blocks = [] } = Astro.props as Props;
       return <EditorialMediaBlock block={block} />;
     case 'caseMediaText':
       return <MediaTextBlock block={block} />;
+    case 'caseTextSplit':
+      return <TextSplitBlock block={block} />;
   }
 })}

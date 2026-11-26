@@ -187,7 +187,15 @@ export interface CaseMediaEditorialBlock extends CaseBlockBase {
 
 export interface CaseMediaTextBlock extends CaseBlockBase {
   _type: 'caseMediaText';
+  textColor?: string | null;
   media?: CmsMedia | null;
+  heading: string;
+  body: string;
+}
+
+export interface CaseTextSplitBlock extends CaseBlockBase {
+  _type: 'caseTextSplit';
+  textColor?: string | null;
   heading: string;
   body: string;
 }
@@ -196,7 +204,8 @@ export type CaseContentBlock =
   | CaseMediaSingleBlock
   | CaseMediaSplitBlock
   | CaseMediaEditorialBlock
-  | CaseMediaTextBlock;
+  | CaseMediaTextBlock
+  | CaseTextSplitBlock;
 
 export interface CaseStudyData extends CaseCardData {
   heroBackgroundColor?: string;

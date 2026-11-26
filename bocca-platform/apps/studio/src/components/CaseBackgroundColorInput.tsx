@@ -9,10 +9,16 @@ const legacyColors: Record<string, string> = {
   blue: '#badbff',
 };
 
-type Props = StringInputProps & { defaultColor: string };
+type Props = StringInputProps & {
+  defaultColor: string;
+  label: string;
+  allowAutomatic?: boolean;
+};
 
-function CaseBackgroundColorInput({
+function CaseColorInput({
   defaultColor,
+  label,
+  allowAutomatic = false,
   elementProps,
   onChange,
   readOnly,
@@ -45,7 +51,7 @@ function CaseBackgroundColorInput({
         value={pickerValue}
         onChange={handleColorChange}
         disabled={readOnly}
-        aria-label="Vælg baggrundsfarve"
+        aria-label={label}
         style={{ width: '3rem', height: '2.75rem', cursor: 'pointer' }}
       />
       <input
@@ -54,7 +60,7 @@ function CaseBackgroundColorInput({
         value={displayValue}
         onChange={handleHexChange}
         readOnly={readOnly}
-        placeholder={defaultColor}
+        placeholder={allowAutomatic ? 'Automatisk' : defaultColor}
         spellCheck={false}
         style={{
           boxSizing: 'border-box',
@@ -69,14 +75,46 @@ function CaseBackgroundColorInput({
           font: 'inherit',
         }}
       />
+      {allowAutomatic && value && (
+        <button
+          type="button"
+          onClick={() => onChange(unset())}
+          disabled={readOnly}
+        >
+          Automatisk
+        </button>
+      )}
     </div>
   );
 }
 
 export function BeigeCaseBackgroundInput(props: StringInputProps) {
-  return <CaseBackgroundColorInput {...props} defaultColor="#faf4f0" />;
+  return (
+    <CaseColorInput
+      {...props}
+      defaultColor="#faf4f0"
+      label="Vælg baggrundsfarve"
+    />
+  );
 }
 
 export function BordeauxCaseBackgroundInput(props: StringInputProps) {
-  return <CaseBackgroundColorInput {...props} defaultColor="#4d1030" />;
+  return (
+    <CaseColorInput
+      {...props}
+      defaultColor="#4d1030"
+      label="Vælg baggrundsfarve"
+    />
+  );
+}
+
+export function CaseTextColorInput(props: StringInputProps) {
+  return (
+    <CaseColorInput
+      {...props}
+      defaultColor="#4d1030"
+      label="Vælg tekstfarve"
+      allowAutomatic
+    />
+  );
 }

@@ -11,6 +11,7 @@ import { caseMediaEditorial } from './objects/caseMediaEditorial';
 import { caseMediaSingle } from './objects/caseMediaSingle';
 import { caseMediaSplit } from './objects/caseMediaSplit';
 import { caseMediaText } from './objects/caseMediaText';
+import { caseTextSplit } from './objects/caseTextSplit';
 import { clientLogo } from './objects/clientLogo';
 import { homeHero } from './objects/homeHero';
 import { homeServices } from './objects/homeServices';
@@ -33,6 +34,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   caseMediaSplit,
   caseMediaEditorial,
   caseMediaText,
+  caseTextSplit,
   clientLogo,
   homeHero,
   homeServices,

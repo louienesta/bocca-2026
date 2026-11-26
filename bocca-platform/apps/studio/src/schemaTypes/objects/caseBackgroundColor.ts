@@ -22,7 +22,7 @@ export function caseBackgroundColorField(
     name,
     title: 'Baggrundsfarve',
     description:
-      'Vælg en farve, eller indsæt en hex-kode (#RRGGBB). Tekstfarven tilpasses automatisk.',
+      'Vælg en farve, eller indsæt en hex-kode (#RRGGBB). Tekstfarven tilpasses automatisk, medmindre du vælger en anden.',
     type: 'string',
     initialValue,
     group,

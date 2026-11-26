@@ -106,7 +106,7 @@ export const caseStudy = defineType({
       name: 'contentBlocks',
       title: 'Indholdsblokke',
       description:
-        'Byg casen ved at tilføje, gentage og sortere de fire tilgængelige layouts.',
+        'Byg casen ved at tilføje, gentage og sortere de fem tilgængelige layouts.',
       type: 'array',
       group: 'content',
       of: [
@@ -114,6 +114,7 @@ export const caseStudy = defineType({
         defineArrayMember({ type: 'caseMediaSplit' }),
         defineArrayMember({ type: 'caseMediaEditorial' }),
         defineArrayMember({ type: 'caseMediaText' }),
+        defineArrayMember({ type: 'caseTextSplit' }),
       ],
       validation: (rule) => rule.required().min(1),
     }),
